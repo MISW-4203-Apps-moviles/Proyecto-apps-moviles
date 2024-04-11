@@ -52,6 +52,7 @@ android {
 dependencies {
     val nav_version = "2.7.7"
     val icons_version = "1.6.5"
+    val coil_version = "2.6.0"
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -63,6 +64,7 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation("androidx.navigation:navigation-compose:$nav_version")
     implementation("androidx.compose.material:material-icons-extended:$icons_version")
+    implementation("io.coil-kt:coil-compose:$coil_version")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
