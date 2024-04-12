@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
@@ -28,36 +30,16 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.miso.vinilos.screens.AlbumDetailScreen
 import com.miso.vinilos.screens.AlbumesScreen
 import com.miso.vinilos.screens.ArtistasScreen
 import com.miso.vinilos.screens.ColeccionistasScreen
 import com.miso.vinilos.ui.theme.VinilosTheme
-
-enum class ScreenType(val title: String, val route: String) {
-    // Albumes
-    ALBUM_TAB("Albumes", "albumes_tab"),
-    ALBUM_LIST("Albumes", "albumes_list"),
-    ALBUM_DETAIL("Detalles del álbum", "albumes_detail"),
-
-    // Coleccionistas
-    COLECCIONISTAS_TAB(
-        "Coleccionistas",
-        "coleccionistas_tab"
-    ),
-    COLECCIONISTAS_LIST("Coleccionistas", "coleccionistas_list"),
-
-    // Artistas
-    ARTISTAS_TAB("Artistas", "artistas_tab"),
-    ARTISTAS_LIST("Artistas", "artistas_list")
-}
 
 fun replaceRoute(route: String, vararg arguments: Pair<String, String>): String {
     var newRoute = route
@@ -116,8 +98,8 @@ fun RunVinilosApp() {
 
     VinilosTheme {
         val screensPadding = PaddingValues(
-            start = 16.dp,
-            top = 50.dp,
+            start = 4.dp,
+            top = 0.dp,
             end = 0.dp,
             bottom = 0.dp
         )
@@ -137,7 +119,8 @@ fun RunVinilosApp() {
                 )
 
                 NavHost(
-                    navController, startDestination = Screen.AlbumTab.route
+                    navController,
+                    startDestination = Screen.AlbumTab.route,
                 ) {
                     navigation(
                         startDestination = Screen.AlbumList.route,
@@ -179,7 +162,7 @@ fun RunVinilosApp() {
 
                     navigation(
                         startDestination = Screen.Artistas.route,
-                        route = ScreenType.ARTISTAS_TAB.route
+                        route = Screen.ArtistaTab.route
                     ) {
                         composable(Screen.Artistas.route) { ArtistasScreen(modifiedPadding) }
                     }
