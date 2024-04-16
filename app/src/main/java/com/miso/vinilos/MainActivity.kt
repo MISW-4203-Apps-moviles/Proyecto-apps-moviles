@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
@@ -18,6 +20,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -25,19 +28,55 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navigation
+import com.miso.vinilos.screens.AlbumDetailScreen
 import com.miso.vinilos.screens.AlbumesScreen
 import com.miso.vinilos.screens.ArtistasScreen
 import com.miso.vinilos.screens.ColeccionistasScreen
 import com.miso.vinilos.ui.theme.VinilosTheme
 
+fun replaceRoute(route: String, vararg arguments: Pair<String, String>): String {
+    var newRoute = route
+    arguments.forEach { (key, value) ->
+        newRoute = newRoute.replace("{$key}", value)
+    }
+    return newRoute
+}
+
 sealed class Screen(val route: String, val icon: ImageVector, val label: String) {
-    object Albumes : Screen("albumes", Icons.Filled.PlayArrow, "Albumes")
-    object Coleccionistas : Screen("coleccionistas", Icons.Filled.AccountCircle, "Coleccionistas")
-    object Artistas : Screen("artistas", Icons.Filled.Star, "Artistas")
+    object AlbumTab :
+        Screen("album_tab", Icons.Filled.PlayArrow, "Albumes")
+
+    object AlbumList :
+        Screen("album_list", Icons.Filled.PlayArrow, "Lista de álbumes")
+
+    object AlbumDetail :
+        Screen(
+            "album_detail/{albumId}",
+            Icons.Filled.PlayArrow,
+            "Detalles del álbum",
+        )
+
+    object ColeccionistaTab :
+        Screen("coleccionistas_tab", Icons.Filled.AccountCircle, "Coleccionistas")
+
+    object Coleccionistas : Screen(
+        "coleccionistas",
+        Icons.Filled.AccountCircle,
+        "Coleccionistas"
+    )
+
+    object ArtistaTab :
+        Screen("artistas_tab", Icons.Filled.Star, "Artistas")
+
+    object Artistas :
+        Screen("artistas", Icons.Filled.Star, "Artistas")
 }
 
 class MainActivity : ComponentActivity() {
@@ -54,21 +93,18 @@ class MainActivity : ComponentActivity() {
 fun RunVinilosApp() {
     val navController = rememberNavController()
     val bottomNavItems = listOf(
-        Screen.Albumes,
-        Screen.Coleccionistas,
-        Screen.Artistas
+        Screen.AlbumTab, Screen.ColeccionistaTab, Screen.ArtistaTab
     )
 
     VinilosTheme {
         val screensPadding = PaddingValues(
-            start = 16.dp,
-            top = 50.dp,
+            start = 4.dp,
+            top = 0.dp,
             end = 0.dp,
             bottom = 0.dp
         )
 
-        Scaffold(
-            bottomBar = { MainNavigationBar(navController, bottomNavItems) },
+        Scaffold(bottomBar = { MainNavigationBar(navController, bottomNavItems) },
             content = { innerPadding ->
 
                 val modifiedPadding = PaddingValues(
@@ -84,25 +120,67 @@ fun RunVinilosApp() {
 
                 NavHost(
                     navController,
-                    startDestination = Screen.Albumes.route
+                    startDestination = Screen.AlbumTab.route,
                 ) {
-                    composable(Screen.Albumes.route) { AlbumesScreen(modifiedPadding) }
-                    composable(Screen.Coleccionistas.route) { ColeccionistasScreen(modifiedPadding) }
-                    composable(Screen.Artistas.route) { ArtistasScreen(modifiedPadding) }
+                    navigation(
+                        startDestination = Screen.AlbumList.route,
+                        route = Screen.AlbumTab.route
+                    ) {
+                        composable(Screen.AlbumList.route) {
+                            AlbumesScreen(
+                                navigateToAlbumDetail = { albumId ->
+                                    navController.navigate(
+                                        replaceRoute(
+                                            Screen.AlbumDetail.route,
+                                            "albumId" to albumId,
+                                        )
+                                    )
+                                },
+                                innerPadding = modifiedPadding
+                            )
+                        }
+                        composable(
+                            Screen.AlbumDetail.route,
+                        ) { backStackEntry ->
+                            AlbumDetailScreen(
+                                albumId = backStackEntry.arguments?.getString("albumId"),
+                                innerPadding = modifiedPadding
+                            )
+                        }
+                    }
+
+                    navigation(
+                        startDestination = Screen.Coleccionistas.route,
+                        route = Screen.ColeccionistaTab.route
+                    ) {
+                        composable(Screen.Coleccionistas.route) {
+                            ColeccionistasScreen(
+                                modifiedPadding
+                            )
+                        }
+                    }
+
+                    navigation(
+                        startDestination = Screen.Artistas.route,
+                        route = Screen.ArtistaTab.route
+                    ) {
+                        composable(Screen.Artistas.route) { ArtistasScreen(modifiedPadding) }
+                    }
                 }
-            }
-        )
+            })
     }
 }
 
 @Composable
 fun MainNavigationBar(
-    navController: NavHostController,
-    items: List<Screen>
+    navController: NavHostController, items: List<Screen>
 ) {
     val currentRoute = remember(navController) {
         mutableStateOf(navController.currentDestination?.route ?: "")
     }
+
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentDestination = navBackStackEntry?.destination
 
     DisposableEffect(navController) {
         val callback = NavController.OnDestinationChangedListener { _, destination, _ ->
@@ -116,12 +194,10 @@ fun MainNavigationBar(
 
     NavigationBar {
         items.forEach { screen ->
-            NavigationBarItem(
-                icon = { Icon(screen.icon, contentDescription = screen.label) },
-                selected = currentRoute.value == screen.route,
+            NavigationBarItem(icon = { Icon(screen.icon, contentDescription = screen.label) },
+                selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
                 onClick = { navController.navigate(screen.route) },
-                label = { Text(screen.label) }
-            )
+                label = { Text(screen.label) })
         }
     }
 }
