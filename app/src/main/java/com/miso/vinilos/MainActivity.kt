@@ -9,6 +9,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -49,6 +50,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -57,10 +60,14 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
 import com.miso.vinilos.screens.AlbumDetailScreen
-import com.miso.vinilos.screens.AlbumesScreen
+import com.miso.vinilos.screens.AlbumListScreen
 import com.miso.vinilos.screens.ArtistasScreen
 import com.miso.vinilos.screens.ColeccionistasScreen
 import com.miso.vinilos.ui.theme.VinilosTheme
+import com.miso.vinilos.viewModels.AlbumDetailViewModel
+import com.miso.vinilos.viewModels.AlbumDetailViewModelFactory
+import com.miso.vinilos.viewModels.AlbumListViewModel
+import com.miso.vinilos.viewModels.AlbumListViewModelFactory
 
 
 fun replaceRoute(route: String, vararg arguments: Pair<String, String>): String {
@@ -199,25 +206,35 @@ fun RunVinilosApp() {
                         route = Screen.AlbumTab.route
                     ) {
                         composable(Screen.AlbumList.route) {
-                            AlbumesScreen(
+                            val albumViewModel: AlbumListViewModel =
+                                viewModel(factory = AlbumListViewModelFactory())
+
+                            AlbumListScreen(
                                 navigateToAlbumDetail = { albumId ->
                                     navController.navigate(
                                         replaceRoute(
                                             Screen.AlbumDetail.route,
-                                            "albumId" to albumId,
+                                            "albumId" to albumId.toString(),
                                         )
                                     )
                                 },
-                                innerPadding = modifiedPadding
+                                innerPadding = modifiedPadding,
+                                viewModel = albumViewModel
                             )
                         }
                         composable(
                             Screen.AlbumDetail.route,
                         ) { backStackEntry ->
-                            AlbumDetailScreen(
-                                albumId = backStackEntry.arguments?.getString("albumId"),
-                                innerPadding = modifiedPadding
-                            )
+                            backStackEntry.arguments?.getString("albumId")?.let {
+                                val viewModel: AlbumDetailViewModel =
+                                    viewModel(factory = AlbumDetailViewModelFactory())
+
+                                AlbumDetailScreen(
+                                    albumId = it,
+                                    innerPadding = modifiedPadding,
+                                    viewModel = viewModel
+                                )
+                            }
                         }
                     }
 
