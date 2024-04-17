@@ -4,8 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.animation.AnimatedContentTransitionScope
-import androidx.compose.animation.core.tween
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
@@ -27,6 +26,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
@@ -36,10 +36,14 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
 import com.miso.vinilos.screens.AlbumDetailScreen
-import com.miso.vinilos.screens.AlbumesScreen
+import com.miso.vinilos.screens.AlbumListScreen
 import com.miso.vinilos.screens.ArtistasScreen
 import com.miso.vinilos.screens.ColeccionistasScreen
 import com.miso.vinilos.ui.theme.VinilosTheme
+import com.miso.vinilos.viewModels.AlbumDetailViewModel
+import com.miso.vinilos.viewModels.AlbumDetailViewModelFactory
+import com.miso.vinilos.viewModels.AlbumListViewModel
+import com.miso.vinilos.viewModels.AlbumListViewModelFactory
 
 fun replaceRoute(route: String, vararg arguments: Pair<String, String>): String {
     var newRoute = route
@@ -80,6 +84,8 @@ sealed class Screen(val route: String, val icon: ImageVector, val label: String)
 }
 
 class MainActivity : ComponentActivity() {
+    private val albumViewModel: AlbumListViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -127,25 +133,35 @@ fun RunVinilosApp() {
                         route = Screen.AlbumTab.route
                     ) {
                         composable(Screen.AlbumList.route) {
-                            AlbumesScreen(
+                            val albumViewModel: AlbumListViewModel =
+                                viewModel(factory = AlbumListViewModelFactory())
+
+                            AlbumListScreen(
                                 navigateToAlbumDetail = { albumId ->
                                     navController.navigate(
                                         replaceRoute(
                                             Screen.AlbumDetail.route,
-                                            "albumId" to albumId,
+                                            "albumId" to albumId.toString(),
                                         )
                                     )
                                 },
-                                innerPadding = modifiedPadding
+                                innerPadding = modifiedPadding,
+                                viewModel = albumViewModel
                             )
                         }
                         composable(
                             Screen.AlbumDetail.route,
                         ) { backStackEntry ->
-                            AlbumDetailScreen(
-                                albumId = backStackEntry.arguments?.getString("albumId"),
-                                innerPadding = modifiedPadding
-                            )
+                            backStackEntry.arguments?.getString("albumId")?.let {
+                                val viewModel: AlbumDetailViewModel =
+                                    viewModel(factory = AlbumDetailViewModelFactory())
+
+                                AlbumDetailScreen(
+                                    albumId = it,
+                                    innerPadding = modifiedPadding,
+                                    viewModel = viewModel
+                                )
+                            }
                         }
                     }
 
