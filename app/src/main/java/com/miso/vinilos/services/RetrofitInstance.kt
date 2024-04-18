@@ -4,7 +4,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitInstance {
-    private const val BASE_URL = "https://iguana-smart-cowbird.ngrok-free.app/"
+    private const val BASE_URL = "https://vynil-back-97a95a6ad966.herokuapp.com/"
 
     private val retrofit: Retrofit by lazy {
         Retrofit.Builder()

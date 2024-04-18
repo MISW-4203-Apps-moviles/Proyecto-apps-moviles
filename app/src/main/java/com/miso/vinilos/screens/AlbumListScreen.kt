@@ -1,6 +1,7 @@
 package com.miso.vinilos.screens
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -11,6 +12,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ListItem
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -18,6 +20,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -31,7 +34,6 @@ import com.miso.vinilos.viewModels.AlbumListViewModel
 @Composable
 fun AlbumListScreen(
     viewModel: AlbumListViewModel,
-    innerPadding: PaddingValues = PaddingValues(),
     navigateToAlbumDetail: (albumId: Int) -> Unit
 ) {
     val albums by viewModel.albums.observeAsState(emptyList())
@@ -50,14 +52,18 @@ fun AlbumListScreen(
         viewModel.fetchAlbums()
     }
 
-    LazyColumn(
-        modifier = Modifier.padding(innerPadding)
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
     ) {
-        items(albums) { album ->
-            AlbumItem(
-                album = album,
-                onNavigateToAlbumDetail = navigateToAlbumDetail
-            )
+        LazyColumn {
+            items(albums) { album ->
+                AlbumItem(
+                    album = album,
+                    onNavigateToAlbumDetail = navigateToAlbumDetail
+                )
+            }
         }
     }
 }
@@ -70,7 +76,7 @@ fun AlbumItem(
     println(album)
     ListItem(
         modifier = Modifier.clickable { onNavigateToAlbumDetail(album.id) },
-        overlineContent = { Text(album.performers[0].name) },
+        overlineContent = { Text(album.performers.getOrNull(0)?.name ?: "Sin artista") },
         headlineContent = { Text(album.name) },
         leadingContent = {
             Image(
