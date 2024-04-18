@@ -1,5 +1,7 @@
 package com.miso.vinilos.screens
 
+
+import androidx.compose.foundation.background
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -32,6 +34,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -55,8 +58,8 @@ import com.miso.vinilos.viewModels.AlbumDetailViewModel
 @Composable
 fun AlbumDetailScreen(
     viewModel: AlbumDetailViewModel,
-    innerPadding: PaddingValues = PaddingValues(),
-    albumId: String
+    albumId: String,
+    innerPadding: PaddingValues = PaddingValues()
 ) {
     val isLoading by viewModel.isLoading.observeAsState(false)
     val album by viewModel.album.observeAsState(null)
@@ -67,7 +70,9 @@ fun AlbumDetailScreen(
 
     if (isLoading || album == null) {
         Box(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                        .fillMaxSize()
+                        .padding(innerPadding),
             contentAlignment = Alignment.Center
         ) {
             CircularProgressIndicator()
