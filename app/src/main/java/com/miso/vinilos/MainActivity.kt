@@ -57,37 +57,30 @@ fun replaceRoute(route: String, vararg arguments: Pair<String, String>): String 
 }
 
 
-sealed class Screen(val route: String, val icon: ImageVector, val label: String) {
+sealed class Screen(val route: String, val icon: ImageVector? = null, val label: String = "") {
 
     data object UserTypeSelection :
-        Screen("user_type_selection", Icons.Filled.PlayArrow, "Selecciòn de tipo de usuario")
+        Screen("user_type_selection")
     data object AlbumTab :
         Screen("album_tab", Icons.Filled.PlayArrow, "Albumes")
 
     data object AlbumList :
-        Screen("album_list", Icons.Filled.PlayArrow, "Lista de álbumes")
+        Screen("album_list")
 
     data object AlbumDetail :
-        Screen(
-            "album_detail/{albumId}",
-            Icons.Filled.PlayArrow,
-            "Detalles del álbum",
-        )
+        Screen("album_detail/{albumId}")
 
     data object ColeccionistaTab :
         Screen("coleccionistas_tab", Icons.Filled.AccountCircle, "Coleccionistas")
 
-    data object Coleccionistas : Screen(
-        "coleccionistas",
-        Icons.Filled.AccountCircle,
-        "Coleccionistas"
-    )
+    data object Coleccionistas :
+        Screen("coleccionistas")
 
     data object ArtistaTab :
         Screen("artistas_tab", Icons.Filled.Star, "Artistas")
 
     data object Artistas :
-        Screen("artistas", Icons.Filled.Star, "Artistas")
+        Screen("artistas")
 }
 
 class MainActivity : ComponentActivity() {
@@ -224,7 +217,14 @@ fun BottomNavigationBar(
 
         items.forEach { screen ->
             NavigationBarItem(
-                icon = { Icon(screen.icon, contentDescription = screen.label) },
+                icon = {
+                    screen.icon?.let { icon ->
+                        Icon(
+                            imageVector = icon,
+                            contentDescription = screen.label
+                        )
+                    }
+                },
                 selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
                 onClick = { navController.navigate(screen.route){
                     popUpTo(navController.graph.startDestinationId)
