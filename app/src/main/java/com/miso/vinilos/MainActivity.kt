@@ -175,7 +175,7 @@ fun RunVinilosApp() {
 
     VinilosTheme {
         val screensPadding = PaddingValues(
-            start = 4.dp,
+            start = 0.dp,
             top = 0.dp,
             end = 0.dp,
             bottom = 0.dp
