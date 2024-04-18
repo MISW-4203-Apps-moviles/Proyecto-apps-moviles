@@ -20,8 +20,8 @@ import com.miso.vinilos.viewModels.AlbumDetailViewModel
 @Composable
 fun AlbumDetailScreen(
     viewModel: AlbumDetailViewModel,
-    innerPadding: PaddingValues = PaddingValues(),
-    albumId: String
+    albumId: String,
+    innerPadding: PaddingValues = PaddingValues()
 ) {
     val isLoading by viewModel.isLoading.observeAsState(false)
     val album by viewModel.album.observeAsState(null)
@@ -32,7 +32,9 @@ fun AlbumDetailScreen(
 
     if (isLoading || album == null) {
         Box(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                        .fillMaxSize()
+                        .padding(innerPadding),
             contentAlignment = Alignment.Center
         ) {
             CircularProgressIndicator()

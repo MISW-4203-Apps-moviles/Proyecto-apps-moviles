@@ -7,11 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.EaseOut
 import androidx.compose.animation.core.FiniteAnimationSpec
-import androidx.compose.animation.core.TweenSpec
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.calculateEndPadding
-import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.AccountCircle
@@ -30,14 +26,9 @@ import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
-import androidx.compose.ui.unit.LayoutDirection
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
@@ -50,13 +41,12 @@ import com.miso.vinilos.screens.AlbumDetailScreen
 import com.miso.vinilos.screens.AlbumListScreen
 import com.miso.vinilos.screens.ArtistasScreen
 import com.miso.vinilos.screens.ColeccionistasScreen
-import com.miso.vinilos.screens.InitialScreen
+import com.miso.vinilos.screens.UserTypeSelectionScreen
 import com.miso.vinilos.ui.theme.VinilosTheme
 import com.miso.vinilos.viewModels.AlbumDetailViewModel
 import com.miso.vinilos.viewModels.AlbumDetailViewModelFactory
 import com.miso.vinilos.viewModels.AlbumListViewModel
 import com.miso.vinilos.viewModels.AlbumListViewModelFactory
-
 
 fun replaceRoute(route: String, vararg arguments: Pair<String, String>): String {
     var newRoute = route
@@ -66,7 +56,11 @@ fun replaceRoute(route: String, vararg arguments: Pair<String, String>): String 
     return newRoute
 }
 
+
 sealed class Screen(val route: String, val icon: ImageVector, val label: String) {
+
+    data object UserTypeSelection :
+        Screen("user_type_selection", Icons.Filled.PlayArrow, "Selecciòn de tipo de usuario")
     data object AlbumTab :
         Screen("album_tab", Icons.Filled.PlayArrow, "Albumes")
 
@@ -100,48 +94,50 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContent {
-            var showScaffold by remember { mutableStateOf(false) }
 
-            if (showScaffold) {
-                RunVinilosApp()
-            } else {
-                InitialScreen(onStartAppClicked = { showScaffold = true })
-            }
+        setContent {
+            MainScreen()
         }
     }
 }
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RunVinilosApp() {
+fun MainScreen() {
     val navController = rememberNavController()
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
     val bottomNavItems = listOf(
         Screen.AlbumTab, Screen.ColeccionistaTab, Screen.ArtistaTab
     )
 
-    val screensPadding = PaddingValues(
-        start = 4.dp,
-        top = 0.dp,
-        end = 0.dp,
-        bottom = 0.dp
-    )
+    val currentDestination by navController.currentBackStackEntryAsState()
 
     VinilosTheme {
         Scaffold(
-            topBar = {TopNavigationBar(navController, scrollBehavior)},
-            bottomBar = { BottomNavigationBar(navController, bottomNavItems) },
+            topBar = {
+                if (currentDestination?.destination?.route != Screen.UserTypeSelection.route) {
+                    TopNavigationBar(navController, scrollBehavior)
+                }
+            },
+            bottomBar = {
+                if (currentDestination?.destination?.route != Screen.UserTypeSelection.route) {
+                    BottomNavigationBar(navController, bottomNavItems)
+                }
+            },
             content = { innerPadding ->
+
                 val tweenSpec: FiniteAnimationSpec<IntOffset> = tween(300, 0, EaseOut)
 
                 NavHost(
                     navController,
-                    startDestination = Screen.AlbumTab.route,
+                    startDestination = Screen.UserTypeSelection.route,
                     enterTransition = { slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Start, tweenSpec) },
                     exitTransition = { slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Start, tweenSpec) },
                     popEnterTransition = { slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.End, tweenSpec) },
                     popExitTransition = { slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.End, tweenSpec) }
                 ) {
+                    composable(Screen.UserTypeSelection.route) { UserTypeSelectionScreen(navController, innerPadding) }
+
                     navigation(
                         startDestination = Screen.AlbumList.route,
                         route = Screen.AlbumTab.route
@@ -159,7 +155,8 @@ fun RunVinilosApp() {
                                         )
                                     )
                                 },
-                                viewModel = albumViewModel
+                                viewModel = albumViewModel,
+                                innerPadding = innerPadding
                             )
                         }
                         composable(
@@ -171,7 +168,8 @@ fun RunVinilosApp() {
 
                                 AlbumDetailScreen(
                                     albumId = it,
-                                    viewModel = viewModel
+                                    viewModel = viewModel,
+                                    innerPadding = innerPadding
                                 )
                             }
                         }
@@ -182,7 +180,7 @@ fun RunVinilosApp() {
                         route = Screen.ColeccionistaTab.route
                     ) {
                         composable(Screen.Coleccionistas.route) {
-                            ColeccionistasScreen()
+                            ColeccionistasScreen(innerPadding)
                         }
                     }
 
@@ -190,7 +188,7 @@ fun RunVinilosApp() {
                         startDestination = Screen.Artistas.route,
                         route = Screen.ArtistaTab.route
                     ) {
-                        composable(Screen.Artistas.route) { ArtistasScreen() }
+                        composable(Screen.Artistas.route) { ArtistasScreen(innerPadding) }
                     }
                 }
             })
@@ -204,9 +202,7 @@ fun TopNavigationBar(navController: NavHostController, scrollBehavior: TopAppBar
         title = {},
         navigationIcon = {
             IconButton(onClick = {
-                if (!navController.navigateUp()){
-                    navController.navigate(Screen.AlbumTab.route)
-                }
+                navController.navigateUp()
             }) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
@@ -242,5 +238,5 @@ fun BottomNavigationBar(
 @Preview(showBackground = true)
 @Composable
 fun VinylsAppPreview() {
-    RunVinilosApp()
+    MainScreen()
 }

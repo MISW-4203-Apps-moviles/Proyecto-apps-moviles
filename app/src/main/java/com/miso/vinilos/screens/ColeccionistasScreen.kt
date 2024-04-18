@@ -14,7 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.miso.vinilos.ui.theme.VinilosTheme
 
 @Composable
-fun ColeccionistasScreen() {
+fun ColeccionistasScreen(innerPadding: PaddingValues = PaddingValues()) {
     Box(
         modifier = Modifier
             .fillMaxSize()

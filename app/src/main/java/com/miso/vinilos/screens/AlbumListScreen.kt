@@ -5,12 +5,16 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -34,19 +38,11 @@ import com.miso.vinilos.viewModels.AlbumListViewModel
 @Composable
 fun AlbumListScreen(
     viewModel: AlbumListViewModel,
-    navigateToAlbumDetail: (albumId: Int) -> Unit
+    navigateToAlbumDetail: (albumId: Int) -> Unit,
+    innerPadding: PaddingValues = PaddingValues()
 ) {
     val albums by viewModel.albums.observeAsState(emptyList())
     val isLoading by viewModel.isLoading.observeAsState(false)
-
-    if (isLoading) {
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            CircularProgressIndicator()
-        }
-    }
 
     LaunchedEffect(Unit) {
         viewModel.fetchAlbums()
@@ -57,7 +53,10 @@ fun AlbumListScreen(
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
     ) {
-        LazyColumn {
+        LazyColumn (
+            contentPadding = innerPadding
+        ){
+
             items(albums) { album ->
                 AlbumItem(
                     album = album,
@@ -66,18 +65,32 @@ fun AlbumListScreen(
             }
         }
     }
+
+    if (isLoading) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+                .background(MaterialTheme.colorScheme.background),
+            contentAlignment = Alignment.Center
+        ) {
+            CircularProgressIndicator()
+        }
+    }
 }
 
 @Composable
 fun AlbumItem(
     album: Album,
-    onNavigateToAlbumDetail: (albumId: Int) -> Unit
+    onNavigateToAlbumDetail: (albumId: Int) -> Unit,
 ) {
     println(album)
+    HorizontalDivider(color = MaterialTheme.colorScheme.primaryContainer, thickness = 1.dp)
     ListItem(
         modifier = Modifier.clickable { onNavigateToAlbumDetail(album.id) },
         overlineContent = { Text(album.performers.getOrNull(0)?.name ?: "Sin artista") },
         headlineContent = { Text(album.name) },
+
         leadingContent = {
             Image(
                 painter = rememberAsyncImagePainter(
@@ -92,6 +105,7 @@ fun AlbumItem(
             )
         }
     )
+
 }
 
 @Preview(showBackground = true)
