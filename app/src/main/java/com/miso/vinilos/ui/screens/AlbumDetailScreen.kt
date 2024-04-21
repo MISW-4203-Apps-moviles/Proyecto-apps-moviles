@@ -20,8 +20,8 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Divider
 import androidx.compose.material3.ExtendedFloatingActionButton
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -29,48 +29,40 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.miso.vinilos.models.Album
 import com.miso.vinilos.models.Comment
-import com.miso.vinilos.ui.theme.backgroundDark
 import com.miso.vinilos.ui.theme.onSurfaceVariantDark
-import com.miso.vinilos.ui.theme.outlineVariantDark
 import com.miso.vinilos.ui.theme.primaryContainerLight
 import com.miso.vinilos.ui.theme.primaryDark
 import com.miso.vinilos.ui.theme.primaryLightHighContrast
 import com.miso.vinilos.ui.theme.scrimDark
 import com.miso.vinilos.ui.theme.surfaceContainerHighLightHighContrast
-import com.miso.vinilos.ui.theme.surfaceContainerHighestLight
-import com.miso.vinilos.ui.theme.surfaceDimLightMediumContrast
-import com.miso.vinilos.viewModels.AlbumDetailViewModel
 
 
 @Composable
 fun AlbumDetailScreen(
-    viewModel: AlbumDetailViewModel,
-    albumId: String,
+    album: Album?,
+    isLoading: Boolean,
+    fetchAlbum: () -> Unit,
     innerPadding: PaddingValues = PaddingValues()
 ) {
-    val isLoading by viewModel.isLoading.observeAsState(false)
-    val album by viewModel.album.observeAsState(null)
-
     LaunchedEffect(Unit) {
-        viewModel.fetchAlbum(albumId.toInt())
+        fetchAlbum()
     }
 
     if (isLoading || album == null) {
         Box(
             modifier = Modifier
-                        .fillMaxSize()
-                        .padding(innerPadding),
+                .fillMaxSize()
+                .padding(innerPadding),
             contentAlignment = Alignment.Center
         ) {
             CircularProgressIndicator()
@@ -106,10 +98,10 @@ fun AlbumCard(
     album: Album,
 ) {
     Card(
-        border = BorderStroke(1.dp, outlineVariantDark),
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
         colors = CardDefaults.cardColors(
-            containerColor = scrimDark,
-            contentColor = contentColorFor(backgroundDark)
+            containerColor = MaterialTheme.colorScheme.surface,
+            contentColor = contentColorFor(MaterialTheme.colorScheme.onSurface)
         )
     ) {
         Column {
@@ -127,7 +119,7 @@ fun AlbumCard(
                         text = album.name,
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = MaterialTheme.typography.titleMedium.fontWeight,
-                        color = primaryDark,
+                        color = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.padding(bottom = 4.dp)
                     )
 
@@ -163,7 +155,7 @@ fun AlbumCard(
                     text = year,
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = MaterialTheme.typography.bodyLarge.fontWeight,
-                    color = primaryContainerLight,
+                    color = MaterialTheme.colorScheme.onPrimaryContainer,
                     modifier = Modifier.padding(bottom = 4.dp)
                 )
 
@@ -171,7 +163,7 @@ fun AlbumCard(
                     text = album.recordLabel,
                     style = MaterialTheme.typography.bodyMedium,
                     fontWeight = MaterialTheme.typography.bodyMedium.fontWeight,
-                    color = surfaceDimLightMediumContrast,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -180,7 +172,7 @@ fun AlbumCard(
                     text = album.description,
                     style = MaterialTheme.typography.bodyMedium,
                     overflow = TextOverflow.Ellipsis,
-                    color = surfaceContainerHighestLight,
+                    color = MaterialTheme.colorScheme.onSurface,
                 )
             }
         }
@@ -192,7 +184,7 @@ fun CommentItem() {
     Surface(
         modifier = Modifier
             .fillMaxWidth(),
-        color = scrimDark,
+        color = MaterialTheme.colorScheme.surface,
         shape = MaterialTheme.shapes.extraSmall,
     ) {
         Column(
@@ -205,7 +197,7 @@ fun CommentItem() {
                 Text(
                     text = "Usuario",
                     style = MaterialTheme.typography.bodyLarge,
-                    color = primaryContainerLight,
+                    color = MaterialTheme.colorScheme.onSurface,
                 )
             }
 
@@ -215,7 +207,7 @@ fun CommentItem() {
                 text = "Comentario",
                 style = MaterialTheme.typography.bodyMedium,
                 fontWeight = MaterialTheme.typography.bodySmall.fontWeight,
-                color = onSurfaceVariantDark,
+                color = MaterialTheme.colorScheme.onSurface,
             )
         }
     }
@@ -248,18 +240,77 @@ fun CommentSection(
             text = "Comentarios",
             style = MaterialTheme.typography.titleMedium,
             fontWeight = MaterialTheme.typography.titleMedium.fontWeight,
-            color = surfaceContainerHighLightHighContrast,
+            color = MaterialTheme.colorScheme.onSurface,
         )
     }
 
     Column {
         repeat(2) {
             CommentItem()
-            Divider(
-                color = primaryLightHighContrast,
-            )
+            HorizontalDivider(color = primaryLightHighContrast)
         }
     }
 
     AddComment(onAddComment)
+}
+
+@Preview
+@Composable
+fun AddCommentPreview() {
+    AddComment(
+        onAddComment = {}
+    )
+}
+
+@Preview
+@Composable
+fun CommentSectionPreview() {
+    CommentSection(
+        comments = emptyList(),
+        onAddComment = {}
+    )
+}
+
+@Preview
+@Composable
+fun CommentItemPreview() {
+    CommentItem()
+}
+
+@Preview
+@Composable
+fun AlbumCardPreview() {
+    AlbumCard(
+        album = Album(
+            id = 1,
+            name = "Album name",
+            description = "Album description",
+            cover = "https://placehold.co/400x400.png",
+            releaseDate = "2021-01-01",
+            recordLabel = "Record label",
+            genre = "Genre",
+            performers = emptyList(),
+            comments = emptyList()
+        )
+    )
+}
+
+@Preview
+@Composable
+fun AlbumDetailScreenPreview() {
+    AlbumDetailScreen(
+        album = Album(
+            id = 1,
+            name = "Album name",
+            description = "Album description",
+            cover = "https://placehold.co/400x400.png",
+            releaseDate = "2021-01-01",
+            recordLabel = "Record label",
+            genre = "Genre",
+            performers = emptyList(),
+            comments = emptyList()
+        ),
+        isLoading = false,
+        fetchAlbum = {}
+    )
 }

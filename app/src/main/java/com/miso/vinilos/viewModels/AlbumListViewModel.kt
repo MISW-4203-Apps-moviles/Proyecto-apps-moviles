@@ -31,7 +31,6 @@ class AlbumListViewModel : ViewModel() {
 
             } catch (e: Exception) {
                 _isLoading.value = false
-                println(e)
             }
         }
     }

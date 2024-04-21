@@ -16,8 +16,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -27,20 +25,18 @@ import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.miso.vinilos.models.Album
 import com.miso.vinilos.ui.theme.VinilosTheme
-import com.miso.vinilos.viewModels.AlbumListViewModel
 
 
 @Composable
 fun AlbumListScreen(
-    viewModel: AlbumListViewModel,
+    albums: List<Album>,
+    fetchAlbums: () -> Unit,
+    isLoading: Boolean,
     navigateToAlbumDetail: (albumId: Int) -> Unit,
     innerPadding: PaddingValues = PaddingValues()
 ) {
-    val albums by viewModel.albums.observeAsState(emptyList())
-    val isLoading by viewModel.isLoading.observeAsState(false)
-
     LaunchedEffect(Unit) {
-        viewModel.fetchAlbums()
+        fetchAlbums()
     }
 
     Box(
@@ -71,12 +67,21 @@ fun AlbumItem(
     album: Album,
     onNavigateToAlbumDetail: (albumId: Int) -> Unit,
 ) {
-    println(album)
     HorizontalDivider(color = MaterialTheme.colorScheme.primaryContainer, thickness = 1.dp)
     ListItem(
         modifier = Modifier.clickable { onNavigateToAlbumDetail(album.id) },
-        overlineContent = { Text(album.performers.getOrNull(0)?.name ?: "Sin artista") },
-        headlineContent = { Text(album.name) },
+        overlineContent = {
+            Text(
+                text = album.performers.getOrNull(0)?.name ?: "Sin artista",
+                color = MaterialTheme.colorScheme.onPrimaryContainer,
+            )
+        },
+        headlineContent = {
+            Text(
+                text = album.name,
+                color = MaterialTheme.colorScheme.onSurface,
+            )
+        },
 
         leadingContent = {
             Image(
@@ -104,7 +109,7 @@ fun AlbumItemPreview() {
                 id = 1,
                 name = "The Dark Side of the Moon",
                 releaseDate = "1973",
-                cover = "https://fastly.picsum.photos/id/861/200/200.jpg?hmac=UJSK-tjn1gjzSmwHWZhjpaGahNSBDQWpMoNvg8Bxy8k",
+                cover = "https://placehold.co/400x400.png",
                 description = "The Dark Side of the Moon es el octavo álbum de estudio de la banda británica de rock progresivo Pink Floyd, lanzado el 1 de marzo de 1973.",
                 comments = emptyList(),
                 performers = emptyList(),
@@ -122,7 +127,32 @@ fun AlbumListScreenPreview() {
     VinilosTheme {
         AlbumListScreen(
             navigateToAlbumDetail = {},
-            viewModel = AlbumListViewModel()
+            albums = listOf(
+                Album(
+                    id = 1,
+                    name = "The Dark Side of the Moon",
+                    releaseDate = "1973",
+                    cover = "https://placehold.co/400x400.png",
+                    description = "The Dark Side of the Moon es el octavo álbum de estudio de la banda británica de rock progresivo Pink Floyd, lanzado el 1 de marzo de 1973.",
+                    comments = emptyList(),
+                    performers = emptyList(),
+                    genre = "Rock progresivo",
+                    recordLabel = "Harvest Records"
+                ),
+                Album(
+                    id = 2,
+                    name = "The Wall",
+                    releaseDate = "1979",
+                    cover = "https://placehold.co/400x400.png",
+                    description = "The Wall es el undécimo álbum de estudio de la banda británica de rock Pink Floyd, lanzado el 30 de noviembre de 1979.",
+                    comments = emptyList(),
+                    performers = emptyList(),
+                    genre = "Rock",
+                    recordLabel = "Harvest Records"
+                ),
+            ),
+            isLoading = false,
+            fetchAlbums = {}
         )
     }
 }
