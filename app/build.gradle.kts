@@ -50,10 +50,6 @@ android {
 }
 
 dependencies {
-    val nav_version = "2.7.7"
-    val icons_version = "1.6.5"
-    val coil_version = "2.6.0"
-
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -63,10 +59,16 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-    implementation("androidx.navigation:navigation-compose:$nav_version")
-    implementation("androidx.compose.material:material-icons-extended:$icons_version")
-    implementation("com.squareup.okhttp3:okhttp:4.12.0")
-    implementation("io.coil-kt:coil-compose:$coil_version")
+    implementation(libs.navigation.compose)
+    implementation(libs.androidx.material.icons.extended)
+    implementation(libs.okhttp)
+    implementation(libs.coil.compose)
+    implementation(libs.androidx.runtime.livedata)
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter.gson)
+    implementation(libs.kotlinx.coroutines.android)
+
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
