@@ -296,7 +296,7 @@ fun VinilosTheme(
 
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = Typography,
+        typography = TypographyDark, // Using Dark theme Typography by default
         content = content
     )
 }

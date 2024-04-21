@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -24,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.miso.vinilos.models.Album
+import com.miso.vinilos.ui.composables.ListDivider
 import com.miso.vinilos.ui.theme.VinilosTheme
 
 
@@ -67,19 +67,17 @@ fun AlbumItem(
     album: Album,
     onNavigateToAlbumDetail: (albumId: Int) -> Unit,
 ) {
-    HorizontalDivider(color = MaterialTheme.colorScheme.primaryContainer, thickness = 1.dp)
+    ListDivider()
     ListItem(
         modifier = Modifier.clickable { onNavigateToAlbumDetail(album.id) },
         overlineContent = {
             Text(
-                text = album.performers.getOrNull(0)?.name ?: "Sin artista",
-                color = MaterialTheme.colorScheme.onPrimaryContainer,
+                text = album.performers.getOrNull(0)?.name ?: "Sin artista"
             )
         },
         headlineContent = {
             Text(
-                text = album.name,
-                color = MaterialTheme.colorScheme.onSurface,
+                text = album.name
             )
         },
 

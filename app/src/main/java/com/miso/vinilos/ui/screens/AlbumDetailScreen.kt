@@ -21,7 +21,6 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExtendedFloatingActionButton
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -39,12 +38,8 @@ import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.miso.vinilos.models.Album
 import com.miso.vinilos.models.Comment
-import com.miso.vinilos.ui.theme.onSurfaceVariantDark
-import com.miso.vinilos.ui.theme.primaryContainerLight
+import com.miso.vinilos.ui.composables.ListDivider
 import com.miso.vinilos.ui.theme.primaryDark
-import com.miso.vinilos.ui.theme.primaryLightHighContrast
-import com.miso.vinilos.ui.theme.scrimDark
-import com.miso.vinilos.ui.theme.surfaceContainerHighLightHighContrast
 
 
 @Composable
@@ -117,13 +112,14 @@ fun AlbumCard(
                 Column(Modifier.fillMaxWidth()) {
                     Text(
                         text = album.name,
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = MaterialTheme.typography.titleMedium.fontWeight,
-                        color = MaterialTheme.colorScheme.primary,
+                        style = MaterialTheme.typography.titleLarge,
                         modifier = Modifier.padding(bottom = 4.dp)
                     )
 
-                    Text(text = album.name, style = MaterialTheme.typography.bodyMedium)
+                    Text(
+                        text = album.performers.getOrNull(0)?.name ?: "Sin artista",
+                        style = MaterialTheme.typography.titleMedium
+                    )
                 }
             }
 
@@ -153,26 +149,21 @@ fun AlbumCard(
                 val year = album.releaseDate.split("-")[0]
                 Text(
                     text = year,
-                    style = MaterialTheme.typography.bodyLarge,
-                    fontWeight = MaterialTheme.typography.bodyLarge.fontWeight,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer,
+                    style = MaterialTheme.typography.titleMedium,
                     modifier = Modifier.padding(bottom = 4.dp)
                 )
 
                 Text(
                     text = album.recordLabel,
-                    style = MaterialTheme.typography.bodyMedium,
-                    fontWeight = MaterialTheme.typography.bodyMedium.fontWeight,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    style = MaterialTheme.typography.titleMedium
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Text(
                     text = album.description,
-                    style = MaterialTheme.typography.bodyMedium,
                     overflow = TextOverflow.Ellipsis,
-                    color = MaterialTheme.colorScheme.onSurface,
+                    style = MaterialTheme.typography.bodyMedium
                 )
             }
         }
@@ -196,8 +187,7 @@ fun CommentItem() {
             ) {
                 Text(
                     text = "Usuario",
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.onSurface,
+                    style = MaterialTheme.typography.titleMedium
                 )
             }
 
@@ -205,9 +195,7 @@ fun CommentItem() {
 
             Text(
                 text = "Comentario",
-                style = MaterialTheme.typography.bodyMedium,
-                fontWeight = MaterialTheme.typography.bodySmall.fontWeight,
-                color = MaterialTheme.colorScheme.onSurface,
+                style = MaterialTheme.typography.bodyMedium
             )
         }
     }
@@ -247,7 +235,7 @@ fun CommentSection(
     Column {
         repeat(2) {
             CommentItem()
-            HorizontalDivider(color = primaryLightHighContrast)
+            ListDivider()
         }
     }
 
