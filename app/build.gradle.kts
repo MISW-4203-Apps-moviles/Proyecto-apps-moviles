@@ -67,6 +67,7 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter.gson)
     implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.androidx.material3.android)
 
 
     testImplementation(libs.junit)

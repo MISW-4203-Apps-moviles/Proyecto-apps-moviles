@@ -22,6 +22,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExtendedFloatingActionButton
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -29,12 +30,11 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
@@ -50,27 +50,24 @@ import com.miso.vinilos.ui.theme.scrimDark
 import com.miso.vinilos.ui.theme.surfaceContainerHighLightHighContrast
 import com.miso.vinilos.ui.theme.surfaceContainerHighestLight
 import com.miso.vinilos.ui.theme.surfaceDimLightMediumContrast
-import com.miso.vinilos.viewModels.AlbumDetailViewModel
 
 
 @Composable
 fun AlbumDetailScreen(
-    viewModel: AlbumDetailViewModel,
-    albumId: String,
+    album: Album?,
+    isLoading: Boolean,
+    fetchAlbum: () -> Unit,
     innerPadding: PaddingValues = PaddingValues()
 ) {
-    val isLoading by viewModel.isLoading.observeAsState(false)
-    val album by viewModel.album.observeAsState(null)
-
     LaunchedEffect(Unit) {
-        viewModel.fetchAlbum(albumId.toInt())
+        fetchAlbum()
     }
 
     if (isLoading || album == null) {
         Box(
             modifier = Modifier
-                        .fillMaxSize()
-                        .padding(innerPadding),
+                .fillMaxSize()
+                .padding(innerPadding),
             contentAlignment = Alignment.Center
         ) {
             CircularProgressIndicator()
@@ -255,11 +252,70 @@ fun CommentSection(
     Column {
         repeat(2) {
             CommentItem()
-            Divider(
-                color = primaryLightHighContrast,
-            )
+            HorizontalDivider(color = primaryLightHighContrast)
         }
     }
 
     AddComment(onAddComment)
+}
+
+@Preview
+@Composable
+fun AddCommentPreview() {
+    AddComment(
+        onAddComment = {}
+    )
+}
+
+@Preview
+@Composable
+fun CommentSectionPreview() {
+    CommentSection(
+        comments = emptyList(),
+        onAddComment = {}
+    )
+}
+
+@Preview
+@Composable
+fun CommentItemPreview() {
+    CommentItem()
+}
+
+@Preview
+@Composable
+fun AlbumCardPreview() {
+    AlbumCard(
+        album = Album(
+            id = 1,
+            name = "Album name",
+            description = "Album description",
+            cover = "https://placehold.co/400x400.png",
+            releaseDate = "2021-01-01",
+            recordLabel = "Record label",
+            genre = "Genre",
+            performers = emptyList(),
+            comments = emptyList()
+        )
+    )
+}
+
+@Preview
+@Composable
+fun AlbumDetailScreenPreview() {
+    AlbumDetailScreen(
+        album = Album(
+            id = 1,
+            name = "Album name",
+            description = "Album description",
+            cover = "https://placehold.co/400x400.png",
+            releaseDate = "2021-01-01",
+            recordLabel = "Record label",
+            genre = "Genre",
+            performers = emptyList(),
+            comments = emptyList()
+        ),
+        isLoading = false,
+        fetchAlbum = {}
+    )
 }
