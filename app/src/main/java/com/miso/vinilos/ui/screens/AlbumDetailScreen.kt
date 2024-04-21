@@ -20,7 +20,6 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Divider
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -40,16 +39,12 @@ import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.miso.vinilos.models.Album
 import com.miso.vinilos.models.Comment
-import com.miso.vinilos.ui.theme.backgroundDark
 import com.miso.vinilos.ui.theme.onSurfaceVariantDark
-import com.miso.vinilos.ui.theme.outlineVariantDark
 import com.miso.vinilos.ui.theme.primaryContainerLight
 import com.miso.vinilos.ui.theme.primaryDark
 import com.miso.vinilos.ui.theme.primaryLightHighContrast
 import com.miso.vinilos.ui.theme.scrimDark
 import com.miso.vinilos.ui.theme.surfaceContainerHighLightHighContrast
-import com.miso.vinilos.ui.theme.surfaceContainerHighestLight
-import com.miso.vinilos.ui.theme.surfaceDimLightMediumContrast
 
 
 @Composable
@@ -103,10 +98,10 @@ fun AlbumCard(
     album: Album,
 ) {
     Card(
-        border = BorderStroke(1.dp, outlineVariantDark),
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
         colors = CardDefaults.cardColors(
-            containerColor = scrimDark,
-            contentColor = contentColorFor(backgroundDark)
+            containerColor = MaterialTheme.colorScheme.surface,
+            contentColor = contentColorFor(MaterialTheme.colorScheme.onSurface)
         )
     ) {
         Column {
@@ -124,7 +119,7 @@ fun AlbumCard(
                         text = album.name,
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = MaterialTheme.typography.titleMedium.fontWeight,
-                        color = primaryDark,
+                        color = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.padding(bottom = 4.dp)
                     )
 
@@ -160,7 +155,7 @@ fun AlbumCard(
                     text = year,
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = MaterialTheme.typography.bodyLarge.fontWeight,
-                    color = primaryContainerLight,
+                    color = MaterialTheme.colorScheme.onPrimaryContainer,
                     modifier = Modifier.padding(bottom = 4.dp)
                 )
 
@@ -168,7 +163,7 @@ fun AlbumCard(
                     text = album.recordLabel,
                     style = MaterialTheme.typography.bodyMedium,
                     fontWeight = MaterialTheme.typography.bodyMedium.fontWeight,
-                    color = surfaceDimLightMediumContrast,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -177,7 +172,7 @@ fun AlbumCard(
                     text = album.description,
                     style = MaterialTheme.typography.bodyMedium,
                     overflow = TextOverflow.Ellipsis,
-                    color = surfaceContainerHighestLight,
+                    color = MaterialTheme.colorScheme.onSurface,
                 )
             }
         }
@@ -189,7 +184,7 @@ fun CommentItem() {
     Surface(
         modifier = Modifier
             .fillMaxWidth(),
-        color = scrimDark,
+        color = MaterialTheme.colorScheme.surface,
         shape = MaterialTheme.shapes.extraSmall,
     ) {
         Column(
@@ -202,7 +197,7 @@ fun CommentItem() {
                 Text(
                     text = "Usuario",
                     style = MaterialTheme.typography.bodyLarge,
-                    color = primaryContainerLight,
+                    color = MaterialTheme.colorScheme.onSurface,
                 )
             }
 
@@ -212,7 +207,7 @@ fun CommentItem() {
                 text = "Comentario",
                 style = MaterialTheme.typography.bodyMedium,
                 fontWeight = MaterialTheme.typography.bodySmall.fontWeight,
-                color = onSurfaceVariantDark,
+                color = MaterialTheme.colorScheme.onSurface,
             )
         }
     }
@@ -245,7 +240,7 @@ fun CommentSection(
             text = "Comentarios",
             style = MaterialTheme.typography.titleMedium,
             fontWeight = MaterialTheme.typography.titleMedium.fontWeight,
-            color = surfaceContainerHighLightHighContrast,
+            color = MaterialTheme.colorScheme.onSurface,
         )
     }
 

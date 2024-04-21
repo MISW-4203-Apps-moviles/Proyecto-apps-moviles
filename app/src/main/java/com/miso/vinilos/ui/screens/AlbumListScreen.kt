@@ -67,12 +67,21 @@ fun AlbumItem(
     album: Album,
     onNavigateToAlbumDetail: (albumId: Int) -> Unit,
 ) {
-    println(album)
     HorizontalDivider(color = MaterialTheme.colorScheme.primaryContainer, thickness = 1.dp)
     ListItem(
         modifier = Modifier.clickable { onNavigateToAlbumDetail(album.id) },
-        overlineContent = { Text(album.performers.getOrNull(0)?.name ?: "Sin artista") },
-        headlineContent = { Text(album.name) },
+        overlineContent = {
+            Text(
+                text = album.performers.getOrNull(0)?.name ?: "Sin artista",
+                color = MaterialTheme.colorScheme.onPrimaryContainer,
+            )
+        },
+        headlineContent = {
+            Text(
+                text = album.name,
+                color = MaterialTheme.colorScheme.onSurface,
+            )
+        },
 
         leadingContent = {
             Image(
