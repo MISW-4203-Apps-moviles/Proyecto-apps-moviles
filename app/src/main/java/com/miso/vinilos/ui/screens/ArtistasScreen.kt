@@ -1,4 +1,4 @@
-package com.miso.vinilos.screens
+package com.miso.vinilos.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -18,7 +18,7 @@ fun ArtistasScreen(innerPadding: PaddingValues = PaddingValues()) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background),
+            .padding(innerPadding),
             contentAlignment = Alignment.Center
     ) {
         Text(
