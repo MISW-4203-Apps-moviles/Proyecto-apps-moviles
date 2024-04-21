@@ -1,7 +1,6 @@
-package com.miso.vinilos.screens
+package com.miso.vinilos.ui.screens
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -25,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.miso.vinilos.R
-import com.miso.vinilos.Screen
+import com.miso.vinilos.ui.NavigationItem
 import com.miso.vinilos.ui.theme.VinilosTheme
 
 @Composable
@@ -34,8 +33,8 @@ fun UserTypeSelectionScreen(navController: NavHostController, innerPadding: Padd
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background),
-            contentAlignment = Alignment.Center
+                .padding(innerPadding),
+            contentAlignment = Alignment.Center,
         ) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -55,10 +54,7 @@ fun UserTypeSelectionScreen(navController: NavHostController, innerPadding: Padd
                 Row{
                     Button(
                         onClick = {
-                            navController.navigate(Screen.AlbumTab.route) {
-                                popUpTo(navController.graph.startDestinationId)
-                                launchSingleTop = true
-                            }
+                            navigateToAlbumTab(navController)
                         },
                         modifier = Modifier.padding(start = 32.dp, end = 16.dp).weight(1f).fillMaxWidth()
                     ) {
@@ -66,10 +62,7 @@ fun UserTypeSelectionScreen(navController: NavHostController, innerPadding: Padd
                     }
                     Button(
                         onClick = {
-                            navController.navigate(Screen.AlbumTab.route) {
-                                popUpTo(navController.graph.startDestinationId)
-                                launchSingleTop = true
-                            }
+                            navigateToAlbumTab(navController)
                         },
                         modifier = Modifier.padding(start = 16.dp, end = 32.dp).weight(1f).fillMaxWidth()
                     ) {
@@ -81,9 +74,17 @@ fun UserTypeSelectionScreen(navController: NavHostController, innerPadding: Padd
     }
 }
 
-@Preview(showBackground = true)
+
+private fun navigateToAlbumTab(navController: NavHostController) {
+    navController.navigate(NavigationItem.AlbumTab.route) {
+        popUpTo(navController.graph.startDestinationId)
+        launchSingleTop = true
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0)
 @Composable
-fun InitialScreenPreview() {
+fun UserTypeSelectionScreenPreview() {
     VinilosTheme {
         UserTypeSelectionScreen(rememberNavController())
     }
