@@ -19,7 +19,6 @@ import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
@@ -41,8 +40,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
-import com.miso.vinilos.ui.screens.AlbumDetailScreen
-import com.miso.vinilos.ui.screens.AlbumListScreen
+import com.miso.vinilos.ui.screens.AlbumDetailRoute
+import com.miso.vinilos.ui.screens.AlbumListRoute
 import com.miso.vinilos.ui.screens.ArtistasScreen
 import com.miso.vinilos.ui.screens.ColeccionistasScreen
 import com.miso.vinilos.ui.screens.UserTypeSelectionScreen
@@ -60,10 +59,15 @@ fun replaceRoute(route: String, vararg arguments: Pair<String, String>): String 
 }
 
 
-sealed class NavigationItem(val route: String, val icon: ImageVector? = null, val label: String = "") {
+sealed class NavigationItem(
+    val route: String,
+    val icon: ImageVector? = null,
+    val label: String = ""
+) {
 
     data object UserTypeSelection :
         NavigationItem("user_type_selection")
+
     data object AlbumTab :
         NavigationItem("album_tab", Icons.Filled.PlayArrow, "Albumes")
 
@@ -87,17 +91,37 @@ sealed class NavigationItem(val route: String, val icon: ImageVector? = null, va
 }
 
 @Composable
-fun Navigation (navController: NavHostController, innerPadding: PaddingValues = PaddingValues()) {
+fun Navigation(navController: NavHostController, innerPadding: PaddingValues = PaddingValues()) {
 
     val tweenSpec: FiniteAnimationSpec<IntOffset> = tween(300, 0, EaseOut)
 
     NavHost(
         navController,
         startDestination = NavigationItem.UserTypeSelection.route,
-        enterTransition = { slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Start, tweenSpec) },
-        exitTransition = { slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Start, tweenSpec) },
-        popEnterTransition = { slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.End, tweenSpec) },
-        popExitTransition = { slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.End, tweenSpec) }
+        enterTransition = {
+            slideIntoContainer(
+                AnimatedContentTransitionScope.SlideDirection.Start,
+                tweenSpec
+            )
+        },
+        exitTransition = {
+            slideOutOfContainer(
+                AnimatedContentTransitionScope.SlideDirection.Start,
+                tweenSpec
+            )
+        },
+        popEnterTransition = {
+            slideIntoContainer(
+                AnimatedContentTransitionScope.SlideDirection.End,
+                tweenSpec
+            )
+        },
+        popExitTransition = {
+            slideOutOfContainer(
+                AnimatedContentTransitionScope.SlideDirection.End,
+                tweenSpec
+            )
+        }
     ) {
         composable(NavigationItem.UserTypeSelection.route) { UserTypeSelectionScreen(navController) }
 
@@ -109,7 +133,7 @@ fun Navigation (navController: NavHostController, innerPadding: PaddingValues = 
                 val albumViewModel: AlbumListViewModel =
                     viewModel(factory = AlbumListViewModelFactory())
 
-                AlbumListScreen(
+                AlbumListRoute(
                     navigateToAlbumDetail = { albumId ->
                         navController.navigate(
                             replaceRoute(
@@ -129,7 +153,7 @@ fun Navigation (navController: NavHostController, innerPadding: PaddingValues = 
                     val viewModel: AlbumDetailViewModel =
                         viewModel(factory = AlbumDetailViewModelFactory())
 
-                    AlbumDetailScreen(
+                    AlbumDetailRoute(
                         albumId = it,
                         viewModel = viewModel,
                         innerPadding = innerPadding
@@ -181,7 +205,9 @@ fun TopNavigationBar(navController: NavHostController) {
                         )
                     }
                 },
-                scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
+                scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(
+                    rememberTopAppBarState()
+                )
             )
         }
     )
@@ -193,7 +219,8 @@ fun BottomNavigationBar(navController: NavHostController) {
 
     var isVisible by remember { mutableStateOf(true) }
 
-    isVisible = currentNavBackStackEntry?.destination?.route != NavigationItem.UserTypeSelection.route
+    isVisible =
+        currentNavBackStackEntry?.destination?.route != NavigationItem.UserTypeSelection.route
 
     AnimatedVisibility(
         visible = isVisible,
@@ -203,7 +230,9 @@ fun BottomNavigationBar(navController: NavHostController) {
             NavigationBar {
                 val currentDestination = navController.currentDestination
                 val items = listOf(
-                    NavigationItem.AlbumTab, NavigationItem.ColeccionistaTab, NavigationItem.ArtistaTab
+                    NavigationItem.AlbumTab,
+                    NavigationItem.ColeccionistaTab,
+                    NavigationItem.ArtistaTab
                 )
 
                 items.forEach { navigationItem ->

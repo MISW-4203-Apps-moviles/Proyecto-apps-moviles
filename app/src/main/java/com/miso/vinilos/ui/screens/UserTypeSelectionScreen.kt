@@ -48,7 +48,7 @@ fun UserTypeSelectionScreen(navController: NavHostController, innerPadding: Padd
 
                 Text(
                     text = "Seleccione el tipo de usuario",
-                    color = MaterialTheme.colorScheme.onSurface
+                    style = MaterialTheme.typography.titleMedium
                 )
                 Spacer(modifier = Modifier.height(32.dp))
                 Row{
