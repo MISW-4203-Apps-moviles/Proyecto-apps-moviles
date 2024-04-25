@@ -30,6 +30,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -40,6 +41,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
+import com.miso.vinilos.R
 import com.miso.vinilos.ui.screens.AlbumDetailRoute
 import com.miso.vinilos.ui.screens.AlbumListRoute
 import com.miso.vinilos.ui.screens.ArtistasScreen
@@ -62,14 +64,14 @@ fun replaceRoute(route: String, vararg arguments: Pair<String, String>): String 
 sealed class NavigationItem(
     val route: String,
     val icon: ImageVector? = null,
-    val label: String = ""
+    val labelResource: Int? = null
 ) {
 
     data object UserTypeSelection :
         NavigationItem("user_type_selection")
 
     data object AlbumTab :
-        NavigationItem("album_tab", Icons.Filled.PlayArrow, "Albumes")
+        NavigationItem("album_tab", Icons.Filled.PlayArrow, R.string.nav_albumes_label)
 
     data object AlbumList :
         NavigationItem("album_list")
@@ -78,13 +80,13 @@ sealed class NavigationItem(
         NavigationItem("album_detail/{albumId}")
 
     data object ColeccionistaTab :
-        NavigationItem("coleccionistas_tab", Icons.Filled.AccountCircle, "Coleccionistas")
+        NavigationItem("coleccionistas_tab", Icons.Filled.AccountCircle, R.string.nav_coleccionistas_label)
 
     data object Coleccionistas :
         NavigationItem("coleccionistas")
 
     data object ArtistaTab :
-        NavigationItem("artistas_tab", Icons.Filled.Star, "Artistas")
+        NavigationItem("artistas_tab", Icons.Filled.Star, R.string.nav_artistas_label)
 
     data object Artistas :
         NavigationItem("artistas")
@@ -201,7 +203,7 @@ fun TopNavigationBar(navController: NavHostController) {
                     }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Regresar"
+                            contentDescription = stringResource(R.string.regresar_boton_descripcion)
                         )
                     }
                 },
@@ -211,6 +213,11 @@ fun TopNavigationBar(navController: NavHostController) {
             )
         }
     )
+}
+
+@Composable
+fun getResourceNavigationString(resourceId: Int?): String {
+    return resourceId?.let { stringResource(id = it) } ?: stringResource(R.string.no_label)
 }
 
 @Composable
@@ -241,7 +248,7 @@ fun BottomNavigationBar(navController: NavHostController) {
                             navigationItem.icon?.let { icon ->
                                 Icon(
                                     imageVector = icon,
-                                    contentDescription = navigationItem.label
+                                    contentDescription = getResourceNavigationString(navigationItem.labelResource)
                                 )
                             }
                         },
@@ -252,7 +259,7 @@ fun BottomNavigationBar(navController: NavHostController) {
                                 launchSingleTop = true
                             }
                         },
-                        label = { Text(navigationItem.label) }
+                        label = { Text(getResourceNavigationString(navigationItem.labelResource)) }
                     )
                 }
             }

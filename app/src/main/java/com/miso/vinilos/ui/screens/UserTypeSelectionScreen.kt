@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -28,7 +29,10 @@ import com.miso.vinilos.ui.NavigationItem
 import com.miso.vinilos.ui.theme.VinilosTheme
 
 @Composable
-fun UserTypeSelectionScreen(navController: NavHostController, innerPadding: PaddingValues = PaddingValues()) {
+fun UserTypeSelectionScreen(
+    navController: NavHostController,
+    innerPadding: PaddingValues = PaddingValues()
+) {
     VinilosTheme {
         Box(
             modifier = Modifier
@@ -42,31 +46,37 @@ fun UserTypeSelectionScreen(navController: NavHostController, innerPadding: Padd
             ) {
                 Image(
                     painter = painterResource(R.drawable.logo),
-                    contentDescription = "Vinilos logo",
+                    contentDescription = stringResource(R.string.vinilos_logo_descripcion),
                     modifier = Modifier.size(250.dp)
                 )
 
                 Text(
-                    text = "Seleccione el tipo de usuario",
+                    text = stringResource(R.string.tipo_usuario_titulo),
                     style = MaterialTheme.typography.titleMedium
                 )
                 Spacer(modifier = Modifier.height(32.dp))
-                Row{
+                Row {
                     Button(
                         onClick = {
                             navigateToAlbumTab(navController)
                         },
-                        modifier = Modifier.padding(start = 32.dp, end = 16.dp).weight(1f).fillMaxWidth()
+                        modifier = Modifier
+                            .padding(start = 32.dp, end = 16.dp)
+                            .weight(1f)
+                            .fillMaxWidth()
                     ) {
-                        Text("Visitante")
+                        Text(stringResource(R.string.tipo_usuario_visitante))
                     }
                     Button(
                         onClick = {
                             navigateToAlbumTab(navController)
                         },
-                        modifier = Modifier.padding(start = 16.dp, end = 32.dp).weight(1f).fillMaxWidth()
+                        modifier = Modifier
+                            .padding(start = 16.dp, end = 32.dp)
+                            .weight(1f)
+                            .fillMaxWidth()
                     ) {
-                        Text("Coleccionista")
+                        Text(stringResource(R.string.tipo_usuario_coleccionista))
                     }
                 }
             }
