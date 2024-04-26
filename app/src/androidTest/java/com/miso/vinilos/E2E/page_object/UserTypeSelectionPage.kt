@@ -4,10 +4,7 @@ import androidx.compose.ui.test.junit4.ComposeTestRule
 import com.miso.vinilos.MainActivity
 import com.miso.vinilos.R
 
-class UserTypeSelectionPage(
-    composeRule: ComposeTestRule,
-    activity: MainActivity
-) :
+class UserTypeSelectionPage(composeRule: ComposeTestRule, activity: MainActivity) :
     PageObject(composeRule) {
 
     val context = activity.applicationContext
