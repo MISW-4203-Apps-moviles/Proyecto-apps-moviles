@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">Vinilos</string>
+    <string name="tipo_usuario_visitante">Visitante</string>
+    <string name="tipo_usuario_coleccionista">Coleccionista</string>
+    <string name="tipo_usuario_titulo">Seleccione el tipo de usuario</string>
+    <string name="vinilos_logo_descripcion">Vinilos logo</string>
+    <string name="nav_albumes_label">Albumes</string>
+    <string name="nav_coleccionistas_label">Coleccionistas</string>
+    <string name="nav_artistas_label">Artistas</string>
+    <string name="no_label">Sin label</string>
+    <string name="regresar_boton_descripcion">Regresar a la pantalla anterior</string>
+    <string name="sin_artista">Sin artista</string>
+    <string name="lista_albumes_descripcion">Listado de álbumes</string>
+    <string name="album_nombre_descripcion">Nombre del album</string>
+    <string name="album_artista_nombre_descripcion">Artista del album</string>
+    <string name="album_anio_descripcion">Año del album</string>
+    <string name="album_descripcion">Descripcion del album</string>
+    <string name="album_disquera_descripcion">Disquera del album</string>
+    <string name="album_portada_descripcion">Portada del album</string>
 </resources>

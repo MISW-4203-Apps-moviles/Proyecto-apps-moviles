@@ -11,17 +11,20 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ListItem
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
+import com.miso.vinilos.R
 import com.miso.vinilos.models.Album
 import com.miso.vinilos.ui.composables.ListDivider
 import com.miso.vinilos.ui.theme.VinilosTheme
@@ -35,6 +38,8 @@ fun AlbumListScreen(
     navigateToAlbumDetail: (albumId: Int) -> Unit,
     innerPadding: PaddingValues = PaddingValues()
 ) {
+    val listDescription = stringResource(R.string.lista_albumes_descripcion)
+
     LaunchedEffect(Unit) {
         fetchAlbums()
     }
@@ -44,7 +49,10 @@ fun AlbumListScreen(
             .fillMaxSize()
             .padding(innerPadding)
     ) {
-        LazyColumn {
+        LazyColumn(
+            modifier = Modifier
+                .semantics { contentDescription = listDescription }
+        ) {
             items(albums) { album ->
                 AlbumItem(
                     album = album,
@@ -72,7 +80,7 @@ fun AlbumItem(
         modifier = Modifier.clickable { onNavigateToAlbumDetail(album.id) },
         overlineContent = {
             Text(
-                text = album.performers.getOrNull(0)?.name ?: "Sin artista"
+                text = album.performers.getOrNull(0)?.name ?: stringResource(R.string.sin_artista)
             )
         },
         headlineContent = {
@@ -95,7 +103,6 @@ fun AlbumItem(
             )
         }
     )
-
 }
 
 @Preview(showBackground = true)

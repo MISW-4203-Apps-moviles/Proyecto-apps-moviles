@@ -24,7 +24,9 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         setContent {
-            MainScreen()
+            VinilosTheme {
+                MainScreen()
+            }
         }
     }
 }
@@ -33,26 +35,24 @@ class MainActivity : ComponentActivity() {
 fun MainScreen() {
     val navController = rememberNavController()
 
-    VinilosTheme {
-        Scaffold(
-            topBar = {
-                TopNavigationBar(navController)
-            },
-            bottomBar = {
-                BottomNavigationBar(navController)
-            },
-            content = { innerPadding ->
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(MaterialTheme.colorScheme.background)
+    Scaffold(
+        topBar = {
+            TopNavigationBar(navController)
+        },
+        bottomBar = {
+            BottomNavigationBar(navController)
+        },
+        content = { innerPadding ->
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(MaterialTheme.colorScheme.background)
 
-                ) {
-                    Navigation(navController, innerPadding)
-                }
+            ) {
+                Navigation(navController, innerPadding)
+            }
 
-            })
-    }
+        })
 }
 @Preview(showBackground = true)
 @Composable
