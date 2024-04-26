@@ -31,11 +31,15 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
+import com.miso.vinilos.R
 import com.miso.vinilos.models.Album
 import com.miso.vinilos.models.Comment
 import com.miso.vinilos.ui.composables.ListDivider
@@ -92,6 +96,13 @@ fun AlbumDetailScreen(
 fun AlbumCard(
     album: Album,
 ) {
+    val albumNombreDescripcion = stringResource(R.string.album_nombre_descripcion)
+    val albumArtistaNombreDescripcion = stringResource(R.string.album_artista_nombre_descripcion)
+    val albumAnioDescripcion = stringResource(R.string.album_anio_descripcion)
+    val albumDescripcion = stringResource(R.string.album_descripcion)
+    val disqueraDescripcion = stringResource(R.string.album_disquera_descripcion)
+    val albumPortadaDescripcion = stringResource(R.string.album_portada_descripcion)
+
     Card(
         border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
         colors = CardDefaults.cardColors(
@@ -107,18 +118,20 @@ fun AlbumCard(
                     .padding(start = 16.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-
-
                 Column(Modifier.fillMaxWidth()) {
                     Text(
                         text = album.name,
                         style = MaterialTheme.typography.titleLarge,
-                        modifier = Modifier.padding(bottom = 4.dp)
+                        modifier = Modifier
+                            .padding(bottom = 4.dp)
+                            .semantics { contentDescription = albumNombreDescripcion }
                     )
 
                     Text(
-                        text = album.performers.getOrNull(0)?.name ?: "Sin artista",
-                        style = MaterialTheme.typography.titleMedium
+                        text = album.performers.getOrNull(0)?.name ?: stringResource(R.string.sin_artista),
+                        style = MaterialTheme.typography.titleMedium,
+                        modifier = Modifier
+                            .semantics { contentDescription = albumArtistaNombreDescripcion }
                     )
                 }
             }
@@ -135,6 +148,7 @@ fun AlbumCard(
                 Modifier
                     .fillMaxWidth()
                     .height(200.dp)
+                    .semantics { contentDescription = albumPortadaDescripcion }
             )
 
 
@@ -150,12 +164,16 @@ fun AlbumCard(
                 Text(
                     text = year,
                     style = MaterialTheme.typography.titleMedium,
-                    modifier = Modifier.padding(bottom = 4.dp)
+                    modifier = Modifier
+                        .padding(bottom = 4.dp)
+                        .semantics { contentDescription = albumAnioDescripcion }
                 )
 
                 Text(
                     text = album.recordLabel,
-                    style = MaterialTheme.typography.titleMedium
+                    style = MaterialTheme.typography.titleMedium,
+                    modifier = Modifier
+                        .semantics { contentDescription = disqueraDescripcion }
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -163,7 +181,9 @@ fun AlbumCard(
                 Text(
                     text = album.description,
                     overflow = TextOverflow.Ellipsis,
-                    style = MaterialTheme.typography.bodyMedium
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier
+                        .semantics { contentDescription = albumDescripcion }
                 )
             }
         }
