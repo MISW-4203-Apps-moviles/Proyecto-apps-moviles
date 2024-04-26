@@ -4,7 +4,7 @@ Vinilos es una aplicación móvil Android que permite visualizar y gestionar con
 coleccionistas de música.
 
 ## Prerequisitos
-
+- Requerimientos mínimos en dispositivo o emulador: Android 5.0 Lollipop (API 21) o superior (recomendado API 33 o superior)
 - [Android Studio](https://developer.android.com/studio) (la última versión estable)
 - Java Development Kit (JDK) 8 o superior
 
@@ -70,3 +70,16 @@ Para instalar una versión de depuración de la aplicación en un dispositivo co
 ```
 
 Para más información [Build your app from the command line](https://developer.android.com/build/building-cmdline).
+
+## Pruebas automatizadas E2E
+
+Las pruebas E2E se encuentran en com > miso > vinilos > E2E
+- Para abstraer y reusar la funcionaldidad de las pruebas, se ha utilizado el patrón PageObject.
+- Estas clases de abstracción pueden observarse en la carpeta page_object.
+- Las pruebas a correr se encuentran en la raiz de la carpeta E2E
+- Para correr las pruebas simplemente cambie el selector de Run / Debug configurations a la opción Tests in 'com.miso.vinilos.E2E'
+- Luego haga click en el botón run
+
+  ![Selección para correr E2E](https://github.com/MISW-4203-Apps-moviles/Proyecto-apps-moviles/assets/142249468/6c7e7f99-7c11-4019-a4ff-8ee419510398)
+
+
