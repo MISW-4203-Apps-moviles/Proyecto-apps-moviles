@@ -15,7 +15,10 @@ class NavigationSelectionPage (composeRule: ComposeTestRule, activity: MainActiv
         fun clickAlbumes() =
             clickTextButton(context.getString(R.string.nav_albumes_label))
 
-        fun verifyAlbumesLoad() =
+        fun verifyAlbumesLoad() {
             assertTagExists("AlbumList")
+            waitUntilLoaded()
+        }
+
 
     }

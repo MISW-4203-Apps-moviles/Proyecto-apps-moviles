@@ -54,6 +54,7 @@ fun AlbumListScreen(
         LazyColumn(
             modifier = Modifier
                 .semantics { contentDescription = listDescription }
+                .testTag("ItemAlbum"),
         ) {
             items(albums) { album ->
                 AlbumItem(
@@ -81,6 +82,7 @@ fun AlbumItem(
     ListItem(
 
         modifier = Modifier.clickable { onNavigateToAlbumDetail(album.id) },
+
         overlineContent = {
             Text(
                 text = album.performers.getOrNull(0)?.name ?: stringResource(R.string.sin_artista)
