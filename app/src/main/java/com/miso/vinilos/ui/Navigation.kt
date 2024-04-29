@@ -259,7 +259,7 @@ fun BottomNavigationBar(navController: NavHostController) {
                                 launchSingleTop = true
                             }
                         },
-                        label = { Text(getResourceNavigationString(navigationItem.labelResource)) }
+                        label = { Text(getResourceNavigationString(navigationItem.labelResource)) },
                     )
                 }
             }

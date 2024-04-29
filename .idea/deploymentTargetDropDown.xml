@@ -2,23 +2,23 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="app">
-        <State>
-          <targetSelectedWithDropDown>
-            <Target>
-              <type value="QUICK_BOOT_TARGET" />
-              <deviceKey>
-                <Key>
-                  <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="$USER_HOME$/.android/avd/Pixel_8_API_33.avd" />
-                </Key>
-              </deviceKey>
-            </Target>
-          </targetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-04-22T05:01:24.535046Z" />
-        </State>
+      <entry key="AlbumListScreenTest">
+        <State />
       </entry>
-      <entry key="navigation_verifyAlbumsPage()">
+      <entry key="SelectUserTest">
+        <State />
+      </entry>
+      <entry key="albumListScreenNavHost_albumListItem_albumListExists()">
+        <State />
+      </entry>
+      <entry key="albumListScreenNavHost_menuSelected_collectionsLabelIsNotSelected()">
+        <State />
+      </entry>
+      <entry key="albumListScreenNavHost_navigate_albumScreen()">
+        <State />
+      </entry>
+      </entry>
+       <entry key="navigation_verifyAlbumsPage()">
         <State />
       </entry>
       <entry key="navigation_verifyStartDestination()">

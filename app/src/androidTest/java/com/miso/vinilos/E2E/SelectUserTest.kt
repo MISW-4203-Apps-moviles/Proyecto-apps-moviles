@@ -25,10 +25,32 @@ class SelectUserTest {
     }
 
     @Test
-    fun testUserTypeSelectionSuccess() {
+    fun mainScreenNavHost_validateContent_existTagContent() {
         with(UserTypeSelectionPage(composeTestRule, composeTestRule.activity)) {
-            validarPantalla()
-            clickColeccionista()
+            validateTag()
+        }
+    }
+
+    @Test
+    fun mainScreenNavHost_validateContent_existImageAndButton() {
+        with(UserTypeSelectionPage(composeTestRule, composeTestRule.activity)) {
+            validateScreen()
+        }
+    }
+
+    @Test
+    fun mainScreenNavHost_clickCollectionUserButton_navigatesToAlbumList() {
+        with(UserTypeSelectionPage(composeTestRule, composeTestRule.activity)) {
+            validateScreen()
+            clickCollectionUserTypeButton()
+        }
+    }
+
+    @Test
+    fun mainScreenNavHost_clickPublicUserButton_navigatesToAlbumList() {
+        with(UserTypeSelectionPage(composeTestRule, composeTestRule.activity)) {
+            validateScreen()
+            clickPublicUserTypeButton()
         }
     }
 }

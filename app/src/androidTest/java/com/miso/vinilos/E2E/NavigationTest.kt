@@ -28,7 +28,7 @@ class NavigationTest {
     private lateinit var navController: TestNavHostController
 
     @Before
-    fun setupMoodTrackerAppNavHost() {
+    fun setUp() {
         composeTestRule.activity.setContent {
             navController = TestNavHostController(LocalContext.current)
             navController.navigatorProvider.addNavigator(ComposeNavigator())
@@ -40,8 +40,8 @@ class NavigationTest {
     fun navigation_verifyAlbumsPage(){
 
         with(UserTypeSelectionPage(composeTestRule, composeTestRule.activity)) {
-            validarPantalla()
-            clickColeccionista()
+            validateScreen()
+            clickPublicUserTypeButton()
         }
 
         with(NavigationSelectionPage(composeTestRule, composeTestRule.activity)) {
