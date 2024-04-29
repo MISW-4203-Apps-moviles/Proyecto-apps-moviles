@@ -56,6 +56,7 @@ fun AlbumListScreen(
             modifier = Modifier
                 .testTag(stringResource(R.string.album_list_item_test))
                 .semantics { contentDescription = listDescription }
+                .testTag("ItemAlbum"),
         ) {
             items(albums, key = { album -> album.id }) { album ->
                 AlbumItem(
@@ -83,6 +84,7 @@ fun AlbumItem(
     ListItem(
 
         modifier = Modifier.clickable { onNavigateToAlbumDetail(album.id) },
+
         overlineContent = {
             Text(
                 text = album.performers.getOrNull(0)?.name ?: stringResource(R.string.sin_artista)

@@ -42,8 +42,8 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
 import com.miso.vinilos.R
-import com.miso.vinilos.ui.screens.AlbumDetailRoute
-import com.miso.vinilos.ui.screens.AlbumListRoute
+import com.miso.vinilos.ui.screens.AlbumDetailScreenHandler
+import com.miso.vinilos.ui.screens.AlbumListScreenHandler
 import com.miso.vinilos.ui.screens.ArtistasScreen
 import com.miso.vinilos.ui.screens.ColeccionistasScreen
 import com.miso.vinilos.ui.screens.UserTypeSelectionScreen
@@ -135,7 +135,7 @@ fun Navigation(navController: NavHostController, innerPadding: PaddingValues = P
                 val albumViewModel: AlbumListViewModel =
                     viewModel(factory = AlbumListViewModelFactory())
 
-                AlbumListRoute(
+                AlbumListScreenHandler(
                     navigateToAlbumDetail = { albumId ->
                         navController.navigate(
                             replaceRoute(
@@ -155,7 +155,7 @@ fun Navigation(navController: NavHostController, innerPadding: PaddingValues = P
                     val viewModel: AlbumDetailViewModel =
                         viewModel(factory = AlbumDetailViewModelFactory())
 
-                    AlbumDetailRoute(
+                    AlbumDetailScreenHandler(
                         albumId = it,
                         viewModel = viewModel,
                         innerPadding = innerPadding

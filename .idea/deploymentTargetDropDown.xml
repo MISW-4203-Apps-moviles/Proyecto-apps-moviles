@@ -27,7 +27,10 @@
       <entry key="testUserTypeSelectionSuccess()">
         <State />
       </entry>
-      <entry key="testVisibilityAlbumDetails()">
+      <entry key="verifyAlbumDetailPage()">
+        <State />
+      </entry>
+      <entry key="verifyAlbumDetailPageNavigation()">
         <State />
       </entry>
     </value>

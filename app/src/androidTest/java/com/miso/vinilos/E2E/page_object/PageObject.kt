@@ -1,12 +1,15 @@
 package com.miso.vinilos.E2E.page_object
 
 
+import androidx.compose.ui.semantics.ProgressBarRangeInfo
+import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertIsNotSelected
 import androidx.compose.ui.test.assertIsSelected
 import androidx.compose.ui.test.hasContentDescription
+import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.hasTextExactly
 import androidx.compose.ui.test.junit4.ComposeTestRule
@@ -16,6 +19,7 @@ import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performSemanticsAction
 
 
 abstract class PageObject (val composeRule: ComposeTestRule) {
@@ -49,6 +53,21 @@ abstract class PageObject (val composeRule: ComposeTestRule) {
         composeRule.onNodeWithTag(tag).assertExists()
     }
 
+    fun waitUntilLoaded() =
+        composeRule.waitUntil(10000) {
+            composeRule
+                .onAllNodes(hasTestTag("AlbumList"))
+                .fetchSemanticsNodes().size == 1
+        }
+
+    fun clickListElement() =
+        composeRule.onAllNodesWithTag("Item")
+            .filter(hasClickAction())
+            .apply {
+                fetchSemanticsNodes().forEachIndexed { i, _ ->
+                    get(i).performSemanticsAction(SemanticsActions.OnClick)
+                }
+            }
     @OptIn(ExperimentalTestApi::class)
     fun waitFor(matcher: SemanticsMatcher) = composeRule.waitUntilExactlyOneExists(matcher)
 }
