@@ -17,4 +17,7 @@
     <string name="album_descripcion">Descripcion del album</string>
     <string name="album_disquera_descripcion">Disquera del album</string>
     <string name="album_portada_descripcion">Portada del album</string>
+    <string name="album_list_screen_test">AlbumListScreen</string>
+    <string name="user_type_selection_screen_test">UserTypeSelectionScreen</string>
+    <string name="album_list_item_test">album_list_items</string>
 </resources>

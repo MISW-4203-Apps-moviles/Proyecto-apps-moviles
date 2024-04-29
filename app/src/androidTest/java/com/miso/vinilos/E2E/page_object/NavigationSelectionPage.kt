@@ -2,8 +2,8 @@ package com.miso.vinilos.E2E.page_object
 
 import androidx.compose.ui.test.junit4.ComposeTestRule
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.miso.vinilos.MainActivity
-import com.miso.vinilos.R
 import org.junit.Assert
 
 class NavigationSelectionPage (composeRule: ComposeTestRule, activity: MainActivity) :
@@ -11,9 +11,9 @@ class NavigationSelectionPage (composeRule: ComposeTestRule, activity: MainActiv
     PageObject(composeRule) {
 
         val context = activity.applicationContext
+        private lateinit var navController: NavHostController
 
-        fun NavController.assertCurrentRouteName(expectedRouteName: String) {
-            Assert.assertEquals(expectedRouteName, currentBackStackEntry?.destination?.route)
+        fun assertCurrentRouteName(navController: NavController, expectedRouteName: String) {
+            Assert.assertEquals(expectedRouteName, navController.currentBackStackEntry?.destination?.route)
         }
-
     }
