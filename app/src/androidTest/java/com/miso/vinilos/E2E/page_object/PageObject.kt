@@ -8,6 +8,9 @@ import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.hasTextExactly
 import androidx.compose.ui.test.junit4.ComposeTestRule
 import androidx.compose.ui.test.performClick
+import androidx.navigation.NavController
+import org.junit.Assert
+
 
 abstract class PageObject (val composeRule: ComposeTestRule) {
 
@@ -19,6 +22,8 @@ abstract class PageObject (val composeRule: ComposeTestRule) {
     fun assertText(text: String, ignoreCase: Boolean = false, substring: Boolean = false) =
         composeRule.onNode(hasText(text, ignoreCase = ignoreCase, substring = substring))
             .assertExists()
+
+
 
     @OptIn(ExperimentalTestApi::class)
     fun waitFor(matcher: SemanticsMatcher) = composeRule.waitUntilExactlyOneExists(matcher)
