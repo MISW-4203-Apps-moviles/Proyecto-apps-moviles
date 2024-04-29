@@ -2,9 +2,6 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="Tests in 'com.miso.vinilos.E2E'">
-        <State />
-      </entry>
       <entry key="app">
         <State>
           <targetSelectedWithDropDown>
@@ -20,6 +17,21 @@
           </targetSelectedWithDropDown>
           <timeTargetWasSelectedWithDropDown value="2024-04-22T05:01:24.535046Z" />
         </State>
+      </entry>
+      <entry key="navigation_verifyAlbumsPage()">
+        <State />
+      </entry>
+      <entry key="navigation_verifyStartDestination()">
+        <State />
+      </entry>
+      <entry key="testUserTypeSelectionSuccess()">
+        <State />
+      </entry>
+      <entry key="verifyAlbumDetailPage()">
+        <State />
+      </entry>
+      <entry key="verifyAlbumDetailPageNavigation()">
+        <State />
       </entry>
     </value>
   </component>

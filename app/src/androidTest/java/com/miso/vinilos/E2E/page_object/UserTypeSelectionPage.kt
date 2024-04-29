@@ -19,4 +19,9 @@ class UserTypeSelectionPage(composeRule: ComposeTestRule, activity: MainActivity
 
     fun clickVisitante() =
         clickTextButton(context.getString(R.string.tipo_usuario_visitante))
+
+
+
+
+
 }
