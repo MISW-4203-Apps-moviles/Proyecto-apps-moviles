@@ -30,8 +30,9 @@ class AlbumDetailTest {
     fun verifyAlbumDetailPageNavigation(){
 
         with(UserTypeSelectionPage(composeTestRule, composeTestRule.activity)) {
-            validarPantalla()
-            clickColeccionista()
+
+            validateScreen()
+            clickCollectionUserTypeButton()
         }
 
         with(NavigationSelectionPage(composeTestRule, composeTestRule.activity)) {
