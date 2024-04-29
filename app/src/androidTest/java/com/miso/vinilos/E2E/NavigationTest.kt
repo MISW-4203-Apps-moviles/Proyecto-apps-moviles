@@ -37,12 +37,18 @@ class NavigationTest {
     }
 
     @Test
-    fun navigation_verifyStartDestination(){
+    fun navigation_verifyAlbumsPage(){
 
+        with(UserTypeSelectionPage(composeTestRule, composeTestRule.activity)) {
+            validarPantalla()
+            clickColeccionista()
+        }
 
         with(NavigationSelectionPage(composeTestRule, composeTestRule.activity)) {
-            navController.assertCurrentRouteName("user_type_selection")
+            clickAlbumes()
+            verifyAlbumesLoad()
         }
+
     }
 }
 

@@ -11,9 +11,11 @@ class NavigationSelectionPage (composeRule: ComposeTestRule, activity: MainActiv
     PageObject(composeRule) {
 
         val context = activity.applicationContext
+        //Navegación y comprobación de la pantalla de listado de álbumes
+        fun clickAlbumes() =
+            clickTextButton(context.getString(R.string.nav_albumes_label))
 
-        fun NavController.assertCurrentRouteName(expectedRouteName: String) {
-            Assert.assertEquals(expectedRouteName, currentBackStackEntry?.destination?.route)
-        }
+        fun verifyAlbumesLoad() =
+            assertTagExists("AlbumList")
 
     }

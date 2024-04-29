@@ -7,14 +7,15 @@ import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.hasTextExactly
 import androidx.compose.ui.test.junit4.ComposeTestRule
+import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
-import androidx.navigation.NavController
-import org.junit.Assert
-
 
 abstract class PageObject (val composeRule: ComposeTestRule) {
 
     fun clickTextButton(text: String) = composeRule.onNode(hasTextExactly(text)).performClick()
+
+    fun clickNodeTextButton(text: String) = composeRule.onNodeWithText(text).performClick()
 
     fun assertImage(description: String) =
         composeRule.onNode(hasContentDescription(description)).assertExists()
@@ -23,7 +24,10 @@ abstract class PageObject (val composeRule: ComposeTestRule) {
         composeRule.onNode(hasText(text, ignoreCase = ignoreCase, substring = substring))
             .assertExists()
 
-
+    fun assertTagExists(text: String)=
+        composeRule
+            .onNodeWithTag(text)
+            .assertExists()
 
     @OptIn(ExperimentalTestApi::class)
     fun waitFor(matcher: SemanticsMatcher) = composeRule.waitUntilExactlyOneExists(matcher)
