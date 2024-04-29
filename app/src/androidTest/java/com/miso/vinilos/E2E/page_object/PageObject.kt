@@ -22,6 +22,8 @@ abstract class PageObject (val composeRule: ComposeTestRule) {
 
     fun clickTextButton(text: String) = composeRule.onNode(hasTextExactly(text)).performClick()
 
+    fun clickNodeTextButton(text: String) = composeRule.onNodeWithText(text).performClick()
+
     fun assertImage(description: String) =
         composeRule.onNode(hasContentDescription(description)).assertExists()
 
@@ -42,7 +44,6 @@ abstract class PageObject (val composeRule: ComposeTestRule) {
         composeRule
             .onNodeWithTag(text)
             .assertExists()
-
     fun assertHasContentElement(tag: String) {
         composeRule.waitForIdle()
         composeRule.onNodeWithTag(tag).assertExists()
