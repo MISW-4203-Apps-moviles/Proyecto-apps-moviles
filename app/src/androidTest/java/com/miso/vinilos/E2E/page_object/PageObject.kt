@@ -1,6 +1,5 @@
 package com.miso.vinilos.E2E.page_object
 
-
 import androidx.compose.ui.semantics.ProgressBarRangeInfo
 import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.test.ExperimentalTestApi
@@ -23,7 +22,6 @@ import androidx.compose.ui.test.performSemanticsAction
 import androidx.compose.ui.test.filter
 import androidx.compose.ui.test.hasClickAction
 import androidx.compose.ui.test.onAllNodesWithTag
-
 
 abstract class PageObject (val composeRule: ComposeTestRule) {
 
@@ -71,6 +69,7 @@ abstract class PageObject (val composeRule: ComposeTestRule) {
                     get(i).performSemanticsAction(SemanticsActions.OnClick)
                 }
             }
+
     @OptIn(ExperimentalTestApi::class)
     fun waitFor(matcher: SemanticsMatcher) = composeRule.waitUntilExactlyOneExists(matcher)
 }
