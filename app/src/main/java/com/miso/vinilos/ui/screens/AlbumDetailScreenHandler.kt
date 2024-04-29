@@ -7,7 +7,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import com.miso.vinilos.viewModels.AlbumDetailViewModel
 
 @Composable
-fun AlbumDetailRoute(
+fun AlbumDetailScreenHandler(
     viewModel: AlbumDetailViewModel,
     albumId: String,
     innerPadding: PaddingValues = PaddingValues()
