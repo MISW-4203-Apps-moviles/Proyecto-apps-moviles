@@ -28,7 +28,7 @@ class NavigationTest {
     private lateinit var navController: TestNavHostController
 
     @Before
-    fun setupMoodTrackerAppNavHost() {
+    fun setUp() {
         composeTestRule.activity.setContent {
             navController = TestNavHostController(LocalContext.current)
             navController.navigatorProvider.addNavigator(ComposeNavigator())

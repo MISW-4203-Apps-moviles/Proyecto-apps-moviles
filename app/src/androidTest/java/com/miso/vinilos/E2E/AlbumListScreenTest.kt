@@ -23,7 +23,7 @@ class AlbumListScreenTest {
     private lateinit var navController: NavHostController
 
     @Before
-    fun setupMoodTrackerAppNavHost() {
+    fun setUp() {
         composeTestRule.activityRule.scenario.onActivity { activity ->
             activity.setContent {
                 navController = rememberNavController()
