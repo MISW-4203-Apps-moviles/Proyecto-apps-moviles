@@ -17,6 +17,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -48,12 +50,15 @@ fun AlbumListScreen(
         modifier = Modifier
             .fillMaxSize()
             .padding(innerPadding)
+            .testTag(stringResource(R.string.album_list_screen_test))
     ) {
         LazyColumn(
             modifier = Modifier
+                .testTag(stringResource(R.string.album_list_item_test))
                 .semantics { contentDescription = listDescription }
+                .testTag("ItemAlbum"),
         ) {
-            items(albums) { album ->
+            items(albums, key = { album -> album.id }) { album ->
                 AlbumItem(
                     album = album,
                     onNavigateToAlbumDetail = navigateToAlbumDetail
@@ -77,7 +82,9 @@ fun AlbumItem(
 ) {
     ListDivider()
     ListItem(
+
         modifier = Modifier.clickable { onNavigateToAlbumDetail(album.id) },
+
         overlineContent = {
             Text(
                 text = album.performers.getOrNull(0)?.name ?: stringResource(R.string.sin_artista)

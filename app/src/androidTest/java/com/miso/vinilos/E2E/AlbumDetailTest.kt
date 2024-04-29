@@ -2,6 +2,8 @@ package com.miso.vinilos.E2E
 
 import androidx.activity.compose.setContent
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import com.miso.vinilos.E2E.page_object.AlbumDetailPage
+import com.miso.vinilos.E2E.page_object.NavigationSelectionPage
 import com.miso.vinilos.E2E.page_object.UserTypeSelectionPage
 import com.miso.vinilos.MainActivity
 import com.miso.vinilos.MainScreen
@@ -10,7 +12,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-class SelectUserTest {
+class AlbumDetailTest {
 
     @get:Rule
     val composeTestRule = createAndroidComposeRule<MainActivity>()
@@ -25,32 +27,24 @@ class SelectUserTest {
     }
 
     @Test
-    fun mainScreenNavHost_validateContent_existTagContent() {
-        with(UserTypeSelectionPage(composeTestRule, composeTestRule.activity)) {
-            validateTag()
-        }
-    }
+    fun verifyAlbumDetailPageNavigation(){
 
-    @Test
-    fun mainScreenNavHost_validateContent_existImageAndButton() {
         with(UserTypeSelectionPage(composeTestRule, composeTestRule.activity)) {
-            validateScreen()
-        }
-    }
 
-    @Test
-    fun mainScreenNavHost_clickCollectionUserButton_navigatesToAlbumList() {
-        with(UserTypeSelectionPage(composeTestRule, composeTestRule.activity)) {
             validateScreen()
             clickCollectionUserTypeButton()
         }
+
+        with(NavigationSelectionPage(composeTestRule, composeTestRule.activity)) {
+           clickAlbumes()
+            verifyAlbumesLoad()
+
+        }
+
+        with(AlbumDetailPage(composeTestRule, composeTestRule.activity)) {
+            verifyAlbumesDetalleLoad()
+        }
+
     }
 
-    @Test
-    fun mainScreenNavHost_clickPublicUserButton_navigatesToAlbumList() {
-        with(UserTypeSelectionPage(composeTestRule, composeTestRule.activity)) {
-            validateScreen()
-            clickPublicUserTypeButton()
-        }
-    }
 }
