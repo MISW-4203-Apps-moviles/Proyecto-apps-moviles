@@ -2,22 +2,22 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
+      <entry key="AlbumListScreenTest">
+        <State />
+      </entry>
+      <entry key="NavigationTest">
+        <State />
+      </entry>
+      <entry key="SelectUserTest">
+        <State />
+      </entry>
       <entry key="Tests in 'com.miso.vinilos.E2E'">
-        <State />
-      </entry>
-      <entry key="albumListScreenNavHost_albumListItem_albumListExists()">
-        <State />
-      </entry>
-      <entry key="albumList_albumListItem_click_success()">
         <State />
       </entry>
       <entry key="album_detail_content_success()">
         <State />
       </entry>
       <entry key="app">
-        <State />
-      </entry>
-      <entry key="verifyAlbumDetailPageNavigation()">
         <State />
       </entry>
     </value>
