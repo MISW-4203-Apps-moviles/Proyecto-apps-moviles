@@ -1,14 +1,8 @@
 package com.miso.vinilos.E2E
 
 import androidx.activity.compose.setContent
-import androidx.compose.ui.semantics.SemanticsProperties
-import androidx.compose.ui.semantics.getOrNull
 import androidx.compose.ui.test.SemanticsNodeInteraction
-import androidx.compose.ui.test.filter
-import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
-import androidx.compose.ui.test.onChildren
-import androidx.compose.ui.test.onFirst
 import com.miso.vinilos.E2E.page_object.AlbumDetailPage
 import com.miso.vinilos.E2E.page_object.AlbumListPage
 import com.miso.vinilos.E2E.page_object.UserTypeSelectionPage
@@ -51,19 +45,11 @@ class AlbumDetailTest {
             // El contenedor del listado está presente
             validateListElement()
 
-            // Los elementos de la lista están presentes
+            // Los elementos de la lista están cargados
             validateListItemElement()
 
-            itemClickedAlbumName =
-                getListItemFromList(0)
-                    .onChildren()
-                    .filter(hasContentDescription("Nombre del album"))
-                    .onFirst()
-
-            albumName = itemClickedAlbumName
-                .fetchSemanticsNode()
-                .config
-                .getOrNull(SemanticsProperties.Text)?.firstOrNull()?.text ?: ""
+            // Obtener el nombre del primer álbum de la lista
+            albumName = getAlbumNameFromList(0)
 
             // Click en el primer elemento de la lista y navegar al detalle
            clickListElement(0)

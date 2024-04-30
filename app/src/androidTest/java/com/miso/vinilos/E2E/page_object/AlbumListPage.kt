@@ -46,6 +46,15 @@ class AlbumListPage (composeRule: ComposeTestRule, activity: MainActivity) :
             itemIndex,
             hasContentDescription(context.getString(R.string.lista_albumes_descripcion))
         )
+    }
 
+    fun getAlbumNameFromList(itemIndex:Int):String {
+        return getListItemFromList(itemIndex)
+            .onChildren()
+            .filter(hasContentDescription(context.getString(R.string.album_nombre_descripcion)))
+            .onFirst()
+            .fetchSemanticsNode()
+            .config
+            .getOrNull(SemanticsProperties.Text)?.firstOrNull()?.text ?: ""
     }
 }
