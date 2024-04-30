@@ -73,7 +73,7 @@ class AlbumDetailTest {
             // Spinning loader está presente
            validateLoader()
 
-            // La pantalla de detalle del albuj tiene los elementos necesarios
+            // La pantalla de detalle del album tiene los elementos necesarios
            validateScreen()
 
            // El nombre del álbum es el mismo que el del elemento de la lista
