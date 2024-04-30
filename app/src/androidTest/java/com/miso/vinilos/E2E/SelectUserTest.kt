@@ -25,13 +25,6 @@ class SelectUserTest {
     }
 
     @Test
-    fun mainScreenNavHost_validateContent_existTagContent() {
-        with(UserTypeSelectionPage(composeTestRule, composeTestRule.activity)) {
-            validateTag()
-        }
-    }
-
-    @Test
     fun mainScreenNavHost_validateContent_existImageAndButton() {
         with(UserTypeSelectionPage(composeTestRule, composeTestRule.activity)) {
             validateScreen()

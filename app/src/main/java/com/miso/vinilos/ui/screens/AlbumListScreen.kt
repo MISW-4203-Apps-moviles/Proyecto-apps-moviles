@@ -18,7 +18,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -41,6 +40,7 @@ fun AlbumListScreen(
     innerPadding: PaddingValues = PaddingValues()
 ) {
     val listDescription = stringResource(R.string.lista_albumes_descripcion)
+    val loadingDescription = stringResource(R.string.cargando_albumes_descripcion)
 
     LaunchedEffect(Unit) {
         fetchAlbums()
@@ -50,11 +50,9 @@ fun AlbumListScreen(
         modifier = Modifier
             .fillMaxSize()
             .padding(innerPadding)
-            .testTag(stringResource(R.string.album_list_screen_test))
     ) {
         LazyColumn(
             modifier = Modifier
-                .testTag(stringResource(R.string.album_list_item_test))
                 .semantics { contentDescription = listDescription }
                 .testTag("ItemAlbum"),
         ) {
@@ -70,6 +68,7 @@ fun AlbumListScreen(
             CircularProgressIndicator(
                 Modifier
                     .align(Alignment.Center)
+                    .semantics { contentDescription = loadingDescription }
             )
         }
     }
@@ -80,10 +79,14 @@ fun AlbumItem(
     album: Album,
     onNavigateToAlbumDetail: (albumId: Int) -> Unit,
 ) {
+
+    val nombreAlbumDescripcion = stringResource(R.string.album_nombre_descripcion)
+
     ListDivider()
     ListItem(
 
-        modifier = Modifier.clickable { onNavigateToAlbumDetail(album.id) },
+        modifier = Modifier
+            .clickable { onNavigateToAlbumDetail(album.id) },
 
         overlineContent = {
             Text(
@@ -92,7 +95,8 @@ fun AlbumItem(
         },
         headlineContent = {
             Text(
-                text = album.name
+                text = album.name,
+                modifier = Modifier.semantics { contentDescription = nombreAlbumDescripcion }
             )
         },
 

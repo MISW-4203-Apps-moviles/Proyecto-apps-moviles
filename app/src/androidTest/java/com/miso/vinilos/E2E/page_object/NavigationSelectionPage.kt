@@ -20,8 +20,4 @@ class NavigationSelectionPage (composeRule: ComposeTestRule, activity: MainActiv
         //Navegación y comprobación de la pantalla de listado de álbumes
         fun clickAlbumes() =
             clickTextButton(context.getString(R.string.nav_albumes_label))
-
-        fun verifyAlbumesLoad() =
-            assertTagExists(context.getString(R.string.album_list_screen_test))
-
     }
