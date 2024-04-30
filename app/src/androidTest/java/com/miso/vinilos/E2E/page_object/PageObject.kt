@@ -52,7 +52,7 @@ abstract class PageObject (val composeRule: ComposeTestRule) {
             )[0].onChildAt(childIndex) // 0 is the AlbumItem
             .performClick()
     }
-    fun waitForElement(matcher: SemanticsMatcher) = composeRule.waitUntil {
+    fun waitForElement(matcher: SemanticsMatcher) = composeRule.waitUntil(7000) {
         composeRule
             .onAllNodes(matcher, useUnmergedTree = true)
             .fetchSemanticsNodes()
