@@ -1,6 +1,12 @@
 package com.miso.vinilos.E2E
 
 import androidx.activity.compose.setContent
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.SemanticsProperties
+import androidx.compose.ui.test.ExperimentalTestApi
+import androidx.compose.ui.test.SemanticsMatcher
+import androidx.compose.ui.test.hasContentDescription
+import androidx.compose.ui.test.hasParent
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
@@ -31,17 +37,6 @@ class AlbumListScreenTest {
                     MainScreen(navController)
                 }
             }
-        }
-    }
-
-    @Test
-    fun albumListScreenNavHost_validateContent_existTag() {
-        with(UserTypeSelectionPage(composeTestRule, composeTestRule.activity)) {
-            validateScreen()
-            clickPublicUserTypeButton()
-        }
-        with(AlbumListPage(composeTestRule, composeTestRule.activity)) {
-            validateTag()
         }
     }
 
@@ -98,13 +93,24 @@ class AlbumListScreenTest {
     }
 
     @Test
-    fun albumListScreenNavHost_albumListItem_albumListExists() {
+    fun albumList_albumListItem_click_success() {
         with(UserTypeSelectionPage(composeTestRule, composeTestRule.activity)) {
             validateScreen()
             clickPublicUserTypeButton()
         }
         with(AlbumListPage(composeTestRule, composeTestRule.activity)) {
-            assertHasContentElement(context.getString(R.string.album_list_item_test))
+
+            // Spinning loader está presente
+            validateLoader()
+
+            // El contenedor del listado está presente
+            validateListElement()
+
+            // Los elementos de la lista están presentes
+            validateListItemElement()
+
+            // Click en el primer elemento de la lista
+            clickListElement(0)
         }
     }
 }

@@ -11,7 +11,7 @@ class UserTypeSelectionPage(composeRule: ComposeTestRule, activity: MainActivity
 
     fun validateScreen() {
         assertText(context.getString(R.string.tipo_usuario_titulo))
-        assertImage(context.getString(R.string.vinilos_logo_descripcion))
+        assertSemanticDescription(context.getString(R.string.vinilos_logo_descripcion))
     }
 
     fun clickCollectionUserTypeButton() =
@@ -19,7 +19,4 @@ class UserTypeSelectionPage(composeRule: ComposeTestRule, activity: MainActivity
 
     fun clickPublicUserTypeButton() =
         clickTextButton(context.getString(R.string.tipo_usuario_visitante))
-
-    fun validateTag() =
-        assertTagExists(context.getString(R.string.user_type_selection_screen_test))
 }

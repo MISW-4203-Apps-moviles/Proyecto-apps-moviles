@@ -5,32 +5,19 @@
       <entry key="AlbumListScreenTest">
         <State />
       </entry>
+      <entry key="NavigationTest">
+        <State />
+      </entry>
       <entry key="SelectUserTest">
         <State />
       </entry>
-      <entry key="albumListScreenNavHost_albumListItem_albumListExists()">
+      <entry key="Tests in 'com.miso.vinilos.E2E'">
         <State />
       </entry>
-      <entry key="albumListScreenNavHost_menuSelected_collectionsLabelIsNotSelected()">
+      <entry key="album_detail_content_success()">
         <State />
       </entry>
-      <entry key="albumListScreenNavHost_navigate_albumScreen()">
-        <State />
-      </entry>
-      </entry>
-       <entry key="navigation_verifyAlbumsPage()">
-        <State />
-      </entry>
-      <entry key="navigation_verifyStartDestination()">
-        <State />
-      </entry>
-      <entry key="testUserTypeSelectionSuccess()">
-        <State />
-      </entry>
-      <entry key="verifyAlbumDetailPage()">
-        <State />
-      </entry>
-      <entry key="verifyAlbumDetailPageNavigation()">
+      <entry key="app">
         <State />
       </entry>
     </value>

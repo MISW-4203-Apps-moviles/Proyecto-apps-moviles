@@ -31,7 +31,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -54,6 +53,8 @@ fun AlbumDetailScreen(
     fetchAlbum: () -> Unit,
     innerPadding: PaddingValues = PaddingValues()
 ) {
+    val loadingDescription = stringResource(R.string.cargando_album_descripcion)
+
     LaunchedEffect(Unit) {
         fetchAlbum()
     }
@@ -65,7 +66,9 @@ fun AlbumDetailScreen(
                 .padding(innerPadding),
             contentAlignment = Alignment.Center
         ) {
-            CircularProgressIndicator(modifier = Modifier.testTag("LoadingIndicator"))
+            CircularProgressIndicator(
+                modifier = Modifier.semantics { contentDescription = loadingDescription }
+            )
         }
     }
 
