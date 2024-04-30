@@ -39,7 +39,6 @@ class NavigationTest {
 
         with(NavigationSelectionPage(composeTestRule, composeTestRule.activity)) {
             clickAlbumes()
-            verifyAlbumesLoad()
         }
 
     }

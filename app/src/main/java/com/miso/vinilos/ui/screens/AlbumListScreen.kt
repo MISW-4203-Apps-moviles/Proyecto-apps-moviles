@@ -50,7 +50,6 @@ fun AlbumListScreen(
         modifier = Modifier
             .fillMaxSize()
             .padding(innerPadding)
-            .testTag(stringResource(R.string.album_list_screen_test))
     ) {
         LazyColumn(
             modifier = Modifier
@@ -83,7 +82,7 @@ fun AlbumItem(
 
     val nombreAlbumDescripcion = stringResource(R.string.album_nombre_descripcion)
 
-    //ListDivider()
+    ListDivider()
     ListItem(
 
         modifier = Modifier

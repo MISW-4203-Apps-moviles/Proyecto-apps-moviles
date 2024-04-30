@@ -38,8 +38,7 @@ fun UserTypeSelectionScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(innerPadding)
-                .testTag(stringResource(R.string.user_type_selection_screen_test)),
+                .padding(innerPadding),
             contentAlignment = Alignment.Center,
         ) {
             Column(
