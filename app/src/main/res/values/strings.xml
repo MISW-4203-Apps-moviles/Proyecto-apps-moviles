@@ -19,5 +19,7 @@
     <string name="album_portada_descripcion">Portada del album</string>
     <string name="album_list_screen_test">AlbumListScreen</string>
     <string name="user_type_selection_screen_test">UserTypeSelectionScreen</string>
-    <string name="album_list_item_test">album_list_items</string>
+    <string name="cargando_descripcion">cargando información</string>
+    <string name="cargando_albumes_descripcion">cargando listado de álbumes</string>
+    <string name="cargando_album_descripcion">cargando álbum</string>
 </resources>

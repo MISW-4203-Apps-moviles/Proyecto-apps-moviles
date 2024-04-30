@@ -54,6 +54,8 @@ fun AlbumDetailScreen(
     fetchAlbum: () -> Unit,
     innerPadding: PaddingValues = PaddingValues()
 ) {
+    val loadingDescription = stringResource(R.string.cargando_album_descripcion)
+
     LaunchedEffect(Unit) {
         fetchAlbum()
     }
@@ -65,7 +67,9 @@ fun AlbumDetailScreen(
                 .padding(innerPadding),
             contentAlignment = Alignment.Center
         ) {
-            CircularProgressIndicator(modifier = Modifier.testTag("LoadingIndicator"))
+            CircularProgressIndicator(
+                modifier = Modifier.semantics { contentDescription = loadingDescription }
+            )
         }
     }
 

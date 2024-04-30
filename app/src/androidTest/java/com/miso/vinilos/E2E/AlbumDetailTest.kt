@@ -1,9 +1,16 @@
 package com.miso.vinilos.E2E
 
 import androidx.activity.compose.setContent
+import androidx.compose.ui.semantics.SemanticsProperties
+import androidx.compose.ui.semantics.getOrNull
+import androidx.compose.ui.test.SemanticsNodeInteraction
+import androidx.compose.ui.test.filter
+import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.onChildren
+import androidx.compose.ui.test.onFirst
 import com.miso.vinilos.E2E.page_object.AlbumDetailPage
-import com.miso.vinilos.E2E.page_object.NavigationSelectionPage
+import com.miso.vinilos.E2E.page_object.AlbumListPage
 import com.miso.vinilos.E2E.page_object.UserTypeSelectionPage
 import com.miso.vinilos.MainActivity
 import com.miso.vinilos.MainScreen
@@ -27,24 +34,50 @@ class AlbumDetailTest {
     }
 
     @Test
-    fun verifyAlbumDetailPageNavigation(){
+    fun album_detail_content_success() {
+
+        val itemClickedAlbumName: SemanticsNodeInteraction
+        val albumName: String
 
         with(UserTypeSelectionPage(composeTestRule, composeTestRule.activity)) {
-
             validateScreen()
-            clickCollectionUserTypeButton()
+            clickPublicUserTypeButton()
         }
+        with(AlbumListPage(composeTestRule, composeTestRule.activity)) {
 
-        with(NavigationSelectionPage(composeTestRule, composeTestRule.activity)) {
-           clickAlbumes()
-            verifyAlbumesLoad()
+            // Spinning loader está presente
+            //validateLoader()
 
+            // El contenedor del listado está presente
+            validateListElement()
+
+            // Los elementos de la lista están presentes
+            validateListItemElement()
+
+            itemClickedAlbumName =
+                getListItemFromList(0)
+                    .onChildren()
+                    .filter(hasContentDescription("Nombre del album"))
+                    .onFirst()
+
+            albumName = itemClickedAlbumName
+                .fetchSemanticsNode()
+                .config
+                .getOrNull(SemanticsProperties.Text)?.firstOrNull()?.text ?: ""
+
+            // Click en el primer elemento de la lista y navegar al detalle
+           clickListElement(0)
         }
 
         with(AlbumDetailPage(composeTestRule, composeTestRule.activity)) {
-            verifyAlbumesDetalleLoad()
+            // Spinning loader está presente
+           validateLoader()
+
+            // La pantalla de detalle del albuj tiene los elementos necesarios
+           validateScreen()
+
+           // El nombre del álbum es el mismo que el del elemento de la lista
+           assertText(albumName)
         }
-
     }
-
 }
