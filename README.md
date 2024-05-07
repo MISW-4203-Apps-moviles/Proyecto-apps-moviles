@@ -3,6 +3,7 @@
 Vinilos es una aplicación móvil Android que permite visualizar y gestionar contenido asociado a
 coleccionistas de música.
 
+
 ## Prerequisitos
 - Requerimientos mínimos en dispositivo o emulador: Android 5.0 Lollipop (API 21) o superior (recomendado API 33 o superior)
 - [Android Studio](https://developer.android.com/studio) (la última versión estable)
