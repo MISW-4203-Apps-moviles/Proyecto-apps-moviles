@@ -11,7 +11,10 @@
     <string name="regresar_boton_descripcion">Regresar a la pantalla anterior</string>
     <string name="sin_artista">Sin artista</string>
     <string name="lista_albumes_descripcion">Listado de álbumes</string>
+    <string name="lista_coleccionistas_descripcion">Listado de coleccionistas</string>
+    <string name="lista_artistas_descripcion">Listado de artistas</string>
     <string name="album_nombre_descripcion">Nombre del album</string>
+    <string name="album_artista_descripcion">Artista del album</string>
     <string name="album_artista_nombre_descripcion">Artista del album</string>
     <string name="album_anio_descripcion">Año del album</string>
     <string name="album_descripcion">Descripcion del album</string>
@@ -20,4 +23,8 @@
     <string name="cargando_descripcion">cargando información</string>
     <string name="cargando_albumes_descripcion">cargando listado de álbumes</string>
     <string name="cargando_album_descripcion">cargando álbum</string>
+    <string name="loading_data">cargando datos</string>
+    <string name="loading_error">Error al cargar</string>
+    <string name="retry">Reintentar</string>
+    <string name="ver_detalles_de_coleccionista">Ver detalles de la colección</string>
 </resources>
