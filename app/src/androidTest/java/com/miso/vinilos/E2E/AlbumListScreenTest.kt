@@ -8,7 +8,7 @@ import com.miso.vinilos.E2E.page_object.AlbumListPage
 import com.miso.vinilos.E2E.page_object.NavigationSelectionPage
 import com.miso.vinilos.E2E.page_object.UserTypeSelectionPage
 import com.miso.vinilos.MainActivity
-import com.miso.vinilos.VinylApp
+import com.miso.vinilos.ui.VinylApp
 import com.miso.vinilos.R
 import com.miso.vinilos.ui.theme.VinylsTheme
 import org.junit.Before
