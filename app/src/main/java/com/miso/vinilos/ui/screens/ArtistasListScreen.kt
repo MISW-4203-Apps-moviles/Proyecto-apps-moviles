@@ -28,14 +28,15 @@ import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.miso.vinilos.R
 import com.miso.vinilos.models.Album
+import com.miso.vinilos.models.Performer
 import com.miso.vinilos.ui.composables.ListDivider
 import com.miso.vinilos.ui.theme.VinylsTheme
 
 
 @Composable
 fun ArtistasListScreen(
-    performers: List<Album>,
-    navigateToPerformerDetail: (performerId: Int) -> Unit,
+    performers: List<Performer>,
+    navigateToPerformerDetail: (performerId: String) -> Unit,
     innerPadding: PaddingValues = PaddingValues()
 ) {
     val listDescription = stringResource(R.string.lista_artistas_descripcion)
@@ -62,8 +63,8 @@ fun ArtistasListScreen(
 
 @Composable
 fun PerformerItem(
-    performer: Album,
-    onNavigateToPerformerDetail: (performerId: Int) -> Unit,
+    performer: Performer,
+    onNavigateToPerformerDetail: (performerId: String) -> Unit,
 ) {
 
     val performerDescription = stringResource(R.string.album_artista_descripcion)
@@ -88,12 +89,12 @@ fun PerformerItem(
             Image(
                 painter = rememberAsyncImagePainter(
                     ImageRequest.Builder(LocalContext.current)
-                        .data(data = performer.cover)
+                        .data(data = performer.image)
                         .apply(block = fun ImageRequest.Builder.() {
                             crossfade(true)
                         }).build()
                 ),
-                contentDescription = "Portada de ${performer.name}",
+                contentDescription = "Imagen de ${performer.name}",
                 modifier = Modifier.size(48.dp),
             )
         }
@@ -104,7 +105,7 @@ fun PerformerItem(
 @Composable
 fun PerformerItemPreview() {
     VinylsTheme(darkTheme = true) {
-        PerformerItem(
+       /*PerformerItem(
             performer = Album(
                 id = 1,
                 name = "The Dark Side of the Moon",
@@ -117,7 +118,7 @@ fun PerformerItemPreview() {
                 recordLabel = "Harvest Records"
             ),
             onNavigateToPerformerDetail = {}
-        )
+        )*/
     }
 }
 
@@ -125,7 +126,7 @@ fun PerformerItemPreview() {
 @Composable
 fun ArtistasListScreenPreview() {
     VinylsTheme (darkTheme = true) {
-        ArtistasListScreen(
+        /*ArtistasListScreen(
             navigateToPerformerDetail = {},
             performers = listOf(
                 Album(
@@ -151,6 +152,6 @@ fun ArtistasListScreenPreview() {
                     recordLabel = "Harvest Records"
                 ),
             ),
-        )
+        )*/
     }
 }

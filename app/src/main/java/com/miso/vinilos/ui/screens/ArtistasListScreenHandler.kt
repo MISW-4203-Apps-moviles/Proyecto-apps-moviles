@@ -15,7 +15,7 @@ fun ArtistaListScreenHandler(
     vinylUiState: VinylUiState,
     retryAction: () -> Unit,
     viewModel: ArtistasListViewModel,
-    navigateToPerformerDetail: (performerId: Int) -> Unit,
+    navigateToPerformerDetail: (performerId: String) -> Unit,
     innerPadding: PaddingValues = PaddingValues()
 ) {
     val performers by viewModel.performers.observeAsState(emptyList())
