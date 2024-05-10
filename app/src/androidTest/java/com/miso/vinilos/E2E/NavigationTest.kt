@@ -8,7 +8,7 @@ import androidx.navigation.testing.TestNavHostController
 import com.miso.vinilos.E2E.page_object.NavigationSelectionPage
 import com.miso.vinilos.E2E.page_object.UserTypeSelectionPage
 import com.miso.vinilos.MainActivity
-import com.miso.vinilos.MainScreen
+import com.miso.vinilos.VinylApp
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -25,7 +25,7 @@ class NavigationTest {
         composeTestRule.activity.setContent {
             navController = TestNavHostController(LocalContext.current)
             navController.navigatorProvider.addNavigator(ComposeNavigator())
-            MainScreen(navController = navController)
+            VinylApp(navController = navController)
         }
     }
 

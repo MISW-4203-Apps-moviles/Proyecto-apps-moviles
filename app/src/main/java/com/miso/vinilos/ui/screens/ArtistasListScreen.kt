@@ -9,6 +9,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowRight
+import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,13 +33,12 @@ import com.miso.vinilos.ui.theme.VinylsTheme
 
 
 @Composable
-fun AlbumListScreen(
-    albums: List<Album>,
-    navigateToAlbumDetail: (albumId: Int) -> Unit,
+fun ArtistasListScreen(
+    performers: List<Album>,
+    navigateToPerformerDetail: (performerId: Int) -> Unit,
     innerPadding: PaddingValues = PaddingValues()
 ) {
-    val listDescription = stringResource(R.string.lista_albumes_descripcion)
-
+    val listDescription = stringResource(R.string.lista_artistas_descripcion)
 
     Box(
         modifier = Modifier
@@ -46,12 +48,12 @@ fun AlbumListScreen(
         LazyColumn(
             modifier = Modifier
                 .semantics { contentDescription = listDescription }
-                .testTag("ItemAlbum"),
+                .testTag("ItemPerformerList"),
         ) {
-            items(albums, key = { album -> album.id }) { album ->
-                AlbumItem(
-                    album = album,
-                    onNavigateToAlbumDetail = navigateToAlbumDetail
+            items(performers, key = { performer -> performer.id }) { performer ->
+                PerformerItem(
+                    performer = performer,
+                    onNavigateToPerformerDetail = navigateToPerformerDetail
                 )
             }
         }
@@ -59,41 +61,39 @@ fun AlbumListScreen(
 }
 
 @Composable
-fun AlbumItem(
-    album: Album,
-    onNavigateToAlbumDetail: (albumId: Int) -> Unit,
+fun PerformerItem(
+    performer: Album,
+    onNavigateToPerformerDetail: (performerId: Int) -> Unit,
 ) {
 
-    val nombreAlbumDescripcion = stringResource(R.string.album_nombre_descripcion)
+    val performerDescription = stringResource(R.string.album_artista_descripcion)
 
     ListDivider()
     ListItem(
-
         modifier = Modifier
-            .clickable { onNavigateToAlbumDetail(album.id) },
-
-        overlineContent = {
-            Text(
-                text = album.performers.getOrNull(0)?.name ?: stringResource(R.string.sin_artista)
-            )
-        },
+            .clickable { onNavigateToPerformerDetail(performer.id) },
         headlineContent = {
             Text(
-                text = album.name,
-                modifier = Modifier.semantics { contentDescription = nombreAlbumDescripcion }
+                text = performer.name,
+                modifier = Modifier.semantics { contentDescription = performerDescription }
             )
         },
-
+        trailingContent = {
+            Icon(
+                imageVector = Icons.AutoMirrored.Filled.ArrowRight,
+                contentDescription = stringResource(R.string.ver_detalles_de_coleccionista)
+            )
+        },
         leadingContent = {
             Image(
                 painter = rememberAsyncImagePainter(
                     ImageRequest.Builder(LocalContext.current)
-                        .data(data = album.cover)
+                        .data(data = performer.cover)
                         .apply(block = fun ImageRequest.Builder.() {
                             crossfade(true)
                         }).build()
                 ),
-                contentDescription = "Portada de ${album.name}",
+                contentDescription = "Portada de ${performer.name}",
                 modifier = Modifier.size(48.dp),
             )
         }
@@ -102,10 +102,10 @@ fun AlbumItem(
 
 @Preview(showBackground = true)
 @Composable
-fun AlbumItemPreview() {
+fun PerformerItemPreview() {
     VinylsTheme(darkTheme = true) {
-        AlbumItem(
-            album = Album(
+        PerformerItem(
+            performer = Album(
                 id = 1,
                 name = "The Dark Side of the Moon",
                 releaseDate = "1973",
@@ -116,18 +116,18 @@ fun AlbumItemPreview() {
                 genre = "Rock progresivo",
                 recordLabel = "Harvest Records"
             ),
-            onNavigateToAlbumDetail = {}
+            onNavigateToPerformerDetail = {}
         )
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun AlbumListScreenPreview() {
+fun ArtistasListScreenPreview() {
     VinylsTheme (darkTheme = true) {
-        AlbumListScreen(
-            navigateToAlbumDetail = {},
-            albums = listOf(
+        ArtistasListScreen(
+            navigateToPerformerDetail = {},
+            performers = listOf(
                 Album(
                     id = 1,
                     name = "The Dark Side of the Moon",

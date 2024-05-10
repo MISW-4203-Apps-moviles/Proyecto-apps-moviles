@@ -5,15 +5,25 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowLeft
+import androidx.compose.material.icons.automirrored.filled.ArrowRight
+import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material.icons.filled.ArrowRight
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
@@ -30,13 +40,12 @@ import com.miso.vinilos.ui.theme.VinylsTheme
 
 
 @Composable
-fun AlbumListScreen(
-    albums: List<Album>,
-    navigateToAlbumDetail: (albumId: Int) -> Unit,
+fun ColeccionistasListScreen(
+    collections: List<Album>,
+    navigateToCollectionDetail: (collectionId: Int) -> Unit,
     innerPadding: PaddingValues = PaddingValues()
 ) {
-    val listDescription = stringResource(R.string.lista_albumes_descripcion)
-
+    val listDescription = stringResource(R.string.lista_coleccionistas_descripcion)
 
     Box(
         modifier = Modifier
@@ -46,12 +55,12 @@ fun AlbumListScreen(
         LazyColumn(
             modifier = Modifier
                 .semantics { contentDescription = listDescription }
-                .testTag("ItemAlbum"),
+                .testTag("ItemCollectionList"),
         ) {
-            items(albums, key = { album -> album.id }) { album ->
-                AlbumItem(
-                    album = album,
-                    onNavigateToAlbumDetail = navigateToAlbumDetail
+            items(collections, key = { album -> album.id }) { collection ->
+                CollectionItem(
+                    collection = collection,
+                    onNavigateToCollectionDetail = navigateToCollectionDetail
                 )
             }
         }
@@ -59,53 +68,37 @@ fun AlbumListScreen(
 }
 
 @Composable
-fun AlbumItem(
-    album: Album,
-    onNavigateToAlbumDetail: (albumId: Int) -> Unit,
+fun CollectionItem(
+    collection: Album,
+    onNavigateToCollectionDetail: (collectionId: Int) -> Unit,
 ) {
 
-    val nombreAlbumDescripcion = stringResource(R.string.album_nombre_descripcion)
+    val albumNameDescription = stringResource(R.string.album_nombre_descripcion)
 
     ListDivider()
     ListItem(
-
-        modifier = Modifier
-            .clickable { onNavigateToAlbumDetail(album.id) },
-
-        overlineContent = {
-            Text(
-                text = album.performers.getOrNull(0)?.name ?: stringResource(R.string.sin_artista)
-            )
-        },
+        modifier = Modifier.fillMaxWidth().clickable { onNavigateToCollectionDetail(collection.id) },
         headlineContent = {
             Text(
-                text = album.name,
-                modifier = Modifier.semantics { contentDescription = nombreAlbumDescripcion }
+                text = collection.name,
+                modifier = Modifier.semantics { contentDescription = albumNameDescription }
             )
         },
-
-        leadingContent = {
-            Image(
-                painter = rememberAsyncImagePainter(
-                    ImageRequest.Builder(LocalContext.current)
-                        .data(data = album.cover)
-                        .apply(block = fun ImageRequest.Builder.() {
-                            crossfade(true)
-                        }).build()
-                ),
-                contentDescription = "Portada de ${album.name}",
-                modifier = Modifier.size(48.dp),
+        trailingContent = {
+            Icon(
+                imageVector = Icons.AutoMirrored.Filled.ArrowRight,
+                contentDescription = stringResource(R.string.ver_detalles_de_coleccionista)
             )
-        }
+        },
     )
 }
 
 @Preview(showBackground = true)
 @Composable
-fun AlbumItemPreview() {
+fun CollectionItemPreview() {
     VinylsTheme(darkTheme = true) {
-        AlbumItem(
-            album = Album(
+        CollectionItem(
+            collection = Album(
                 id = 1,
                 name = "The Dark Side of the Moon",
                 releaseDate = "1973",
@@ -116,18 +109,18 @@ fun AlbumItemPreview() {
                 genre = "Rock progresivo",
                 recordLabel = "Harvest Records"
             ),
-            onNavigateToAlbumDetail = {}
+            onNavigateToCollectionDetail = {}
         )
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun AlbumListScreenPreview() {
+fun ColeccionistasListScreenPreview() {
     VinylsTheme (darkTheme = true) {
-        AlbumListScreen(
-            navigateToAlbumDetail = {},
-            albums = listOf(
+        ColeccionistasListScreen(
+            navigateToCollectionDetail = {},
+            collections = listOf(
                 Album(
                     id = 1,
                     name = "The Dark Side of the Moon",

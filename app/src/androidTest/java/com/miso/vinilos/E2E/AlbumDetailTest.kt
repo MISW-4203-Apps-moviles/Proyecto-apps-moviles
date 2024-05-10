@@ -7,11 +7,14 @@ import com.miso.vinilos.E2E.page_object.AlbumDetailPage
 import com.miso.vinilos.E2E.page_object.AlbumListPage
 import com.miso.vinilos.E2E.page_object.UserTypeSelectionPage
 import com.miso.vinilos.MainActivity
-import com.miso.vinilos.MainScreen
-import com.miso.vinilos.ui.theme.VinilosTheme
+import com.miso.vinilos.VinylApp
+import com.miso.vinilos.ui.theme.VinylsTheme
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+
+
+
 
 class AlbumDetailTest {
 
@@ -23,8 +26,8 @@ class AlbumDetailTest {
     @Before
     fun setUp() {
         composeTestRule.activity.setContent {
-            VinilosTheme {
-                MainScreen()
+            VinylsTheme () {
+                VinylApp()
             }
         }
     }

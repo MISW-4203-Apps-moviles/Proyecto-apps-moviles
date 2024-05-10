@@ -1,5 +1,6 @@
 package com.miso.vinilos.ui.screens
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -25,59 +26,58 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.miso.vinilos.R
-import com.miso.vinilos.ui.NavigationItem
-import com.miso.vinilos.ui.theme.VinilosTheme
+import com.miso.vinilos.VinylTab
+import com.miso.vinilos.ui.theme.VinylsTheme
+import kotlin.math.log
 
 @Composable
 fun UserTypeSelectionScreen(
     navController: NavHostController,
     innerPadding: PaddingValues = PaddingValues()
 ) {
-    VinilosTheme {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding),
-            contentAlignment = Alignment.Center,
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(innerPadding),
+        contentAlignment = Alignment.Center,
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
         ) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                Image(
-                    painter = painterResource(R.drawable.logo),
-                    contentDescription = stringResource(R.string.vinilos_logo_descripcion),
-                    modifier = Modifier.size(250.dp)
-                )
+            Image(
+                painter = painterResource(R.drawable.logo),
+                contentDescription = stringResource(R.string.vinilos_logo_descripcion),
+                modifier = Modifier.size(250.dp)
+            )
 
-                Text(
-                    text = stringResource(R.string.tipo_usuario_titulo),
-                    style = MaterialTheme.typography.titleMedium
-                )
-                Spacer(modifier = Modifier.height(32.dp))
-                Row {
-                    Button(
-                        onClick = {
-                            navigateToAlbumTab(navController)
-                        },
-                        modifier = Modifier
-                            .padding(start = 32.dp, end = 16.dp)
-                            .weight(1f)
-                            .fillMaxWidth()
-                    ) {
-                        Text(stringResource(R.string.tipo_usuario_visitante))
-                    }
-                    Button(
-                        onClick = {
-                            navigateToAlbumTab(navController)
-                        },
-                        modifier = Modifier
-                            .padding(start = 16.dp, end = 32.dp)
-                            .weight(1f)
-                            .fillMaxWidth()
-                    ) {
-                        Text(stringResource(R.string.tipo_usuario_coleccionista))
-                    }
+            Text(
+                text = stringResource(R.string.tipo_usuario_titulo),
+                style = MaterialTheme.typography.titleMedium
+            )
+            Spacer(modifier = Modifier.height(32.dp))
+            Row {
+                Button(
+                    onClick = {
+                        navigateToAlbumTab(navController)
+                    },
+                    modifier = Modifier
+                        .padding(start = 32.dp, end = 16.dp)
+                        .weight(1f)
+                        .fillMaxWidth()
+                ) {
+                    Text(stringResource(R.string.tipo_usuario_visitante))
+                }
+                Button(
+                    onClick = {
+                        navigateToAlbumTab(navController)
+                    },
+                    modifier = Modifier
+                        .padding(start = 16.dp, end = 32.dp)
+                        .weight(1f)
+                        .fillMaxWidth()
+                ) {
+                    Text(stringResource(R.string.tipo_usuario_coleccionista))
                 }
             }
         }
@@ -86,7 +86,9 @@ fun UserTypeSelectionScreen(
 
 
 private fun navigateToAlbumTab(navController: NavHostController) {
-    navController.navigate(NavigationItem.AlbumTab.route) {
+    //Log.d( "DEBUG", "navigateToAlbumTab")
+    //Log.d( "DEBUG", VinylTab.AlbumTab.name)
+    navController.navigate(VinylTab.AlbumTab.name) {
         popUpTo(navController.graph.startDestinationId)
         launchSingleTop = true
     }
@@ -95,7 +97,7 @@ private fun navigateToAlbumTab(navController: NavHostController) {
 @Preview(showBackground = true, backgroundColor = 0)
 @Composable
 fun UserTypeSelectionScreenPreview() {
-    VinilosTheme {
+    VinylsTheme (darkTheme = true) {
         UserTypeSelectionScreen(rememberNavController())
     }
 }
