@@ -27,4 +27,5 @@
     <string name="loading_error">Error al cargar</string>
     <string name="retry">Reintentar</string>
     <string name="ver_detalles_de_coleccionista">Ver detalles de la colección</string>
+    <string name="detalles_del_artista">Ver detalles del artista</string>
 </resources>
