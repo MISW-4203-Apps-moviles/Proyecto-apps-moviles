@@ -13,6 +13,7 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.miso.vinilos.data.VinylUiState
 import com.miso.vinilos.models.Album
+import com.miso.vinilos.models.Performer
 import com.miso.vinilos.repositories.AlbumRepository
 import com.miso.vinilos.repositories.PerformedRepository
 import kotlinx.coroutines.launch
@@ -27,8 +28,8 @@ class ArtistasListViewModel() : ViewModel() {
 
     private val repository = PerformedRepository()
 
-    private val _performers = MutableLiveData<List<Album>>()
-    val performers: LiveData<List<Album>> = _performers
+    private val _performers = MutableLiveData<List<Performer>>()
+    val performers: LiveData<List<Performer>> = _performers
 
     /**
      * Call fetchPerformer() on init so we can display status immediately.
