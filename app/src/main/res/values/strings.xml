@@ -28,4 +28,9 @@
     <string name="retry">Reintentar</string>
     <string name="ver_detalles_de_coleccionista">Ver detalles de la colección</string>
     <string name="detalles_del_artista">Ver detalles del artista</string>
+    <string name="cargando_artista_description">Cargando artista</string>
+    <string name="artista_nombre">Nombre del artista</string>
+    <string name="artista_imagen_descripcion">Imagen del artista</string>
+    <string name="artista_descripcion">Descripción del artista</string>
+    <string name="artista_fecha_nacimiento">Fecha de nacimiento del artista</string>
 </resources>

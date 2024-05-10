@@ -46,6 +46,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
 import com.miso.vinilos.ui.screens.AlbumDetailScreenHandler
 import com.miso.vinilos.ui.screens.AlbumListScreenHandler
+import com.miso.vinilos.ui.screens.ArtistaDetailScreenHandler
 import com.miso.vinilos.ui.screens.ArtistaListScreenHandler
 import com.miso.vinilos.ui.screens.ArtistasScreen
 import com.miso.vinilos.ui.screens.ColeccionistasListScreenHandler
@@ -56,6 +57,8 @@ import com.miso.vinilos.viewModels.AlbumDetailViewModel
 import com.miso.vinilos.viewModels.AlbumDetailViewModelFactory
 import com.miso.vinilos.viewModels.AlbumListViewModel
 import com.miso.vinilos.viewModels.AlbumListViewModelFactory
+import com.miso.vinilos.viewModels.ArtistaDetailViewModel
+import com.miso.vinilos.viewModels.ArtistaDetailViewModelFactory
 import com.miso.vinilos.viewModels.ArtistasListViewModel
 import com.miso.vinilos.viewModels.ArtistasListViewModelFactory
 import com.miso.vinilos.viewModels.ColeccionistasListViewModel
@@ -324,15 +327,14 @@ fun Navigation(
                 VinylScreen.ArtistaDetail.route,
             ) { backStackEntry ->
                 backStackEntry.arguments?.getString("performedId")?.let {
-                    val viewModel: ArtistasListViewModel =
-                        viewModel(factory = ArtistasListViewModelFactory())
-                    // TODO: Implement this screen
-                    ArtistasScreen(innerPadding)
-                    //AlbumDetailScreenHandler(
-                    //    albumId = it,
-                    //    viewModel = viewModel,
-                    //    innerPadding = innerPadding
-                    //)
+                    val viewModel: ArtistaDetailViewModel =
+                        viewModel(factory = ArtistaDetailViewModelFactory())
+
+                    ArtistaDetailScreenHandler(
+                        artistaId =  it,
+                        viewModel = viewModel,
+                        innerPadding = innerPadding
+                    )
                 }
             }
         }

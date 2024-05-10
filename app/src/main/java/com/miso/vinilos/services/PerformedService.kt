@@ -11,5 +11,5 @@ interface PerformedService {
     suspend fun getPerformers(): List<Performer>
 
     @GET("musicians/{performerId}")
-    suspend fun getPerformer(@Path("performerId") performedId: Int): Performer
+    suspend fun getPerformer(@Path("performerId") performedId: String): Performer
 }
