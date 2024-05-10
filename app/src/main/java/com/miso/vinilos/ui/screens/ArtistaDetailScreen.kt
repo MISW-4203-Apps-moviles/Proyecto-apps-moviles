@@ -103,7 +103,13 @@ fun ArtistaCard(
         )
     ) {
         Column {
-            Row {
+            Row(
+                Modifier
+                    .fillMaxWidth()
+                    .height(72.dp)
+                    .padding(start = 16.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 Text(
                     text = performer.name,
                     style = MaterialTheme.typography.titleLarge,
@@ -113,6 +119,49 @@ fun ArtistaCard(
                 )
             }
         }
+
+        Image(
+            painter = rememberAsyncImagePainter(
+                ImageRequest.Builder(LocalContext.current)
+                    .data(data = performer.image)
+                    .apply(block = fun ImageRequest.Builder.() {
+                        crossfade(true)
+                    }).build(),
+            ),
+            contentDescription = performer.name,
+            Modifier
+                .fillMaxWidth()
+                .height(200.dp)
+                .semantics { contentDescription = imagenArtistaDescripcion }
+        )
+
+        Column(
+            modifier = Modifier.padding(
+                start = 16.dp,
+                end = 24.dp,
+                top = 16.dp,
+                bottom = 16.dp
+            ),
+        ) {
+            val year = performer.birthDate.split("-")[0]
+            Text(
+                text = stringResource(R.string.anio_de_nacimiento) + year,
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier
+                    .padding(bottom = 4.dp)
+                    .semantics { contentDescription = fechaNacimientoArtista }
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Text(
+                text = performer.description,
+                overflow = TextOverflow.Ellipsis,
+                style = MaterialTheme.typography.bodyMedium,
+                modifier = Modifier
+                    .semantics { contentDescription = descripcionArtista }
+            )
+        }
+
     }
 
 

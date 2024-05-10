@@ -33,4 +33,5 @@
     <string name="artista_imagen_descripcion">Imagen del artista</string>
     <string name="artista_descripcion">Descripción del artista</string>
     <string name="artista_fecha_nacimiento">Fecha de nacimiento del artista</string>
+    <string name="anio_de_nacimiento">"Año de nacimiento: "</string>
 </resources>
