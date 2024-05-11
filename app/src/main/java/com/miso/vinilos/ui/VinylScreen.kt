@@ -1,6 +1,5 @@
-package com.miso.vinilos
+package com.miso.vinilos.ui
 
-import android.util.Log
 import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.AnimatedVisibility
@@ -44,6 +43,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
+import com.miso.vinilos.R
 import com.miso.vinilos.ui.screens.AlbumDetailScreenHandler
 import com.miso.vinilos.ui.screens.AlbumListScreenHandler
 import com.miso.vinilos.ui.screens.ArtistaDetailScreenHandler
