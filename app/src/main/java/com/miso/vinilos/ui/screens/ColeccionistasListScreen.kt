@@ -34,14 +34,14 @@ import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.miso.vinilos.R
-import com.miso.vinilos.models.Album
+import com.miso.vinilos.models.Collector
 import com.miso.vinilos.ui.composables.ListDivider
 import com.miso.vinilos.ui.theme.VinylsTheme
 
 
 @Composable
 fun ColeccionistasListScreen(
-    collections: List<Album>,
+    collections: List<Collector>,
     navigateToCollectionDetail: (collectionId: Int) -> Unit,
     innerPadding: PaddingValues = PaddingValues()
 ) {
@@ -69,19 +69,21 @@ fun ColeccionistasListScreen(
 
 @Composable
 fun CollectionItem(
-    collection: Album,
+    collection: Collector,
     onNavigateToCollectionDetail: (collectionId: Int) -> Unit,
 ) {
 
-    val albumNameDescription = stringResource(R.string.album_nombre_descripcion)
+    val collectorNameDescription = stringResource(R.string.nombre_del_coleccionista)
 
     ListDivider()
     ListItem(
-        modifier = Modifier.fillMaxWidth().clickable { onNavigateToCollectionDetail(collection.id) },
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onNavigateToCollectionDetail(collection.id) },
         headlineContent = {
             Text(
                 text = collection.name,
-                modifier = Modifier.semantics { contentDescription = albumNameDescription }
+                modifier = Modifier.semantics { contentDescription = collectorNameDescription }
             )
         },
         trailingContent = {
@@ -98,16 +100,14 @@ fun CollectionItem(
 fun CollectionItemPreview() {
     VinylsTheme(darkTheme = true) {
         CollectionItem(
-            collection = Album(
+            collection = Collector(
                 id = 1,
-                name = "The Dark Side of the Moon",
-                releaseDate = "1973",
-                cover = "https://placehold.co/400x400.png",
-                description = "The Dark Side of the Moon es el octavo álbum de estudio de la banda británica de rock progresivo Pink Floyd, lanzado el 1 de marzo de 1973.",
+                name = "Manolo Bellon",
+                telephone = "12334324432",
+                email = "test@test.com",
                 comments = emptyList(),
-                performers = emptyList(),
-                genre = "Rock progresivo",
-                recordLabel = "Harvest Records"
+                favoritePerformers = emptyList(),
+                collectorAlbums = emptyList()
             ),
             onNavigateToCollectionDetail = {}
         )
@@ -121,27 +121,24 @@ fun ColeccionistasListScreenPreview() {
         ColeccionistasListScreen(
             navigateToCollectionDetail = {},
             collections = listOf(
-                Album(
+                Collector(
                     id = 1,
-                    name = "The Dark Side of the Moon",
-                    releaseDate = "1973",
-                    cover = "https://placehold.co/400x400.png",
-                    description = "The Dark Side of the Moon es el octavo álbum de estudio de la banda británica de rock progresivo Pink Floyd, lanzado el 1 de marzo de 1973.",
+                    name = "Manolo Bellon",
+                    telephone = "12334324432",
+                    email = "test@test.com",
                     comments = emptyList(),
-                    performers = emptyList(),
-                    genre = "Rock progresivo",
-                    recordLabel = "Harvest Records"
+                    favoritePerformers = emptyList(),
+                    collectorAlbums = emptyList()
+
                 ),
-                Album(
-                    id = 2,
-                    name = "The Wall",
-                    releaseDate = "1979",
-                    cover = "https://placehold.co/400x400.png",
-                    description = "The Wall es el undécimo álbum de estudio de la banda británica de rock Pink Floyd, lanzado el 30 de noviembre de 1979.",
+                Collector(
+                    id = 1,
+                    name = "Juan Bellon",
+                    telephone = "12334322222",
+                    email = "test2@test.com",
                     comments = emptyList(),
-                    performers = emptyList(),
-                    genre = "Rock",
-                    recordLabel = "Harvest Records"
+                    favoritePerformers = emptyList(),
+                    collectorAlbums = emptyList()
                 ),
             ),
         )
