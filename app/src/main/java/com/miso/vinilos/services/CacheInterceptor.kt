@@ -1,19 +1,30 @@
 package com.miso.vinilos.services
 
-import okhttp3.CacheControl
+import com.miso.vinilos.MainActivity.Companion.context
+import com.miso.vinilos.utils.Network
 import okhttp3.Interceptor
 import okhttp3.Response
-import java.util.concurrent.TimeUnit
+
+const val MAX_AGE = 60 * 60 * 24
+const val MAX_STALE = 60 * 2
 
 class CacheInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
-        val request = chain.request()
-        val response = chain.proceed(request)
-        val cacheControl = CacheControl.Builder()
-            .maxAge(60, TimeUnit.SECONDS)
-            .build()
-        return response.newBuilder()
-            .header("Cache-Control", cacheControl.toString())
-            .build()
+        var request = chain.request()
+
+        request = if (Network().isConnected(context)) {
+            request.newBuilder()
+                .header("Cache-Control", "public, max-age=$MAX_AGE")
+                .build()
+        } else {
+            request.newBuilder()
+                .header(
+                    "Cache-Control",
+                    "public, only-if-cached, max-stale=$MAX_STALE"
+                )
+                .build()
+        }
+
+        return chain.proceed(request)
     }
 }
