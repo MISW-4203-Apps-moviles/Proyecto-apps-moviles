@@ -22,20 +22,27 @@ import com.miso.vinilos.ui.theme.VinilosTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Save the instance of the MainActivity
+        context = this
+
         enableEdgeToEdge()
+
         setContent {
             VinilosTheme {
                 MainScreen()
             }
         }
     }
+
+    companion object {
+        lateinit var context: MainActivity
+            private set
+    }
 }
 
 @Composable
 fun MainScreen(navController: NavHostController = rememberNavController()) {
-  //  val navController = rememberNavController()
-    //val navController = navController
-
     Scaffold(
         topBar = {
             TopNavigationBar(navController)
@@ -55,6 +62,7 @@ fun MainScreen(navController: NavHostController = rememberNavController()) {
 
         })
 }
+
 @Preview(showBackground = true)
 @Composable
 fun VinylsAppPreview() {
