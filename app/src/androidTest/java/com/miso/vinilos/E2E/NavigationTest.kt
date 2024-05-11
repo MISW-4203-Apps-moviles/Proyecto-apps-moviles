@@ -8,7 +8,7 @@ import androidx.navigation.testing.TestNavHostController
 import com.miso.vinilos.E2E.page_object.NavigationSelectionPage
 import com.miso.vinilos.E2E.page_object.UserTypeSelectionPage
 import com.miso.vinilos.MainActivity
-import com.miso.vinilos.VinylApp
+import com.miso.vinilos.ui.VinylApp
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test

@@ -15,7 +15,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
@@ -27,15 +26,15 @@ import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.miso.vinilos.R
-import com.miso.vinilos.models.Album
+import com.miso.vinilos.models.Performer
 import com.miso.vinilos.ui.composables.ListDivider
 import com.miso.vinilos.ui.theme.VinylsTheme
 
 
 @Composable
 fun ArtistasListScreen(
-    performers: List<Album>,
-    navigateToPerformerDetail: (performerId: Int) -> Unit,
+    performers: List<Performer>,
+    navigateToPerformerDetail: (performerId: String) -> Unit,
     innerPadding: PaddingValues = PaddingValues()
 ) {
     val listDescription = stringResource(R.string.lista_artistas_descripcion)
@@ -62,8 +61,8 @@ fun ArtistasListScreen(
 
 @Composable
 fun PerformerItem(
-    performer: Album,
-    onNavigateToPerformerDetail: (performerId: Int) -> Unit,
+    performer: Performer,
+    onNavigateToPerformerDetail: (performerId: String) -> Unit,
 ) {
 
     val performerDescription = stringResource(R.string.album_artista_descripcion)
@@ -81,19 +80,19 @@ fun PerformerItem(
         trailingContent = {
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowRight,
-                contentDescription = stringResource(R.string.ver_detalles_de_coleccionista)
+                contentDescription = stringResource(R.string.detalles_del_artista)
             )
         },
         leadingContent = {
             Image(
                 painter = rememberAsyncImagePainter(
                     ImageRequest.Builder(LocalContext.current)
-                        .data(data = performer.cover)
+                        .data(data = performer.image)
                         .apply(block = fun ImageRequest.Builder.() {
                             crossfade(true)
                         }).build()
                 ),
-                contentDescription = "Portada de ${performer.name}",
+                contentDescription = "Imagen de ${performer.name}",
                 modifier = Modifier.size(48.dp),
             )
         }
@@ -104,18 +103,15 @@ fun PerformerItem(
 @Composable
 fun PerformerItemPreview() {
     VinylsTheme(darkTheme = true) {
-        PerformerItem(
-            performer = Album(
-                id = 1,
-                name = "The Dark Side of the Moon",
-                releaseDate = "1973",
-                cover = "https://placehold.co/400x400.png",
-                description = "The Dark Side of the Moon es el octavo álbum de estudio de la banda británica de rock progresivo Pink Floyd, lanzado el 1 de marzo de 1973.",
-                comments = emptyList(),
-                performers = emptyList(),
-                genre = "Rock progresivo",
-                recordLabel = "Harvest Records"
-            ),
+       PerformerItem(
+            Performer(
+                    id = "1",
+                    name = "Joan Manuel Serrat Teresa",
+                    image = "https://upload.wikimedia.org/wikipedia/commons/e/e3/Serrat.jpg",
+                    description = "Es un cantautor, compositor, actor, escritor, poeta y músico español.",
+                    birthDate = "1943-12-27T00:00:00-05:00",
+                    albums = emptyList(),
+                ),
             onNavigateToPerformerDetail = {}
         )
     }
@@ -128,27 +124,21 @@ fun ArtistasListScreenPreview() {
         ArtistasListScreen(
             navigateToPerformerDetail = {},
             performers = listOf(
-                Album(
-                    id = 1,
-                    name = "The Dark Side of the Moon",
-                    releaseDate = "1973",
-                    cover = "https://placehold.co/400x400.png",
-                    description = "The Dark Side of the Moon es el octavo álbum de estudio de la banda británica de rock progresivo Pink Floyd, lanzado el 1 de marzo de 1973.",
-                    comments = emptyList(),
-                    performers = emptyList(),
-                    genre = "Rock progresivo",
-                    recordLabel = "Harvest Records"
+                Performer(
+                    id = "1",
+                    name = "Joan Manuel Serrat Teresa",
+                    image = "https://upload.wikimedia.org/wikipedia/commons/e/e3/Serrat.jpg",
+                    description = "Es un cantautor, compositor, actor, escritor, poeta y músico español.",
+                    birthDate = "1943-12-27T00:00:00-05:00",
+                    albums = emptyList(),
                 ),
-                Album(
-                    id = 2,
-                    name = "The Wall",
-                    releaseDate = "1979",
-                    cover = "https://placehold.co/400x400.png",
-                    description = "The Wall es el undécimo álbum de estudio de la banda británica de rock Pink Floyd, lanzado el 30 de noviembre de 1979.",
-                    comments = emptyList(),
-                    performers = emptyList(),
-                    genre = "Rock",
-                    recordLabel = "Harvest Records"
+                Performer(
+                    id = "2",
+                    name = "Rubén Blades Bellido de Luna",
+                    image = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Ruben_Blades_by_Gage_Skidmore.jpg/800px-Ruben_Blades_by_Gage_Skidmore.jpg",
+                    description = "Es un cantante, compositor, músico, actor, abogado, político y activista panameño. Ha desarrollado gran parte de su carrera artística en la ciudad de Nueva York.",
+                    birthDate = "1948-07-16T05:00:00.000Z",
+                    albums = emptyList(),
                 ),
             ),
         )
