@@ -6,12 +6,11 @@ import android.net.NetworkCapabilities
 import android.os.Build
 
 // WIP
-class Network(context: Context) {
-    private val connectivityManager =
-        context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-
-    fun isConnected(): Boolean {
+class Network {
+    fun isConnected(context: Context): Boolean {
         val hasInternetConnection: Boolean
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             val networkCapabilities = connectivityManager.activeNetwork ?: return false

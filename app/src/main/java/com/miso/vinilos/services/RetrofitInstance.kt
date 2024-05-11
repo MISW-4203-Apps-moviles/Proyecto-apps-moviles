@@ -28,7 +28,7 @@ object RetrofitInstance {
                     10L * 1024L * 1024L
                 )
             )
-            .addNetworkInterceptor(CacheInterceptor())
+            .addInterceptor(CacheInterceptor())
             .build()
 
         httpClient.addInterceptor(logging)
