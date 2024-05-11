@@ -2,19 +2,13 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="AlbumListScreenTest">
+      <entry key="ErrorScreenPreview">
         <State />
       </entry>
-      <entry key="NavigationTest">
+      <entry key="MainActivity">
         <State />
       </entry>
-      <entry key="SelectUserTest">
-        <State />
-      </entry>
-      <entry key="Tests in 'com.miso.vinilos.E2E'">
-        <State />
-      </entry>
-      <entry key="album_detail_content_success()">
+      <entry key="NavigationPreview">
         <State />
       </entry>
       <entry key="app">
