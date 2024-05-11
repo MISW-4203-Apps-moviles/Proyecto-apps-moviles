@@ -1,18 +1,12 @@
-package com.miso.vinilos.E2E
+package com.miso.vinilos.e2e
 
 import androidx.activity.compose.setContent
-import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.semantics.SemanticsProperties
-import androidx.compose.ui.test.ExperimentalTestApi
-import androidx.compose.ui.test.SemanticsMatcher
-import androidx.compose.ui.test.hasContentDescription
-import androidx.compose.ui.test.hasParent
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.miso.vinilos.E2E.page_object.AlbumListPage
-import com.miso.vinilos.E2E.page_object.NavigationSelectionPage
-import com.miso.vinilos.E2E.page_object.UserTypeSelectionPage
+import com.miso.vinilos.e2e.page_object.AlbumListPage
+import com.miso.vinilos.e2e.page_object.NavigationSelectionPage
+import com.miso.vinilos.e2e.page_object.UserTypeSelectionPage
 import com.miso.vinilos.MainActivity
 import com.miso.vinilos.MainScreen
 import com.miso.vinilos.R

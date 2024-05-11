@@ -1,8 +1,8 @@
-package com.miso.vinilos.E2E
+package com.miso.vinilos.e2e
 
 import androidx.activity.compose.setContent
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
-import com.miso.vinilos.E2E.page_object.UserTypeSelectionPage
+import com.miso.vinilos.e2e.page_object.UserTypeSelectionPage
 import com.miso.vinilos.MainActivity
 import com.miso.vinilos.MainScreen
 import com.miso.vinilos.ui.theme.VinilosTheme
