@@ -12,7 +12,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.miso.vinilos.data.VinylUiState
-import com.miso.vinilos.models.Album
+import com.miso.vinilos.models.Collector
 import com.miso.vinilos.repositories.AlbumRepository
 import com.miso.vinilos.repositories.CollectionRepository
 import kotlinx.coroutines.launch
@@ -27,17 +27,9 @@ class ColeccionistasListViewModel() : ViewModel() {
 
     private val repository = CollectionRepository()
 
-    private val _collections = MutableLiveData<List<Album>>()
-    val collections: LiveData<List<Album>> = _collections
+    private val _collections = MutableLiveData<List<Collector>>()
+    val collections: LiveData<List<Collector>> = _collections
 
-    /**
-     * Call fetchAlbums() on init so we can display status immediately.
-     */
-    //init {
-    //    if (vinylUiState == VinylUiState.Loading) {
-    //        fetchAlbums()
-    //    }
-    //}
 
     fun fetchCollections() {
         viewModelScope.launch {
