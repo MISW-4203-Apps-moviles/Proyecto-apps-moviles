@@ -19,7 +19,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         setContent {
-            VinylsTheme {
+            VinylsTheme(darkTheme = true) {
                 VinylApp()
             }
         }

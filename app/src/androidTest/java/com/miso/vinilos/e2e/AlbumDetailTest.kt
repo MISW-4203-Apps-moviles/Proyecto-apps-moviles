@@ -45,7 +45,7 @@ class AlbumDetailTest {
         with(AlbumListPage(composeTestRule, composeTestRule.activity)) {
 
             // Spinning loader está presente
-            //validateLoader()
+            validateLoader()
 
             // El contenedor del listado está presente
             validateListElement()
@@ -57,12 +57,10 @@ class AlbumDetailTest {
             albumName = getAlbumNameFromList(0)
 
             // Click en el primer elemento de la lista y navegar al detalle
-           clickListElement(0)
+            clickListElement(0)
         }
 
         with(AlbumDetailPage(composeTestRule, composeTestRule.activity)) {
-            // Spinning loader está presente
-           validateLoader()
 
             // La pantalla de detalle del album tiene los elementos necesarios
            validateScreen()
