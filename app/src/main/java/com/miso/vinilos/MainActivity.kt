@@ -12,12 +12,22 @@ import com.miso.vinilos.ui.theme.VinylsTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Save the instance of the MainActivity
+        context = this
+
         enableEdgeToEdge()
+
         setContent {
             VinylsTheme {
                 VinylApp()
             }
         }
+    }
+
+    companion object {
+        lateinit var context: MainActivity
+            private set
     }
 }
 
