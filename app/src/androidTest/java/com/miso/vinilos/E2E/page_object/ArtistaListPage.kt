@@ -1,5 +1,6 @@
 package com.miso.vinilos.E2E.page_object
 
+import android.util.Log
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.semantics.getOrNull
 import androidx.compose.ui.test.SemanticsNodeInteraction
@@ -39,8 +40,20 @@ class ArtistaListPage (composeRule: ComposeTestRule, activity: MainActivity) :
     fun getListItemFromList(itemIndex: Int): SemanticsNodeInteraction {
         return getNodeItemFromList(
             itemIndex,
-            hasContentDescription(context.getString(R.string.lista_albumes_descripcion))
+            hasContentDescription(context.getString(R.string.lista_artistas_descripcion))
         )
+    }
+    fun getArtistaNameFromList(itemIndex:Int):String {
+        return getListItemFromList(itemIndex)
+            .onChildren()
+            .filter(hasContentDescription(context.getString(R.string.album_artista_descripcion)))
+            .onFirst()
+            .onChildren()
+            .filter(hasContentDescription(context.getString(R.string.performer_click)))
+            .onFirst()
+            .fetchSemanticsNode()
+            .config
+            .getOrNull(SemanticsProperties.Text)?.firstOrNull()?.text ?: ""
     }
 
 }

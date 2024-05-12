@@ -66,6 +66,7 @@ fun PerformerItem(
 ) {
 
     val performerDescription = stringResource(R.string.album_artista_descripcion)
+    val performerContent = stringResource(R.string.performer_click)
 
     ListDivider()
     ListItem(
@@ -75,7 +76,7 @@ fun PerformerItem(
         headlineContent = {
             Text(
                 text = performer.name,
-                //modifier = Modifier.semantics { contentDescription = performerDescription }
+                modifier = Modifier.semantics { contentDescription = performerContent }
             )
         },
         trailingContent = {
