@@ -15,7 +15,7 @@ class AlbumDetailPage(composeRule: ComposeTestRule, activity: MainActivity):
     //Navegación y comprobación de la pantalla de detalle de álbumes
 
     fun validateLoader() {
-        waitFor(hasContentDescription(context.getString(R.string.cargando_album_descripcion)))
+        waitForElement(hasContentDescription(context.getString(R.string.loading_data)))
     }
     fun validateScreen() {
         waitForElement(hasContentDescription(context.getString(R.string.album_nombre_descripcion)))

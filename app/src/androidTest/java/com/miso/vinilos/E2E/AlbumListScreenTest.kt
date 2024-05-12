@@ -41,7 +41,7 @@ class AlbumListScreenTest {
             clickPublicUserTypeButton()
         }
         with(NavigationSelectionPage(composeTestRule, composeTestRule.activity)) {
-            assertCurrentRouteName(navController,"album_list")
+            assertCurrentRouteName(navController,"AlbumList")
         }
     }
 
