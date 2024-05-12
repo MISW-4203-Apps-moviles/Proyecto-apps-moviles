@@ -9,7 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.miso.vinilos.ui.theme.VinilosTheme
+import com.miso.vinilos.ui.theme.VinylsTheme
 
 @Composable
 fun ArtistasScreen(innerPadding: PaddingValues = PaddingValues()) {
@@ -28,7 +28,7 @@ fun ArtistasScreen(innerPadding: PaddingValues = PaddingValues()) {
 @Preview(showBackground = true)
 @Composable
 fun ArtistasScreenPreview() {
-    VinilosTheme {
+    VinylsTheme (darkTheme = true) {
         ArtistasScreen()
     }
 }

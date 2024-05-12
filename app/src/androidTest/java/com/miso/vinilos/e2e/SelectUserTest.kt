@@ -4,8 +4,8 @@ import androidx.activity.compose.setContent
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import com.miso.vinilos.e2e.page_object.UserTypeSelectionPage
 import com.miso.vinilos.MainActivity
-import com.miso.vinilos.MainScreen
-import com.miso.vinilos.ui.theme.VinilosTheme
+import com.miso.vinilos.ui.VinylApp
+import com.miso.vinilos.ui.theme.VinylsTheme
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -18,8 +18,8 @@ class SelectUserTest {
     @Before
     fun setUp() {
         composeTestRule.activity.setContent {
-            VinilosTheme {
-                MainScreen()
+            VinylsTheme {
+                VinylApp()
             }
         }
     }

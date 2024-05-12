@@ -7,8 +7,8 @@ import com.miso.vinilos.e2e.page_object.AlbumDetailPage
 import com.miso.vinilos.e2e.page_object.AlbumListPage
 import com.miso.vinilos.e2e.page_object.UserTypeSelectionPage
 import com.miso.vinilos.MainActivity
-import com.miso.vinilos.MainScreen
-import com.miso.vinilos.ui.theme.VinilosTheme
+import com.miso.vinilos.ui.VinylApp
+import com.miso.vinilos.ui.theme.VinylsTheme
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -18,14 +18,16 @@ import org.junit.Test
 
 class AlbumDetailTest {
 
+    
+
     @get:Rule
     val composeTestRule = createAndroidComposeRule<MainActivity>()
 
     @Before
     fun setUp() {
         composeTestRule.activity.setContent {
-            VinilosTheme {
-                MainScreen()
+            VinylsTheme () {
+                VinylApp()
             }
         }
     }
