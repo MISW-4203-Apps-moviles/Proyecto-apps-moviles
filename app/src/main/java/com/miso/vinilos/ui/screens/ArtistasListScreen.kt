@@ -47,7 +47,7 @@ fun ArtistasListScreen(
         LazyColumn(
             modifier = Modifier
                 .semantics { contentDescription = listDescription }
-                .testTag("ItemPerformerList"),
+
         ) {
             items(performers, key = { performer -> performer.id }) { performer ->
                 PerformerItem(
@@ -70,11 +70,12 @@ fun PerformerItem(
     ListDivider()
     ListItem(
         modifier = Modifier
-            .clickable { onNavigateToPerformerDetail(performer.id) },
+            .clickable { onNavigateToPerformerDetail(performer.id) }
+            .semantics { contentDescription = performerDescription },
         headlineContent = {
             Text(
                 text = performer.name,
-                modifier = Modifier.semantics { contentDescription = performerDescription }
+                //modifier = Modifier.semantics { contentDescription = performerDescription }
             )
         },
         trailingContent = {

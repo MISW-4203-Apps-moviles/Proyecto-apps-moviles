@@ -20,4 +20,7 @@ class NavigationSelectionPage (composeRule: ComposeTestRule, activity: MainActiv
         //Navegación y comprobación de la pantalla de listado de álbumes
         fun clickAlbumes() =
             clickTextButton(context.getString(R.string.nav_albumes_label))
+        //Navegaciòn pantalla de artistas
+        fun clickArtistas() =
+            clickTextButton(context.getString(R.string.nav_artistas_label))
     }
