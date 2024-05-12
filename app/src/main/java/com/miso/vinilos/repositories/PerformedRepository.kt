@@ -10,7 +10,7 @@ class PerformedRepository {
         return performedService.getPerformers()
     }
 
-    suspend fun getPerformer(performedId: Int): Performer {
+    suspend fun getPerformer(performedId: String): Performer {
         return performedService.getPerformer(performedId)
     }
 }

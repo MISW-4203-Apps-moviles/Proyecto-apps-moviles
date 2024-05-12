@@ -29,4 +29,12 @@
     <string name="ver_detalles_de_coleccionista">Ver detalles de la colección</string>
     <string name="nombre_del_coleccionista">Nombre del coleccionista</string>
     <string name="detalles_del_artista">Ver detalles del artista</string>
+    <string name="cargando_artista_description">Cargando artista</string>
+    <string name="artista_nombre">Nombre del artista</string>
+    <string name="artista_imagen_descripcion">Imagen del artista</string>
+    <string name="artista_descripcion">Descripción del artista</string>
+    <string name="artista_fecha_nacimiento">Fecha de nacimiento del artista</string>
+    <string name="anio_de_nacimiento">"Año de nacimiento: "</string>
+    <string name="albumes_pertenecientes_al_artista">Álbumes</string>
+    <string name="no_albumes_disponibles">No hay álbumes disponibles para este artista</string>
 </resources>

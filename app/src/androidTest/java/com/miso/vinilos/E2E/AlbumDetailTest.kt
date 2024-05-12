@@ -18,6 +18,8 @@ import org.junit.Test
 
 class AlbumDetailTest {
 
+    
+
     @get:Rule
     val composeTestRule = createAndroidComposeRule<MainActivity>()
 
