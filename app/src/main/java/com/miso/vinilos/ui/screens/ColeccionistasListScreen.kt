@@ -79,11 +79,12 @@ fun CollectionItem(
     ListItem(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { onNavigateToCollectionDetail(collection.id) },
+            .clickable { onNavigateToCollectionDetail(collection.id) }
+            .semantics { contentDescription = collectorNameDescription },
         headlineContent = {
             Text(
-                text = collection.name,
-                modifier = Modifier.semantics { contentDescription = collectorNameDescription }
+                text = collection.name
+
             )
         },
         trailingContent = {
