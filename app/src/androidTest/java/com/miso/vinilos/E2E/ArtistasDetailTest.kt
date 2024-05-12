@@ -74,7 +74,7 @@ class ArtistasDetailTest {
             validateScreen()
 
             // El nombre del álbum es el mismo que el del elemento de la lista
-           // assertText(artistaName)
+            assertText(artistaName)
         }
     }
 }
