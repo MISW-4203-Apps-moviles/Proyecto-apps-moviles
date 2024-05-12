@@ -49,28 +49,8 @@ import com.miso.vinilos.ui.composables.ListDivider
 @Composable
 fun ArtistaDetailScreen(
     performer: Performer?,
-    isLoading: Boolean,
-    fetchPerformer: () -> Unit,
     innerPadding: PaddingValues = PaddingValues()
 ) {
-    val loadingDescription = stringResource(R.string.cargando_artista_description)
-
-    LaunchedEffect(Unit) {
-        fetchPerformer()
-    }
-
-    if (isLoading || performer == null) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding),
-            contentAlignment = Alignment.Center
-        ) {
-            CircularProgressIndicator(
-                modifier = Modifier.semantics { contentDescription = loadingDescription }
-            )
-        }
-    }
 
     Column(
         modifier = Modifier
@@ -90,6 +70,7 @@ fun ArtistaDetailScreen(
                 Log.d("myTag", it.albums.toString());
                 AlbumListSection(
                     albums = it.albums,
+
                )
             }
         }
@@ -177,13 +158,16 @@ fun ArtistaCard(
 }
 
 @Composable
-fun AlbumItem(album: Album) {
+fun AlbumArtistItem(album: Album,
+              onNavigateToAlbumDetail: (albumId: Int) -> Unit
+) {
     val nombreAlbumDescripcion = stringResource(R.string.album_nombre_descripcion)
 
 
     ListItem(
 
-
+        modifier = Modifier
+            .clickable { onNavigateToAlbumDetail(album.id) },
         headlineContent = {
             Text(
                 text = album.name,
@@ -213,7 +197,7 @@ fun AlbumListSection(
     albums: List<Album> = emptyList(),
     innerPadding: PaddingValues = PaddingValues()
 ) {
-    val albumesArtistaDesc = "Albumes pertenecientes al artista"
+    val albumesArtistaDesc = stringResource(R.string.albumes_pertenecientes_al_artista)
 
     Column {
         Text(
@@ -224,15 +208,13 @@ fun AlbumListSection(
         )
     }
 
-        LazyColumn(
-
-            modifier = Modifier
+    LazyColumn(
+        modifier = Modifier
                 .height(80.dp)
-
-        ) {
-            items(albums) { album ->
-                AlbumItem(album)
+    ) {
+        items(albums) { album ->
+            AlbumArtistItem(album = album
+                           // onNavigateToAlbumDetail = navigateToAlbumDetail)
             }
         }
-
 }

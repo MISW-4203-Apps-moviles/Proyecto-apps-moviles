@@ -35,4 +35,5 @@
     <string name="artista_descripcion">Descripción del artista</string>
     <string name="artista_fecha_nacimiento">Fecha de nacimiento del artista</string>
     <string name="anio_de_nacimiento">"Año de nacimiento: "</string>
+    <string name="albumes_pertenecientes_al_artista">Albumes pertenecientes al artista</string>
 </resources>

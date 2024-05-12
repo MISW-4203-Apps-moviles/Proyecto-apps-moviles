@@ -1,15 +1,24 @@
 package com.miso.vinilos.viewModels
 
+import android.util.Log
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.miso.vinilos.data.VinylUiState
 import com.miso.vinilos.models.Performer
 import com.miso.vinilos.repositories.PerformedRepository
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
+import java.io.IOException
 
 class ArtistaDetailViewModel : ViewModel() {
+    var vinylUiState: VinylUiState by mutableStateOf(VinylUiState.Loading)
+        private set
     private val repository = PerformedRepository()
 
     private val _performer = MutableLiveData<Performer>()
@@ -21,15 +30,18 @@ class ArtistaDetailViewModel : ViewModel() {
 
     fun fetchPerformer(performerId: String) {
         viewModelScope.launch {
-            _isLoading.value = true
+            vinylUiState = VinylUiState.Loading
             try {
                 val performer = repository.getPerformer(performerId)
+                vinylUiState = VinylUiState.Success
                 _performer.value = performer
-                _isLoading.value = false
-            } catch (e: Exception) {
-                _isLoading.value = false
-                println(e)
+            } catch (e: IOException) {
+                vinylUiState = VinylUiState.Error
+            } catch (e: HttpException) {
+                vinylUiState = VinylUiState.Error
             }
+
+
         }
     }
 }

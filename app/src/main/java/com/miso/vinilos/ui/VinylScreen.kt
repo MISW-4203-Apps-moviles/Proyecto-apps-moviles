@@ -327,13 +327,14 @@ fun Navigation(
                 VinylScreen.ArtistaDetail.route,
             ) { backStackEntry ->
                 backStackEntry.arguments?.getString("performedId")?.let {
-                    val viewModel: ArtistaDetailViewModel =
+                    val artistaDetailViewModel: ArtistaDetailViewModel =
                         viewModel(factory = ArtistaDetailViewModelFactory())
-
                     ArtistaDetailScreenHandler(
-                        artistaId =  it,
-                        viewModel = viewModel,
-                        innerPadding = innerPadding
+                        vinylUiState = artistaDetailViewModel.vinylUiState,
+                        artistaId = it,
+                        retryAction = { artistaDetailViewModel.fetchPerformer(it) },
+                        viewModel = artistaDetailViewModel,
+                        innerPadding = innerPadding,
                     )
                 }
             }
