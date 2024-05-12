@@ -1,11 +1,7 @@
 package com.miso.vinilos.ui.screens
 
-import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -16,64 +12,78 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.miso.vinilos.R
 import com.miso.vinilos.models.Album
-import com.miso.vinilos.models.Comment
 import com.miso.vinilos.models.Performer
 import com.miso.vinilos.ui.composables.ListDivider
 
 @Composable
 fun ArtistaDetailScreen(
     performer: Performer?,
-    innerPadding: PaddingValues = PaddingValues()
+    innerPadding: PaddingValues = PaddingValues(),
+
 ) {
+    val albumesArtistaDesc = stringResource(R.string.albumes_pertenecientes_al_artista)
 
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .verticalScroll(rememberScrollState())
-            .padding(innerPadding)
-    ) {
 
-        performer?.let {
-            Column(
-                verticalArrangement = Arrangement.spacedBy(16.dp)
-            ) {
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+        ){
+            performer?.let {
+                item {
+                    ArtistaCard(performer = it)
+                }
+                item {
+                    Text(
+                        text = albumesArtistaDesc,
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Medium,
+                        modifier = Modifier.padding(top = 8.dp, bottom = 8.dp)
+                    )
+                }
 
-                ArtistaCard(
-                    performer = it,
-                )
-                Log.d("myTag", it.albums.toString());
-                AlbumListSection(
-                    albums = it.albums,
-
-               )
+                if (it.albums.isNotEmpty()) {
+                    AlbumListSection(albums = it.albums)
+                } else {
+                    item {
+                        Text(
+                            text = stringResource(R.string.no_albumes_disponibles),
+                            modifier = Modifier.padding(top = 8.dp)
+                        )
+                    }
+                }
             }
-        }
+    }
+
+}
+
+fun LazyListScope.AlbumListSection(
+    albums: List<Album> = emptyList(),
+) {
+    items(albums) { album ->
+        AlbumArtistItem(album = album)
     }
 }
 
@@ -158,16 +168,13 @@ fun ArtistaCard(
 }
 
 @Composable
-fun AlbumArtistItem(album: Album,
-              onNavigateToAlbumDetail: (albumId: Int) -> Unit
+fun AlbumArtistItem(album: Album
 ) {
     val nombreAlbumDescripcion = stringResource(R.string.album_nombre_descripcion)
 
-
+    ListDivider()
     ListItem(
 
-        modifier = Modifier
-            .clickable { onNavigateToAlbumDetail(album.id) },
         headlineContent = {
             Text(
                 text = album.name,
@@ -190,31 +197,4 @@ fun AlbumArtistItem(album: Album,
         }
     )
 
-}
-
-@Composable
-fun AlbumListSection(
-    albums: List<Album> = emptyList(),
-    innerPadding: PaddingValues = PaddingValues()
-) {
-    val albumesArtistaDesc = stringResource(R.string.albumes_pertenecientes_al_artista)
-
-    Column {
-        Text(
-            text = "Álbumes",
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = MaterialTheme.typography.titleMedium.fontWeight,
-            color = MaterialTheme.colorScheme.onSurface,
-        )
-    }
-
-    LazyColumn(
-        modifier = Modifier
-                .height(80.dp)
-    ) {
-        items(albums) { album ->
-            AlbumArtistItem(album = album
-                           // onNavigateToAlbumDetail = navigateToAlbumDetail)
-            }
-        }
 }
