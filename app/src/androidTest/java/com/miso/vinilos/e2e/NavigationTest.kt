@@ -1,12 +1,12 @@
-package com.miso.vinilos.E2E
+package com.miso.vinilos.e2e
 
 import androidx.activity.compose.setContent
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.navigation.compose.ComposeNavigator
 import androidx.navigation.testing.TestNavHostController
-import com.miso.vinilos.E2E.page_object.NavigationSelectionPage
-import com.miso.vinilos.E2E.page_object.UserTypeSelectionPage
+import com.miso.vinilos.e2e.page_object.NavigationSelectionPage
+import com.miso.vinilos.e2e.page_object.UserTypeSelectionPage
 import com.miso.vinilos.MainActivity
 import com.miso.vinilos.ui.VinylApp
 import org.junit.Before

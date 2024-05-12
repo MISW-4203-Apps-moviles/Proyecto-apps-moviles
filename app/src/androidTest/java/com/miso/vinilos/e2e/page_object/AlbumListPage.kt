@@ -1,5 +1,6 @@
-package com.miso.vinilos.E2E.page_object
+package com.miso.vinilos.e2e.page_object
 
+import android.content.Context
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.semantics.getOrNull
 import androidx.compose.ui.test.SemanticsNodeInteraction
@@ -12,10 +13,11 @@ import androidx.compose.ui.test.onFirst
 import com.miso.vinilos.MainActivity
 import com.miso.vinilos.R
 
+
 class AlbumListPage (composeRule: ComposeTestRule, activity: MainActivity) :
     PageObject(composeRule) {
 
-    val context = activity.applicationContext
+    val context: Context = activity.applicationContext
 
     fun validateLoader() {
         waitFor(hasContentDescription(context.getString(R.string.loading_data)))

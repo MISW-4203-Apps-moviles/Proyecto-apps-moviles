@@ -1,4 +1,4 @@
-package com.miso.vinilos.E2E.page_object
+package com.miso.vinilos.e2e.page_object
 
 import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.SemanticsMatcher
