@@ -335,6 +335,11 @@ fun Navigation(
                         retryAction = { artistaDetailViewModel.fetchPerformer(it) },
                         viewModel = artistaDetailViewModel,
                         innerPadding = innerPadding,
+                        navigateToAlbumDetail = { albumId ->
+                            navController.navigate(
+                                VinylScreen.AlbumDetail.route.replace("{albumId}", albumId.toString()),
+                            )
+                        },
                     )
                 }
             }

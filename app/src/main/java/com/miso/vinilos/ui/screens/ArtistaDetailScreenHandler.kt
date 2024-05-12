@@ -16,7 +16,8 @@ fun ArtistaDetailScreenHandler(
     artistaId: String,
     retryAction: () -> Unit,
     viewModel: ArtistaDetailViewModel,
-    innerPadding: PaddingValues = PaddingValues()
+    innerPadding: PaddingValues = PaddingValues(),
+    navigateToAlbumDetail: (albumId: Int) -> Unit,
 ) {
     val performer by viewModel.performer.observeAsState()
 
@@ -29,6 +30,7 @@ fun ArtistaDetailScreenHandler(
         is VinylUiState.Success -> ArtistaDetailScreen(
             innerPadding = innerPadding,
             performer = performer,
+            navigateToAlbumDetail = navigateToAlbumDetail
         )
         is VinylUiState.Error -> ErrorScreen(retryAction)
     }

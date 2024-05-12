@@ -2,6 +2,7 @@ package com.miso.vinilos.ui.screens
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -41,6 +42,7 @@ import com.miso.vinilos.ui.composables.ListDivider
 fun ArtistaDetailScreen(
     performer: Performer?,
     innerPadding: PaddingValues = PaddingValues(),
+    navigateToAlbumDetail: (albumId: Int) -> Unit,
 
 ) {
     val albumesArtistaDesc = stringResource(R.string.albumes_pertenecientes_al_artista)
@@ -65,7 +67,8 @@ fun ArtistaDetailScreen(
                 }
 
                 if (it.albums.isNotEmpty()) {
-                    AlbumListSection(albums = it.albums)
+                    AlbumListSection(albums = it.albums,
+                        onNavigateToAlbumDetail = navigateToAlbumDetail)
                 } else {
                     item {
                         Text(
@@ -81,9 +84,10 @@ fun ArtistaDetailScreen(
 
 fun LazyListScope.AlbumListSection(
     albums: List<Album> = emptyList(),
+    onNavigateToAlbumDetail: (albumId: Int) -> Unit,
 ) {
     items(albums) { album ->
-        AlbumArtistItem(album = album)
+        AlbumArtistItem(album = album, onNavigateToAlbumDetail )
     }
 }
 
@@ -168,12 +172,15 @@ fun ArtistaCard(
 }
 
 @Composable
-fun AlbumArtistItem(album: Album
+fun AlbumArtistItem(album: Album,
+   onNavigateToAlbumDetail: (albumId: Int) -> Unit,
 ) {
     val nombreAlbumDescripcion = stringResource(R.string.album_nombre_descripcion)
 
     ListDivider()
     ListItem(
+        modifier = Modifier
+            .clickable { onNavigateToAlbumDetail(album.id) },
 
         headlineContent = {
             Text(
