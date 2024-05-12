@@ -4,20 +4,10 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
-import com.miso.vinilos.ui.BottomNavigationBar
-import com.miso.vinilos.ui.Navigation
-import com.miso.vinilos.ui.TopNavigationBar
-import com.miso.vinilos.ui.theme.VinilosTheme
+import com.miso.vinilos.ui.VinylApp
+import com.miso.vinilos.ui.theme.VinylsTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,8 +19,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         setContent {
-            VinilosTheme {
-                MainScreen()
+            VinylsTheme {
+                VinylApp()
             }
         }
     }
@@ -41,30 +31,11 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Composable
-fun MainScreen(navController: NavHostController = rememberNavController()) {
-    Scaffold(
-        topBar = {
-            TopNavigationBar(navController)
-        },
-        bottomBar = {
-            BottomNavigationBar(navController)
-        },
-        content = { innerPadding ->
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(MaterialTheme.colorScheme.background)
-
-            ) {
-                Navigation(navController, innerPadding)
-            }
-
-        })
-}
 
 @Preview(showBackground = true)
 @Composable
 fun VinylsAppPreview() {
-    MainScreen()
+    VinylsTheme(darkTheme = true) {
+        VinylApp()
+    }
 }

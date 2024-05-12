@@ -1,12 +1,6 @@
 package com.miso.vinilos.E2E
 
 import androidx.activity.compose.setContent
-import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.semantics.SemanticsProperties
-import androidx.compose.ui.test.ExperimentalTestApi
-import androidx.compose.ui.test.SemanticsMatcher
-import androidx.compose.ui.test.hasContentDescription
-import androidx.compose.ui.test.hasParent
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
@@ -14,9 +8,9 @@ import com.miso.vinilos.E2E.page_object.AlbumListPage
 import com.miso.vinilos.E2E.page_object.NavigationSelectionPage
 import com.miso.vinilos.E2E.page_object.UserTypeSelectionPage
 import com.miso.vinilos.MainActivity
-import com.miso.vinilos.MainScreen
+import com.miso.vinilos.ui.VinylApp
 import com.miso.vinilos.R
-import com.miso.vinilos.ui.theme.VinilosTheme
+import com.miso.vinilos.ui.theme.VinylsTheme
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -33,8 +27,8 @@ class AlbumListScreenTest {
         composeTestRule.activityRule.scenario.onActivity { activity ->
             activity.setContent {
                 navController = rememberNavController()
-                VinilosTheme {
-                    MainScreen(navController)
+                VinylsTheme {
+                    VinylApp(navController)
                 }
             }
         }

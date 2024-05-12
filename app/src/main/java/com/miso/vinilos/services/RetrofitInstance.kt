@@ -2,7 +2,6 @@ package com.miso.vinilos.services
 
 import com.google.gson.GsonBuilder
 import com.miso.vinilos.MainActivity.Companion.context
-import com.miso.vinilos.utils.Network
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -45,5 +44,13 @@ object RetrofitInstance {
 
     val albumService: AlbumService by lazy {
         retrofit.create(AlbumService::class.java)
+    }
+
+    val collectionService: CollectionService by lazy {
+        retrofit.create(CollectionService::class.java)
+    }
+
+    val performedService: PerformedService by lazy {
+        retrofit.create(PerformedService::class.java)
     }
 }

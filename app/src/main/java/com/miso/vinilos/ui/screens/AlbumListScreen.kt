@@ -9,12 +9,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
@@ -28,23 +26,17 @@ import coil.request.ImageRequest
 import com.miso.vinilos.R
 import com.miso.vinilos.models.Album
 import com.miso.vinilos.ui.composables.ListDivider
-import com.miso.vinilos.ui.theme.VinilosTheme
+import com.miso.vinilos.ui.theme.VinylsTheme
 
 
 @Composable
 fun AlbumListScreen(
     albums: List<Album>,
-    fetchAlbums: () -> Unit,
-    isLoading: Boolean,
     navigateToAlbumDetail: (albumId: Int) -> Unit,
     innerPadding: PaddingValues = PaddingValues()
 ) {
     val listDescription = stringResource(R.string.lista_albumes_descripcion)
-    val loadingDescription = stringResource(R.string.cargando_albumes_descripcion)
 
-    LaunchedEffect(Unit) {
-        fetchAlbums()
-    }
 
     Box(
         modifier = Modifier
@@ -62,14 +54,6 @@ fun AlbumListScreen(
                     onNavigateToAlbumDetail = navigateToAlbumDetail
                 )
             }
-        }
-
-        if (isLoading) {
-            CircularProgressIndicator(
-                Modifier
-                    .align(Alignment.Center)
-                    .semantics { contentDescription = loadingDescription }
-            )
         }
     }
 }
@@ -119,7 +103,7 @@ fun AlbumItem(
 @Preview(showBackground = true)
 @Composable
 fun AlbumItemPreview() {
-    VinilosTheme {
+    VinylsTheme(darkTheme = true) {
         AlbumItem(
             album = Album(
                 id = 1,
@@ -140,7 +124,7 @@ fun AlbumItemPreview() {
 @Preview(showBackground = true)
 @Composable
 fun AlbumListScreenPreview() {
-    VinilosTheme {
+    VinylsTheme (darkTheme = true) {
         AlbumListScreen(
             navigateToAlbumDetail = {},
             albums = listOf(
@@ -167,8 +151,6 @@ fun AlbumListScreenPreview() {
                     recordLabel = "Harvest Records"
                 ),
             ),
-            isLoading = false,
-            fetchAlbums = {}
         )
     }
 }
