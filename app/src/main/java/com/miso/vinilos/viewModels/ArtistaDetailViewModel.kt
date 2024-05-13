@@ -1,6 +1,5 @@
 package com.miso.vinilos.viewModels
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -10,53 +9,44 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.miso.vinilos.data.VinylUiState
-import com.miso.vinilos.models.Album
-import com.miso.vinilos.repositories.AlbumRepository
+import com.miso.vinilos.models.Performer
+import com.miso.vinilos.repositories.PerformedRepository
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
 
-class AlbumListViewModel : ViewModel() {
-
-    /** Status of the view */
+class ArtistaDetailViewModel : ViewModel() {
     var vinylUiState: VinylUiState by mutableStateOf(VinylUiState.Loading)
 
-    private val repository = AlbumRepository()
+    private val repository = PerformedRepository()
 
-    private val _albums = MutableLiveData<List<Album>>()
-    val albums: LiveData<List<Album>> = _albums
+    private val _performer = MutableLiveData<Performer>()
+    val performer: LiveData<Performer> = _performer
 
-    /**
-     * Call fetchAlbums() on init so we can display status immediately.
-     */
-    //init {
-    //    if (vinylUiState == VinylUiState.Loading) {
-    //        fetchAlbums()
-    //    }
-    //}
 
-    fun fetchAlbums() {
+    fun fetchPerformer(performerId: String) {
         viewModelScope.launch {
             vinylUiState = VinylUiState.Loading
             try {
-                val albums = repository.getAlbums()
-                Log.d("AlbumListViewModel", "fetchAlbums: $albums")
+                val performer = repository.getPerformer(performerId)
                 vinylUiState = VinylUiState.Success
-                _albums.value = albums
+                _performer.value = performer
             } catch (e: IOException) {
                 vinylUiState = VinylUiState.Error
             } catch (e: HttpException) {
                 vinylUiState = VinylUiState.Error
             }
+
+
         }
     }
 }
 
-class AlbumListViewModelFactory : ViewModelProvider.Factory {
+class ArtistaDetailViewModelFactory : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(AlbumListViewModel::class.java)) {
-            return AlbumListViewModel() as T
+        if (modelClass.isAssignableFrom(ArtistaDetailViewModel::class.java)) {
+            return ArtistaDetailViewModel() as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

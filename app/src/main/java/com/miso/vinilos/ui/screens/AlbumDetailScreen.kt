@@ -43,6 +43,7 @@ import com.miso.vinilos.R
 import com.miso.vinilos.models.Album
 import com.miso.vinilos.models.Comment
 import com.miso.vinilos.ui.composables.ListDivider
+import com.miso.vinilos.ui.theme.VinylsTheme
 import com.miso.vinilos.ui.theme.primaryDark
 
 
@@ -269,60 +270,70 @@ fun CommentSection(
 @Preview
 @Composable
 fun AddCommentPreview() {
-    AddComment(
-        onAddComment = {}
-    )
+    VinylsTheme(darkTheme = true) {
+        AddComment(
+            onAddComment = {}
+        )
+    }
 }
 
 @Preview
 @Composable
 fun CommentSectionPreview() {
-    CommentSection(
-        comments = emptyList(),
-        onAddComment = {}
-    )
+    VinylsTheme(darkTheme = true) {
+        CommentSection(
+            comments = emptyList(),
+            onAddComment = {}
+        )
+    }
 }
 
 @Preview
 @Composable
 fun CommentItemPreview() {
-    CommentItem()
+    VinylsTheme(darkTheme = true) {
+        CommentItem()
+    }
 }
 
 @Preview
 @Composable
 fun AlbumCardPreview() {
-    AlbumCard(
-        album = Album(
-            id = 1,
-            name = "Album name",
-            description = "Album description",
-            cover = "https://placehold.co/400x400.png",
-            releaseDate = "2021-01-01",
-            recordLabel = "Record label",
-            genre = "Genre",
-            performers = emptyList(),
-            comments = emptyList()
+    VinylsTheme(darkTheme = true) {
+        AlbumCard(
+            album = Album(
+                id = 1,
+                name = "Album name",
+                description = "Album description",
+                cover = "https://placehold.co/400x400.png",
+                releaseDate = "2021-01-01",
+                recordLabel = "Record label",
+                genre = "Genre",
+                performers = emptyList(),
+                comments = emptyList()
+            )
         )
-    )
+    }
 }
 
 @Preview
 @Composable
 fun AlbumDetailScreenPreview() {
-    AlbumDetailScreen(
-        album = Album(
-            id = 1,
-            name = "Album name",
-            description = "Album description",
-            cover = "https://placehold.co/400x400.png",
-            releaseDate = "2021-01-01",
-            recordLabel = "Record label",
-            genre = "Genre",
-            performers = emptyList(),
-            comments = emptyList()
-        ),
-        isLoading = false,
-        fetchAlbum = {}
-    )
+    VinylsTheme(darkTheme = true) {
+        AlbumDetailScreen(
+            album = Album(
+                id = 1,
+                name = "Album name",
+                description = "Album description",
+                cover = "https://placehold.co/400x400.png",
+                releaseDate = "2021-01-01",
+                recordLabel = "Record label",
+                genre = "Genre",
+                performers = emptyList(),
+                comments = emptyList()
+            ),
+            isLoading = false,
+            fetchAlbum = {}
+        )
+    }
 }

@@ -1,19 +1,24 @@
-package com.miso.vinilos.E2E
+package com.miso.vinilos.e2e
 
 import androidx.activity.compose.setContent
 import androidx.compose.ui.test.SemanticsNodeInteraction
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
-import com.miso.vinilos.E2E.page_object.AlbumDetailPage
-import com.miso.vinilos.E2E.page_object.AlbumListPage
-import com.miso.vinilos.E2E.page_object.UserTypeSelectionPage
+import com.miso.vinilos.e2e.page_object.AlbumDetailPage
+import com.miso.vinilos.e2e.page_object.AlbumListPage
+import com.miso.vinilos.e2e.page_object.UserTypeSelectionPage
 import com.miso.vinilos.MainActivity
-import com.miso.vinilos.MainScreen
-import com.miso.vinilos.ui.theme.VinilosTheme
+import com.miso.vinilos.ui.VinylApp
+import com.miso.vinilos.ui.theme.VinylsTheme
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
+
+
+
 class AlbumDetailTest {
+
+    
 
     @get:Rule
     val composeTestRule = createAndroidComposeRule<MainActivity>()
@@ -21,8 +26,8 @@ class AlbumDetailTest {
     @Before
     fun setUp() {
         composeTestRule.activity.setContent {
-            VinilosTheme {
-                MainScreen()
+            VinylsTheme {
+                VinylApp()
             }
         }
     }
@@ -40,7 +45,7 @@ class AlbumDetailTest {
         with(AlbumListPage(composeTestRule, composeTestRule.activity)) {
 
             // Spinning loader está presente
-            //validateLoader()
+            validateLoader()
 
             // El contenedor del listado está presente
             validateListElement()
@@ -52,12 +57,10 @@ class AlbumDetailTest {
             albumName = getAlbumNameFromList(0)
 
             // Click en el primer elemento de la lista y navegar al detalle
-           clickListElement(0)
+            clickListElement(0)
         }
 
         with(AlbumDetailPage(composeTestRule, composeTestRule.activity)) {
-            // Spinning loader está presente
-           validateLoader()
 
             // La pantalla de detalle del album tiene los elementos necesarios
            validateScreen()

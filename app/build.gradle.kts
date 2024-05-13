@@ -35,6 +35,7 @@ android {
     }
     kotlinOptions {
         jvmTarget = "1.8"
+        freeCompilerArgs += "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api"
     }
     buildFeatures {
         compose = true
@@ -62,6 +63,7 @@ dependencies {
     implementation(libs.navigation.compose)
     implementation(libs.androidx.material.icons.extended)
     implementation(libs.okhttp)
+    implementation (libs.okhttp3.logging.interceptor)
     implementation(libs.coil.compose)
     implementation(libs.androidx.runtime.livedata)
     implementation(libs.retrofit)

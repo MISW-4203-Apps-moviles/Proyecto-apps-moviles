@@ -1,4 +1,4 @@
-package com.miso.vinilos.E2E.page_object
+package com.miso.vinilos.e2e.page_object
 
 import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.SemanticsMatcher
@@ -10,7 +10,6 @@ import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.hasTextExactly
 import androidx.compose.ui.test.junit4.ComposeTestRule
 import androidx.compose.ui.test.onChildAt
-import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 
@@ -30,11 +29,6 @@ abstract class PageObject (val composeRule: ComposeTestRule) {
 
     fun assertNotItemSelection(tag: String) =
         composeRule.onNodeWithText(tag).assertIsNotSelected()
-
-    fun assertTagExists(text: String)=
-        composeRule
-            .onNodeWithTag(text)
-            .assertExists()
 
     fun getNodeItemFromList(childIndex: Int, parentMatcher: SemanticsMatcher): SemanticsNodeInteraction {
         val node = composeRule
