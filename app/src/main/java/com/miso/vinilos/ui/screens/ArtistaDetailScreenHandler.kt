@@ -8,28 +8,29 @@ import androidx.compose.runtime.livedata.observeAsState
 import com.miso.vinilos.data.VinylUiState
 import com.miso.vinilos.ui.composables.ErrorScreen
 import com.miso.vinilos.ui.composables.SpinnerScreen
-import com.miso.vinilos.viewModels.AlbumListViewModel
+import com.miso.vinilos.viewModels.ArtistaDetailViewModel
 
 @Composable
-fun AlbumListScreenHandler(
+fun ArtistaDetailScreenHandler(
     vinylUiState: VinylUiState,
+    artistaId: String,
     retryAction: () -> Unit,
-    viewModel: AlbumListViewModel,
+    viewModel: ArtistaDetailViewModel,
+    innerPadding: PaddingValues = PaddingValues(),
     navigateToAlbumDetail: (albumId: Int) -> Unit,
-    innerPadding: PaddingValues = PaddingValues()
 ) {
-    val albums by viewModel.albums.observeAsState(emptyList())
+    val performer by viewModel.performer.observeAsState()
 
     LaunchedEffect(Unit) {
-        viewModel.fetchAlbums()
+        viewModel.fetchPerformer(artistaId)
     }
 
     when (vinylUiState) {
         is VinylUiState.Loading -> SpinnerScreen()
-        is VinylUiState.Success -> AlbumListScreen(
-            navigateToAlbumDetail = navigateToAlbumDetail,
+        is VinylUiState.Success -> ArtistaDetailScreen(
             innerPadding = innerPadding,
-            albums = albums,
+            performer = performer,
+            navigateToAlbumDetail = navigateToAlbumDetail
         )
         is VinylUiState.Error -> ErrorScreen(retryAction)
     }

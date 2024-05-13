@@ -1,23 +1,28 @@
-package com.miso.vinilos.E2E.page_object
+package com.miso.vinilos.e2e.page_object
 
+import android.content.Context
 import androidx.compose.ui.test.junit4.ComposeTestRule
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
 import com.miso.vinilos.MainActivity
-import org.junit.Assert
 import com.miso.vinilos.R
+import org.junit.Assert
 
 class NavigationSelectionPage (composeRule: ComposeTestRule, activity: MainActivity) :
 
     PageObject(composeRule) {
 
-        val context = activity.applicationContext
-        private lateinit var navController: NavHostController
+        val context: Context = activity.applicationContext
 
-        fun assertCurrentRouteName(navController: NavController, expectedRouteName: String) {
+    fun assertCurrentRouteName(navController: NavController, expectedRouteName: String) {
             Assert.assertEquals(expectedRouteName, navController.currentBackStackEntry?.destination?.route)
         }
         //Navegación y comprobación de la pantalla de listado de álbumes
         fun clickAlbumes() =
             clickTextButton(context.getString(R.string.nav_albumes_label))
+        //Navegaciòn pantalla de artistas
+        fun clickArtistas() =
+            clickTextButton(context.getString(R.string.nav_artistas_label))
+
+        fun clickColeccionistas() =
+            clickTextButton(context.getString(R.string.nav_coleccionistas_label))
     }
