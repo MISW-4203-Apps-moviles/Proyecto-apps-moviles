@@ -1,5 +1,6 @@
-package com.miso.vinilos.E2E.page_object
+package com.miso.vinilos.e2e.page_object
 
+import android.content.Context
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.semantics.getOrNull
 import androidx.compose.ui.test.SemanticsNodeInteraction
@@ -15,11 +16,7 @@ import com.miso.vinilos.R
 class ColeccionistaListPage (composeRule: ComposeTestRule, activity: MainActivity) :
     PageObject(composeRule) {
 
-    val context = activity.applicationContext
-
-    fun validateLoader() {
-        waitForElement(hasContentDescription(context.getString(R.string.loading_data)))
-    }
+    val context: Context = activity.applicationContext
 
     fun validateListElement() {
         waitForElement(hasContentDescription(context.getString(R.string.lista_coleccionistas_descripcion)))

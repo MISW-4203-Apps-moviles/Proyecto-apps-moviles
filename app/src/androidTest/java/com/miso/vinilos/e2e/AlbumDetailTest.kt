@@ -26,7 +26,7 @@ class AlbumDetailTest {
     @Before
     fun setUp() {
         composeTestRule.activity.setContent {
-            VinylsTheme () {
+            VinylsTheme {
                 VinylApp()
             }
         }

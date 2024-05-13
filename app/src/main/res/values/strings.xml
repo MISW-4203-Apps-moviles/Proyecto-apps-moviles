@@ -7,7 +7,6 @@
     <string name="nav_albumes_label">Albumes</string>
     <string name="nav_coleccionistas_label">Coleccionistas</string>
     <string name="nav_artistas_label">Artistas</string>
-    <string name="no_label">Sin label</string>
     <string name="regresar_boton_descripcion">Regresar a la pantalla anterior</string>
     <string name="sin_artista">Sin artista</string>
     <string name="lista_albumes_descripcion">Listado de álbumes</string>
@@ -20,8 +19,6 @@
     <string name="album_descripcion">Descripcion del album</string>
     <string name="album_disquera_descripcion">Disquera del album</string>
     <string name="album_portada_descripcion">Portada del album</string>
-    <string name="cargando_descripcion">cargando información</string>
-    <string name="cargando_albumes_descripcion">cargando listado de álbumes</string>
     <string name="cargando_album_descripcion">cargando álbum</string>
     <string name="loading_data">cargando datos</string>
     <string name="loading_error">Error al cargar</string>
@@ -29,7 +26,6 @@
     <string name="ver_detalles_de_coleccionista">Ver detalles de la colección</string>
     <string name="nombre_del_coleccionista">Nombre del coleccionista</string>
     <string name="detalles_del_artista">Ver detalles del artista</string>
-    <string name="cargando_artista_description">Cargando artista</string>
     <string name="artista_nombre">Nombre del artista</string>
     <string name="artista_imagen_descripcion">Imagen del artista</string>
     <string name="artista_descripcion">Descripción del artista</string>

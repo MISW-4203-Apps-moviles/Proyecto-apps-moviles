@@ -21,7 +21,7 @@ fun ArtistaListScreenHandler(
     val performers by viewModel.performers.observeAsState(emptyList())
 
     LaunchedEffect(Unit) {
-        viewModel.fetchPerformer()
+        viewModel.fetchPerformers()
     }
 
     when (vinylUiState) {

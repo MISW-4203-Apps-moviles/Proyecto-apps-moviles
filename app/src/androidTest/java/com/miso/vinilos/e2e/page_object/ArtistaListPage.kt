@@ -1,5 +1,6 @@
-package com.miso.vinilos.E2E.page_object
+package com.miso.vinilos.e2e.page_object
 
+import android.content.Context
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.hasParent
@@ -10,7 +11,7 @@ import com.miso.vinilos.R
 class ArtistaListPage (composeRule: ComposeTestRule, activity: MainActivity) :
     PageObject(composeRule) {
 
-    val context = activity.applicationContext
+    val context: Context = activity.applicationContext
 
     fun validateLoader() {
         waitForElement(hasContentDescription(context.getString(R.string.loading_data)))
