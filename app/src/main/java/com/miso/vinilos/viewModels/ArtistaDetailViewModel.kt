@@ -1,6 +1,5 @@
 package com.miso.vinilos.viewModels
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -18,14 +17,11 @@ import java.io.IOException
 
 class ArtistaDetailViewModel : ViewModel() {
     var vinylUiState: VinylUiState by mutableStateOf(VinylUiState.Loading)
-        private set
+
     private val repository = PerformedRepository()
 
     private val _performer = MutableLiveData<Performer>()
     val performer: LiveData<Performer> = _performer
-
-    private val _isLoading = MutableLiveData(false)
-    val isLoading: LiveData<Boolean> = _isLoading
 
 
     fun fetchPerformer(performerId: String) {

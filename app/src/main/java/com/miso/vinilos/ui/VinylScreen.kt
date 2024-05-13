@@ -48,7 +48,6 @@ import com.miso.vinilos.ui.screens.AlbumDetailScreenHandler
 import com.miso.vinilos.ui.screens.AlbumListScreenHandler
 import com.miso.vinilos.ui.screens.ArtistaDetailScreenHandler
 import com.miso.vinilos.ui.screens.ArtistaListScreenHandler
-import com.miso.vinilos.ui.screens.ArtistasScreen
 import com.miso.vinilos.ui.screens.ColeccionistasListScreenHandler
 import com.miso.vinilos.ui.screens.ColeccionistasScreen
 import com.miso.vinilos.ui.screens.UserTypeSelectionScreen
@@ -94,9 +93,9 @@ enum class VinylTab(
 
 @Composable
 fun VinylAppBar(
+    modifier: Modifier = Modifier,
     isVisible: Boolean = false,
     navigateUp: () -> Unit,
-    modifier: Modifier = Modifier,
 ) {
     AnimatedVisibility(
         visible = isVisible,
@@ -151,9 +150,9 @@ fun VinylApp(
 
 @Composable
 fun BottomNavigationBar(
+    modifier: Modifier = Modifier,
     isVisible: Boolean = false,
-    navController: NavHostController,
-    modifier: Modifier = Modifier
+    navController: NavHostController
 ) {
     AnimatedVisibility(
         visible = isVisible,
@@ -162,7 +161,7 @@ fun BottomNavigationBar(
         content = {
             NavigationBar {
                val currentDestination = navController.currentDestination
-                VinylTab.values().forEach { tab ->
+                VinylTab.entries.forEach { tab ->
                     //Log.d("DEBUG", "tab: ${tab.name}")
                     NavigationBarItem(
                         icon = {
@@ -313,10 +312,10 @@ fun Navigation(
                     viewModel(factory = ArtistasListViewModelFactory())
                 ArtistaListScreenHandler(
                     vinylUiState = artistasListViewModel.vinylUiState,
-                    retryAction = artistasListViewModel::fetchPerformer,
+                    retryAction = artistasListViewModel::fetchPerformers,
                     navigateToPerformerDetail = { performedId ->
                         navController.navigate(
-                            VinylScreen.ArtistaDetail.route.replace("{performedId}", performedId.toString()),
+                            VinylScreen.ArtistaDetail.route.replace("{performedId}", performedId),
                         )
                     },
                     viewModel = artistasListViewModel,

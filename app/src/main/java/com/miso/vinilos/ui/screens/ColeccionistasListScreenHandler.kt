@@ -8,7 +8,6 @@ import androidx.compose.runtime.livedata.observeAsState
 import com.miso.vinilos.data.VinylUiState
 import com.miso.vinilos.ui.composables.ErrorScreen
 import com.miso.vinilos.ui.composables.SpinnerScreen
-import com.miso.vinilos.viewModels.AlbumListViewModel
 import com.miso.vinilos.viewModels.ColeccionistasListViewModel
 
 @Composable

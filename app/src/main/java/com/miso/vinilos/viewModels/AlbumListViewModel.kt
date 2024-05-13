@@ -9,8 +9,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.initializer
-import androidx.lifecycle.viewmodel.viewModelFactory
 import com.miso.vinilos.data.VinylUiState
 import com.miso.vinilos.models.Album
 import com.miso.vinilos.repositories.AlbumRepository
@@ -18,11 +16,10 @@ import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
 
-class AlbumListViewModel() : ViewModel() {
+class AlbumListViewModel : ViewModel() {
 
     /** Status of the view */
     var vinylUiState: VinylUiState by mutableStateOf(VinylUiState.Loading)
-        private set
 
     private val repository = AlbumRepository()
 

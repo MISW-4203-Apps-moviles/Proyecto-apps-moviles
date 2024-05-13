@@ -1,22 +1,21 @@
-package com.miso.vinilos.E2E
+package com.miso.vinilos.e2e
 
 import androidx.activity.compose.setContent
 import androidx.compose.ui.test.SemanticsNodeInteraction
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.miso.vinilos.E2E.page_object.AlbumDetailPage
-import com.miso.vinilos.E2E.page_object.AlbumListPage
-import com.miso.vinilos.E2E.page_object.ArtistaDetailPage
-import com.miso.vinilos.E2E.page_object.ArtistaListPage
-import com.miso.vinilos.E2E.page_object.NavigationSelectionPage
-import com.miso.vinilos.E2E.page_object.UserTypeSelectionPage
 import com.miso.vinilos.MainActivity
+import com.miso.vinilos.e2e.page_object.ArtistaDetailPage
+import com.miso.vinilos.e2e.page_object.ArtistaListPage
+import com.miso.vinilos.e2e.page_object.NavigationSelectionPage
+import com.miso.vinilos.e2e.page_object.UserTypeSelectionPage
 import com.miso.vinilos.ui.VinylApp
 import com.miso.vinilos.ui.theme.VinylsTheme
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+
 class ArtistasDetailTest {
 
     @get:Rule
