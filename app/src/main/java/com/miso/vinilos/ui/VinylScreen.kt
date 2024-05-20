@@ -1,7 +1,5 @@
 package com.miso.vinilos.ui
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.AnimatedVisibility
@@ -55,8 +53,6 @@ import com.miso.vinilos.ui.screens.ColeccionistasListScreenHandler
 import com.miso.vinilos.ui.screens.ColeccionistasScreen
 import com.miso.vinilos.ui.screens.UserTypeSelectionScreen
 import com.miso.vinilos.ui.theme.VinylsTheme
-import com.miso.vinilos.viewModels.AlbumCreateViewModel
-import com.miso.vinilos.viewModels.AlbumCreateViewModelFactory
 import com.miso.vinilos.viewModels.AlbumDetailViewModel
 import com.miso.vinilos.viewModels.AlbumDetailViewModelFactory
 import com.miso.vinilos.viewModels.AlbumListViewModel
