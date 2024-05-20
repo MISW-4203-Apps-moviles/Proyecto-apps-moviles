@@ -21,6 +21,7 @@ class AlbumCreateViewModel : ViewModel() {
             repository.createAlbum(album)
         }
     }
+}
 
 class AlbumCreateViewModelFactory : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
