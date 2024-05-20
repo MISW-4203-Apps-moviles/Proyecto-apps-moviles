@@ -1,7 +1,5 @@
 package com.miso.vinilos.ui.screens
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -38,11 +36,10 @@ import com.miso.vinilos.ui.theme.VinylsTheme
 import com.miso.vinilos.ui.theme.primaryDark
 import com.miso.vinilos.ui.theme.secondaryDark
 import com.miso.vinilos.viewModels.AlbumCreateViewModel
-import java.time.LocalDate
-import java.time.ZoneOffset
-import java.time.format.DateTimeFormatter
+import java.text.SimpleDateFormat
+import java.util.Locale
+import java.util.TimeZone
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun AlbumCreateScreen(
     navController: NavController = rememberNavController(),
@@ -61,7 +58,6 @@ fun AlbumCreateScreen(
     }
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun CreateAlbumForm(navController: NavController, viewModel: AlbumCreateViewModel) {
     val albumNameState = rememberSaveable { mutableStateOf("") }
@@ -165,14 +161,12 @@ fun CreateAlbumForm(navController: NavController, viewModel: AlbumCreateViewMode
             ExtendedFloatingActionButton(
                 onClick = {
                     if (isFormValid) {
+                        val inputFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                        val date = inputFormat.parse(albumReleaseDateState.value)
 
-                        val releaseDateInput = LocalDate.parse(
-                            albumReleaseDateState.value, DateTimeFormatter.ofPattern("dd/MM/yyyy")
-                        )
-                        val releaseDateOutput = releaseDateInput
-                            .atStartOfDay()
-                            .atOffset(ZoneOffset.ofHours(-5))
-                            .format(DateTimeFormatter.ISO_OFFSET_DATE_TIME)
+                        val outputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+                        outputFormat.timeZone = TimeZone.getTimeZone("GMT-5")
+                        val releaseDateOutput = outputFormat.format(date) + "-05:00"
 
                         viewModel.createAlbum(
                             Album(
@@ -201,7 +195,6 @@ fun CreateAlbumForm(navController: NavController, viewModel: AlbumCreateViewMode
     }
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Preview(showBackground = true)
 @Composable
 fun AlbumCreatePreview() {

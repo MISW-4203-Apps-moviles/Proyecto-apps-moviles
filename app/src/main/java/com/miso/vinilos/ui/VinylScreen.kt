@@ -1,5 +1,7 @@
 package com.miso.vinilos.ui
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.AnimatedVisibility
@@ -191,6 +193,7 @@ fun BottomNavigationBar(
 }
 
 
+
 @Composable
 fun Navigation(
     navController: NavHostController,
@@ -273,12 +276,9 @@ fun Navigation(
                 }
             }
             composable(VinylScreen.AlbumCreate.name) {
-                val albumCreateViewModel: AlbumCreateViewModel =
-                    viewModel(factory = AlbumCreateViewModelFactory())
 
                 AlbumCreateScreenHandler(
                     navController = navController,
-                    viewModel = albumCreateViewModel,
                     innerPadding = innerPadding
                 )
             }
