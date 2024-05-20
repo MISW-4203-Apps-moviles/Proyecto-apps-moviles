@@ -47,7 +47,6 @@ import java.time.format.DateTimeFormatter
 fun AlbumCreateScreen(
     navController: NavController = rememberNavController(),
     viewModel: AlbumCreateViewModel = AlbumCreateViewModel(),
-    album: Album? = null,
     innerPadding: PaddingValues = PaddingValues()
 ) {
 
