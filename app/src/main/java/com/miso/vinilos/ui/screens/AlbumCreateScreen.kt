@@ -81,7 +81,7 @@ fun CreateAlbumForm(navController: NavController, viewModel: AlbumCreateViewMode
             albumRecordLabelState.value.isNotBlank()
 
 
-    Spacer(modifier = Modifier.height(50.dp))
+    Spacer(modifier = Modifier.height(30.dp))
 
     Column(
         modifier = Modifier
@@ -97,7 +97,7 @@ fun CreateAlbumForm(navController: NavController, viewModel: AlbumCreateViewMode
             forceShowError = showErrors
         )
 
-        Spacer(modifier = Modifier.height(40.dp))
+        Spacer(modifier = Modifier.height(35.dp))
 
         VinylsTextField(
             state = albumCoverState,
@@ -107,7 +107,7 @@ fun CreateAlbumForm(navController: NavController, viewModel: AlbumCreateViewMode
             forceShowError = showErrors
         )
 
-        Spacer(modifier = Modifier.height(40.dp))
+        Spacer(modifier = Modifier.height(35.dp))
 
         VynilsDatePicker(
             state = albumReleaseDateState,
@@ -116,7 +116,7 @@ fun CreateAlbumForm(navController: NavController, viewModel: AlbumCreateViewMode
             forceShowError = showErrors
         )
 
-        Spacer(modifier = Modifier.height(40.dp))
+        Spacer(modifier = Modifier.height(35.dp))
 
         VinylsTextField(
             state = albumGenreState,
@@ -126,7 +126,7 @@ fun CreateAlbumForm(navController: NavController, viewModel: AlbumCreateViewMode
             forceShowError = showErrors
         )
 
-        Spacer(modifier = Modifier.height(40.dp))
+        Spacer(modifier = Modifier.height(35.dp))
 
         VinylsTextField(
             state = albumDescriptionState,
@@ -137,7 +137,7 @@ fun CreateAlbumForm(navController: NavController, viewModel: AlbumCreateViewMode
             forceShowError = showErrors
         )
 
-        Spacer(modifier = Modifier.height(40.dp))
+        Spacer(modifier = Modifier.height(35.dp))
 
         VinylsTextField(
             state = albumRecordLabelState,
@@ -147,7 +147,7 @@ fun CreateAlbumForm(navController: NavController, viewModel: AlbumCreateViewMode
             forceShowError = showErrors
         )
 
-        Spacer(modifier = Modifier.height(40.dp))
+        Spacer(modifier = Modifier.height(35.dp))
 
         Row {
             ExtendedFloatingActionButton(

@@ -1,12 +1,13 @@
 package com.miso.vinilos.ui.screens
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.navigation.NavController
 import com.miso.vinilos.viewModels.AlbumCreateViewModel
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun AlbumCreateScreenHandler(
     navController: NavController,
@@ -14,11 +15,8 @@ fun AlbumCreateScreenHandler(
     innerPadding: PaddingValues = PaddingValues()
 ) {
 
-    val album by viewModel.album.observeAsState(null)
-
     AlbumCreateScreen(
         navController = navController,
         innerPadding = innerPadding,
-        album = album
     )
 }
