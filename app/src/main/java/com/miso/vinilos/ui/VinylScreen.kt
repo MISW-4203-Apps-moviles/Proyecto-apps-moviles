@@ -359,26 +359,6 @@ fun Navigation(
                     )
                 }
             }
-            composable(
-                VinylScreen.ArtistaDetail.route,
-            ) { backStackEntry ->
-                backStackEntry.arguments?.getString("performedId")?.let {
-                    val artistaDetailViewModel: ArtistaDetailViewModel =
-                        viewModel(factory = ArtistaDetailViewModelFactory())
-                    ArtistaDetailScreenHandler(
-                        vinylUiState = artistaDetailViewModel.vinylUiState,
-                        artistaId = it,
-                        retryAction = { artistaDetailViewModel.fetchPerformer(it) },
-                        viewModel = artistaDetailViewModel,
-                        innerPadding = innerPadding,
-                        navigateToAlbumDetail = { albumId ->
-                            navController.navigate(
-                                VinylScreen.AlbumDetail.route.replace("{albumId}", albumId.toString()),
-                            )
-                        },
-                    )
-                }
-            }
         }
     }
 }
