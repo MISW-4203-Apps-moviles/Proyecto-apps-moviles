@@ -34,4 +34,11 @@
     <string name="albumes_pertenecientes_al_artista">Álbumes</string>
     <string name="no_albumes_disponibles">No hay álbumes disponibles para este artista</string>
     <string name="performer_click">Performer click</string>
+    <string name="desc_collect_comentarios">Comentarios</string>
+    <string name="desc_no_comentarios_disponibles">No hay comentarios disponibles</string>
+    <string name="desc_nombre_del_coleccionista">Nombre del coleccionista</string>
+    <string name="desc_email_del_coleccionista">Email del coleccionista</string>
+    <string name="desc_telefono_del_coleccionista">Telefono del coleccionista</string>
+    <string name="lista_de_comentarios">Lista de comentarios</string>
+    <string name="descripcion_del_comment">Descripcion del comment</string>
 </resources>
