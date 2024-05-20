@@ -10,7 +10,7 @@ class CollectionRepository {
         return collectionService.getCollections()
     }
 
-    suspend fun getCollection(collectionId: Int): Collector {
-        return collectionService.getCollection(collectionId)
+    suspend fun getCollector(collectionId: String): Collector {
+        return collectionService.getCollector(collectionId)
     }
 }

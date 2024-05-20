@@ -48,6 +48,7 @@ import com.miso.vinilos.ui.screens.AlbumDetailScreenHandler
 import com.miso.vinilos.ui.screens.AlbumListScreenHandler
 import com.miso.vinilos.ui.screens.ArtistaDetailScreenHandler
 import com.miso.vinilos.ui.screens.ArtistaListScreenHandler
+import com.miso.vinilos.ui.screens.ColeccionistasDetailScreenHandler
 import com.miso.vinilos.ui.screens.ColeccionistasListScreenHandler
 import com.miso.vinilos.ui.screens.ColeccionistasScreen
 import com.miso.vinilos.ui.screens.UserTypeSelectionScreen
@@ -60,6 +61,8 @@ import com.miso.vinilos.viewModels.ArtistaDetailViewModel
 import com.miso.vinilos.viewModels.ArtistaDetailViewModelFactory
 import com.miso.vinilos.viewModels.ArtistasListViewModel
 import com.miso.vinilos.viewModels.ArtistasListViewModelFactory
+import com.miso.vinilos.viewModels.ColeccionistaDetailViewModel
+import com.miso.vinilos.viewModels.ColeccionistaDetailViewModelFactory
 import com.miso.vinilos.viewModels.ColeccionistasListViewModel
 import com.miso.vinilos.viewModels.ColeccionistasListViewModelFactory
 
@@ -290,15 +293,15 @@ fun Navigation(
                 VinylScreen.ColeccionistaDetail.route,
             ) { backStackEntry ->
                 backStackEntry.arguments?.getString("collectionId")?.let {
-                    val viewModel: ColeccionistasListViewModel =
-                        viewModel(factory = ColeccionistasListViewModelFactory())
-                    // TODO: Implement this screen
-                    ColeccionistasScreen(innerPadding)
-                    //AlbumDetailScreenHandler(
-                    //    albumId = it,
-                    //    viewModel = viewModel,
-                    //    innerPadding = innerPadding
-                    //)
+                        val viewModel: ColeccionistaDetailViewModel =
+                            viewModel(factory = ColeccionistaDetailViewModelFactory())
+                        ColeccionistasDetailScreenHandler(
+                            coleccionistaId = it,
+                            viewModel = viewModel,
+                            innerPadding = innerPadding,
+                            vinylUiState = viewModel.vinylUiState,
+                            retryAction = { viewModel.fetchCollector(it) },
+                        )
                 }
             }
         }
