@@ -133,7 +133,7 @@ fun AlbumCard(
                     )
 
                     Text(
-                        text = album.performers.getOrNull(0)?.name ?: stringResource(R.string.sin_artista),
+                        text = album.performers?.getOrNull(0)?.name ?: stringResource(R.string.sin_artista),
                         style = MaterialTheme.typography.titleMedium,
                         modifier = Modifier
                             .semantics { contentDescription = albumArtistaNombreDescripcion }

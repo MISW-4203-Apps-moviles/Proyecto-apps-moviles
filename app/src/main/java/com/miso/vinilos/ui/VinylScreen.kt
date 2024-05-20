@@ -44,6 +44,8 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
 import com.miso.vinilos.R
+import com.miso.vinilos.ui.screens.AlbumCreateScreen
+import com.miso.vinilos.ui.screens.AlbumCreateScreenHandler
 import com.miso.vinilos.ui.screens.AlbumDetailScreenHandler
 import com.miso.vinilos.ui.screens.AlbumListScreenHandler
 import com.miso.vinilos.ui.screens.ArtistaDetailScreenHandler
@@ -52,6 +54,8 @@ import com.miso.vinilos.ui.screens.ColeccionistasListScreenHandler
 import com.miso.vinilos.ui.screens.ColeccionistasScreen
 import com.miso.vinilos.ui.screens.UserTypeSelectionScreen
 import com.miso.vinilos.ui.theme.VinylsTheme
+import com.miso.vinilos.viewModels.AlbumCreateViewModel
+import com.miso.vinilos.viewModels.AlbumCreateViewModelFactory
 import com.miso.vinilos.viewModels.AlbumDetailViewModel
 import com.miso.vinilos.viewModels.AlbumDetailViewModelFactory
 import com.miso.vinilos.viewModels.AlbumListViewModel
@@ -71,6 +75,7 @@ enum class VinylScreen(val route: String) {
     UserTypeSelection(route = "user_type_selection"),
     AlbumList(route = "album_list"),
     AlbumDetail(route = "album_detail/{albumId}"),
+    AlbumCreate(route = "album_create"),
     ColeccionistasList(route = "coleccionistas_list"),
     ColeccionistaDetail(route = "coleccionistas/{collectionId}"),
     ArtistasList(route = "artistas_list"),
@@ -248,6 +253,9 @@ fun Navigation(
                             VinylScreen.AlbumDetail.route.replace("{albumId}", albumId.toString()),
                         )
                     },
+                    navigateToAlbumCreate = {
+                        navController.navigate(VinylScreen.AlbumCreate.name)
+                    },
                     viewModel = albumViewModel,
                     innerPadding = innerPadding,
                 )
@@ -264,6 +272,16 @@ fun Navigation(
                         innerPadding = innerPadding
                     )
                 }
+            }
+            composable(VinylScreen.AlbumCreate.name) {
+                val albumCreateViewModel: AlbumCreateViewModel =
+                    viewModel(factory = AlbumCreateViewModelFactory())
+
+                AlbumCreateScreenHandler(
+                    navController = navController,
+                    viewModel = albumCreateViewModel,
+                    innerPadding = innerPadding
+                )
             }
         }
         // Collections screen
@@ -321,6 +339,26 @@ fun Navigation(
                     viewModel = artistasListViewModel,
                     innerPadding = innerPadding,
                 )
+            }
+            composable(
+                VinylScreen.ArtistaDetail.route,
+            ) { backStackEntry ->
+                backStackEntry.arguments?.getString("performedId")?.let {
+                    val artistaDetailViewModel: ArtistaDetailViewModel =
+                        viewModel(factory = ArtistaDetailViewModelFactory())
+                    ArtistaDetailScreenHandler(
+                        vinylUiState = artistaDetailViewModel.vinylUiState,
+                        artistaId = it,
+                        retryAction = { artistaDetailViewModel.fetchPerformer(it) },
+                        viewModel = artistaDetailViewModel,
+                        innerPadding = innerPadding,
+                        navigateToAlbumDetail = { albumId ->
+                            navController.navigate(
+                                VinylScreen.AlbumDetail.route.replace("{albumId}", albumId.toString()),
+                            )
+                        },
+                    )
+                }
             }
             composable(
                 VinylScreen.ArtistaDetail.route,

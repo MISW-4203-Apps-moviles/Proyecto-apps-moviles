@@ -2,13 +2,18 @@ package com.miso.vinilos.ui.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.ExtendedFloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,18 +31,20 @@ import com.miso.vinilos.R
 import com.miso.vinilos.models.Album
 import com.miso.vinilos.ui.composables.ListDivider
 import com.miso.vinilos.ui.theme.VinylsTheme
+import com.miso.vinilos.ui.theme.primaryDark
 
 
 @Composable
 fun AlbumListScreen(
     albums: List<Album>,
     navigateToAlbumDetail: (albumId: Int) -> Unit,
+    navigateToAlbumCreate: () -> Unit,
     innerPadding: PaddingValues = PaddingValues()
 ) {
     val listDescription = stringResource(R.string.lista_albumes_descripcion)
 
 
-    Box(
+    Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(innerPadding)
@@ -45,17 +52,32 @@ fun AlbumListScreen(
         LazyColumn(
             modifier = Modifier
                 .semantics { contentDescription = listDescription }
-                .testTag("ItemAlbum"),
+                .testTag("ItemAlbum")
+                .weight(10f)
         ) {
-            items(albums, key = { album -> album.id }) { album ->
+            items(albums, key = { album -> album.id!! }) { album ->
                 AlbumItem(
                     album = album,
                     onNavigateToAlbumDetail = navigateToAlbumDetail
                 )
             }
         }
+
+        ExtendedFloatingActionButton(
+            onClick = {navigateToAlbumCreate()},
+            icon = { Icon(Icons.Filled.Add, stringResource(R.string.agregar_album)) },
+            text = { Text(text = stringResource(R.string.agregar_album)) },
+            containerColor = primaryDark,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(
+                    bottom = 16.dp,
+                    top = 20.dp,
+                )
+        )
     }
 }
+
 
 @Composable
 fun AlbumItem(
@@ -69,11 +91,11 @@ fun AlbumItem(
     ListItem(
 
         modifier = Modifier
-            .clickable { onNavigateToAlbumDetail(album.id) },
+            .clickable { album.id?.let { onNavigateToAlbumDetail(it) } },
 
         overlineContent = {
             Text(
-                text = album.performers.getOrNull(0)?.name ?: stringResource(R.string.sin_artista)
+                text = album.performers?.getOrNull(0)?.name ?: stringResource(R.string.sin_artista)
             )
         },
         headlineContent = {
@@ -126,6 +148,7 @@ fun AlbumListScreenPreview() {
     VinylsTheme (darkTheme = true) {
         AlbumListScreen(
             navigateToAlbumDetail = {},
+            navigateToAlbumCreate = {},
             albums = listOf(
                 Album(
                     id = 1,
