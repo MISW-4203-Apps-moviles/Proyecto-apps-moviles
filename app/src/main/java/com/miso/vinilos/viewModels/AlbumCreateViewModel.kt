@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.miso.vinilos.models.Album
+import com.miso.vinilos.models.Genre
+import com.miso.vinilos.models.RecordLabel
 import com.miso.vinilos.repositories.AlbumRepository
 import kotlinx.coroutines.launch
 
@@ -15,6 +17,12 @@ class AlbumCreateViewModel : ViewModel() {
 
     private val _album = MutableLiveData<Album>()
     val album: LiveData<Album> = _album
+
+    private val _genres = MutableLiveData<List<Genre>>(Genre.getGenres)
+    val genres: LiveData<List<Genre>> = _genres
+
+    private val _recordLabels = MutableLiveData<List<RecordLabel>>(RecordLabel.getRecordLabels)
+    val recordLabels: LiveData<List<RecordLabel>> = _recordLabels
 
     fun createAlbum(album: Album) {
         viewModelScope.launch {

@@ -18,6 +18,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -30,6 +31,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.miso.vinilos.R
 import com.miso.vinilos.models.Album
+import com.miso.vinilos.ui.composables.VinylsDropDownMenu
 import com.miso.vinilos.ui.composables.VinylsTextField
 import com.miso.vinilos.ui.composables.VynilsDatePicker
 import com.miso.vinilos.ui.theme.VinylsTheme
@@ -64,18 +66,19 @@ fun CreateAlbumForm(navController: NavController, viewModel: AlbumCreateViewMode
     val albumCoverState = rememberSaveable { mutableStateOf("") }
     val albumDescriptionState = rememberSaveable { mutableStateOf("") }
     val albumReleaseDateState = rememberSaveable { mutableStateOf("") }
-    val albumRecordLabelState = rememberSaveable { mutableStateOf("") }
-    val albumGenreState = rememberSaveable { mutableStateOf("") }
+
+    val genres by viewModel.genres.observeAsState(emptyList())
+    val recordLabels by viewModel.recordLabels.observeAsState(emptyList())
+
+    val selectedGenreText = rememberSaveable { mutableStateOf(genres.firstOrNull()?.displayName ?: "") }
+    val selectedRecordLabelText = rememberSaveable { mutableStateOf(recordLabels.firstOrNull()?.displayName ?: "") }
 
     var showErrors by remember { mutableStateOf(false) }
 
     val isFormValid = albumNameState.value.isNotBlank() &&
             albumCoverState.value.isNotBlank() &&
             albumDescriptionState.value.isNotBlank() &&
-            albumGenreState.value.isNotBlank() &&
-            albumReleaseDateState.value.isNotBlank() &&
-            albumRecordLabelState.value.isNotBlank()
-
+            albumReleaseDateState.value.isNotBlank()
 
     Spacer(modifier = Modifier.height(30.dp))
 
@@ -114,12 +117,10 @@ fun CreateAlbumForm(navController: NavController, viewModel: AlbumCreateViewMode
 
         Spacer(modifier = Modifier.height(35.dp))
 
-        VinylsTextField(
-            state = albumGenreState,
-            label = stringResource(R.string.genero),
-            placeholder = stringResource(R.string.digite_el_genero),
-            error = if (albumGenreState.value.isBlank()) stringResource(R.string.genero_requerido) else null,
-            forceShowError = showErrors
+        VinylsDropDownMenu(
+            state = selectedGenreText,
+            options = genres.map { it.displayName },
+            label = stringResource(R.string.genero)
         )
 
         Spacer(modifier = Modifier.height(35.dp))
@@ -135,12 +136,10 @@ fun CreateAlbumForm(navController: NavController, viewModel: AlbumCreateViewMode
 
         Spacer(modifier = Modifier.height(35.dp))
 
-        VinylsTextField(
-            state = albumRecordLabelState,
-            label = stringResource(R.string.sello_discografico),
-            placeholder = stringResource(R.string.digite_el_sello_discografico),
-            error = if (albumRecordLabelState.value.isBlank()) stringResource(R.string.sello_discografico_requerido) else null,
-            forceShowError = showErrors
+        VinylsDropDownMenu(
+            state = selectedRecordLabelText,
+            options = recordLabels.map { it.displayName },
+            label = stringResource(R.string.sello_discografico)
         )
 
         Spacer(modifier = Modifier.height(35.dp))
@@ -166,7 +165,7 @@ fun CreateAlbumForm(navController: NavController, viewModel: AlbumCreateViewMode
 
                         val outputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
                         outputFormat.timeZone = TimeZone.getTimeZone("GMT-5")
-                        val releaseDateOutput = outputFormat.format(date) + "-05:00"
+                        val releaseDateOutput = date?.let { outputFormat.format(it) } + "-05:00"
 
                         viewModel.createAlbum(
                             Album(
@@ -174,8 +173,8 @@ fun CreateAlbumForm(navController: NavController, viewModel: AlbumCreateViewMode
                                 cover = albumCoverState.value,
                                 releaseDate = releaseDateOutput,
                                 description = albumDescriptionState.value,
-                                recordLabel = albumRecordLabelState.value,
-                                genre = albumGenreState.value,
+                                recordLabel = selectedRecordLabelText.value,
+                                genre = selectedGenreText.value,
                             )
                         )
                         navController.popBackStack()
