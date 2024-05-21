@@ -16,6 +16,7 @@ fun AlbumListScreenHandler(
     retryAction: () -> Unit,
     viewModel: AlbumListViewModel,
     navigateToAlbumDetail: (albumId: Int) -> Unit,
+    navigateToAlbumCreate: () -> Unit,
     innerPadding: PaddingValues = PaddingValues()
 ) {
     val albums by viewModel.albums.observeAsState(emptyList())
@@ -28,6 +29,7 @@ fun AlbumListScreenHandler(
         is VinylUiState.Loading -> SpinnerScreen()
         is VinylUiState.Success -> AlbumListScreen(
             navigateToAlbumDetail = navigateToAlbumDetail,
+            navigateToAlbumCreate = navigateToAlbumCreate,
             innerPadding = innerPadding,
             albums = albums,
         )

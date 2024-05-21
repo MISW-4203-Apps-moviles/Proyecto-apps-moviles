@@ -44,6 +44,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
 import com.miso.vinilos.R
+import com.miso.vinilos.ui.screens.AlbumCreateScreenHandler
 import com.miso.vinilos.ui.screens.AlbumDetailScreenHandler
 import com.miso.vinilos.ui.screens.AlbumListScreenHandler
 import com.miso.vinilos.ui.screens.ArtistaDetailScreenHandler
@@ -74,6 +75,7 @@ enum class VinylScreen(val route: String) {
     UserTypeSelection(route = "user_type_selection"),
     AlbumList(route = "album_list"),
     AlbumDetail(route = "album_detail/{albumId}"),
+    AlbumCreate(route = "album_create"),
     ColeccionistasList(route = "coleccionistas_list"),
     ColeccionistaDetail(route = "coleccionistas/{collectionId}"),
     ArtistasList(route = "artistas_list"),
@@ -190,6 +192,7 @@ fun BottomNavigationBar(
 }
 
 
+
 @Composable
 fun Navigation(
     navController: NavHostController,
@@ -251,6 +254,9 @@ fun Navigation(
                             VinylScreen.AlbumDetail.route.replace("{albumId}", albumId.toString()),
                         )
                     },
+                    navigateToAlbumCreate = {
+                        navController.navigate(VinylScreen.AlbumCreate.name)
+                    },
                     viewModel = albumViewModel,
                     innerPadding = innerPadding,
                 )
@@ -267,6 +273,13 @@ fun Navigation(
                         innerPadding = innerPadding
                     )
                 }
+            }
+            composable(VinylScreen.AlbumCreate.name) {
+
+                AlbumCreateScreenHandler(
+                    navController = navController,
+                    innerPadding = innerPadding
+                )
             }
         }
         // Collections screen
