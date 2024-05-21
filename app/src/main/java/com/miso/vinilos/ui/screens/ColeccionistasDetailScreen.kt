@@ -28,7 +28,6 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.miso.vinilos.R
-import com.miso.vinilos.models.Album
 import com.miso.vinilos.models.Collector
 import com.miso.vinilos.models.Comment
 import com.miso.vinilos.ui.composables.ListDivider
