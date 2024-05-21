@@ -51,7 +51,6 @@ import com.miso.vinilos.ui.screens.ArtistaDetailScreenHandler
 import com.miso.vinilos.ui.screens.ArtistaListScreenHandler
 import com.miso.vinilos.ui.screens.ColeccionistasDetailScreenHandler
 import com.miso.vinilos.ui.screens.ColeccionistasListScreenHandler
-import com.miso.vinilos.ui.screens.ColeccionistasScreen
 import com.miso.vinilos.ui.screens.UserTypeSelectionScreen
 import com.miso.vinilos.ui.theme.VinylsTheme
 import com.miso.vinilos.viewModels.AlbumDetailViewModel
