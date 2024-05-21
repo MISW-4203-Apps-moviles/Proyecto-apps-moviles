@@ -9,5 +9,5 @@ interface CollectionService {
     suspend fun getCollections(): List<Collector>
 
     @GET("collectors/{collectionId}")
-    suspend fun getCollection(@Path("collectionId") collectionId: Int): Collector
+    suspend fun getCollector(@Path("collectionId") collectionId: String): Collector
 }
