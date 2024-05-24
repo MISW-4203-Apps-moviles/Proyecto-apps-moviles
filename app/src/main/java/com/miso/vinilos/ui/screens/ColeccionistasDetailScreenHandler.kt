@@ -8,28 +8,27 @@ import androidx.compose.runtime.livedata.observeAsState
 import com.miso.vinilos.data.VinylUiState
 import com.miso.vinilos.ui.composables.ErrorScreen
 import com.miso.vinilos.ui.composables.SpinnerScreen
-import com.miso.vinilos.viewModels.ColeccionistasListViewModel
+import com.miso.vinilos.viewModels.ColeccionistaDetailViewModel
 
 @Composable
-fun ColeccionistasListScreenHandler(
+fun ColeccionistasDetailScreenHandler(
     vinylUiState: VinylUiState,
+    coleccionistaId: String,
     retryAction: () -> Unit,
-    viewModel: ColeccionistasListViewModel,
-    navigateToCollectionDetail: (collectionId: Int) -> Unit,
+    viewModel: ColeccionistaDetailViewModel,
     innerPadding: PaddingValues = PaddingValues()
 ) {
-    val collections by viewModel.collections.observeAsState(emptyList())
+    val collector by viewModel.collector.observeAsState()
 
     LaunchedEffect(Unit) {
-        viewModel.fetchCollections()
+        viewModel.fetchCollector(coleccionistaId)
     }
 
     when (vinylUiState) {
         is VinylUiState.Loading -> SpinnerScreen()
-        is VinylUiState.Success -> ColeccionistasListScreen(
-            navigateToCollectionDetail = navigateToCollectionDetail,
+        is VinylUiState.Success -> ColeccionistasDetailScreen(
             innerPadding = innerPadding,
-            collections = collections,
+            collector = collector
         )
         is VinylUiState.Error -> ErrorScreen(retryAction)
     }

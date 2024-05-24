@@ -16,7 +16,12 @@ class AlbumRepository {
         return albumService.getAlbum(albumId)
     }
 
+
     suspend fun postComment(albumId: Int, comment: NewComment): Comment {
         return albumService.postComment(albumId, comment)
+    }
+    
+    suspend fun createAlbum(album: Album): Album {
+        return albumService.createAlbum(album)
     }
 }

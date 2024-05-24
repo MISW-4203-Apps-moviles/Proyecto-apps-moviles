@@ -1,6 +1,5 @@
 package com.miso.vinilos.services
 
-import com.miso.vinilos.models.Album
 import com.miso.vinilos.models.Performer
 import retrofit2.http.GET
 import retrofit2.http.Path

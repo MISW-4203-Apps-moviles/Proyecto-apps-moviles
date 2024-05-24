@@ -45,44 +45,43 @@ fun ArtistaDetailScreen(
     navigateToAlbumDetail: (albumId: Int) -> Unit,
 
 ) {
-    val albumesArtistaDesc = stringResource(R.string.albumes_pertenecientes_al_artista)
+    val albumesArtistaDesc: String = stringResource(R.string.albumes_pertenecientes_al_artista)
+    
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(innerPadding)
+    ){
+        performer?.let {
+            item {
+                ArtistaCard(performer = it)
+            }
+            item {
+                Text(
+                    text = albumesArtistaDesc,
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Medium,
+                    modifier = Modifier.padding(top = 8.dp, bottom = 8.dp)
+                )
+            }
 
-
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding)
-        ){
-            performer?.let {
-                item {
-                    ArtistaCard(performer = it)
-                }
+            if (it.albums.isNotEmpty()) {
+                albumListSection(albums = it.albums,
+                    onNavigateToAlbumDetail = navigateToAlbumDetail)
+            } else {
                 item {
                     Text(
-                        text = albumesArtistaDesc,
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Medium,
-                        modifier = Modifier.padding(top = 8.dp, bottom = 8.dp)
+                        text = stringResource(R.string.no_albumes_disponibles),
+                        modifier = Modifier.padding(top = 8.dp)
                     )
                 }
-
-                if (it.albums.isNotEmpty()) {
-                    AlbumListSection(albums = it.albums,
-                        onNavigateToAlbumDetail = navigateToAlbumDetail)
-                } else {
-                    item {
-                        Text(
-                            text = stringResource(R.string.no_albumes_disponibles),
-                            modifier = Modifier.padding(top = 8.dp)
-                        )
-                    }
-                }
             }
+        }
     }
 
 }
 
-fun LazyListScope.AlbumListSection(
+fun LazyListScope.albumListSection(
     albums: List<Album> = emptyList(),
     onNavigateToAlbumDetail: (albumId: Int) -> Unit,
 ) {
@@ -180,7 +179,7 @@ fun AlbumArtistItem(album: Album,
     ListDivider()
     ListItem(
         modifier = Modifier
-            .clickable { onNavigateToAlbumDetail(album.id) },
+            .clickable { album.id?.let { onNavigateToAlbumDetail(it) } },
 
         headlineContent = {
             Text(
