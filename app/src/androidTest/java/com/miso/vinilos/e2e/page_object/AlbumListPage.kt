@@ -7,9 +7,11 @@ import androidx.compose.ui.test.SemanticsNodeInteraction
 import androidx.compose.ui.test.filter
 import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.hasParent
+import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.ComposeTestRule
 import androidx.compose.ui.test.onChildren
 import androidx.compose.ui.test.onFirst
+import androidx.compose.ui.test.performScrollToNode
 import com.miso.vinilos.MainActivity
 import com.miso.vinilos.R
 
@@ -31,11 +33,22 @@ class AlbumListPage (composeRule: ComposeTestRule, activity: MainActivity) :
         waitForElement(hasParent(hasContentDescription(context.getString(R.string.lista_albumes_descripcion))))
     }
 
+    fun validateCreateAlbumButton() {
+        waitForElementWithText(context.getString(R.string.agregar_album))
+    }
+
     fun clickListElement(itemIndex: Int) {
         clickItemFromList(
             itemIndex,
             hasContentDescription(context.getString(R.string.lista_albumes_descripcion))
         )
+    }
+
+    fun elementInListHasAlbumName(albumName: String) {
+        composeRule.onNode(
+            matcher = hasContentDescription(context.getString(R.string.lista_albumes_descripcion)),
+            useUnmergedTree = true
+        ).performScrollToNode(hasText(albumName))
     }
 
     fun getListItemFromList(itemIndex: Int): SemanticsNodeInteraction {
@@ -54,4 +67,7 @@ class AlbumListPage (composeRule: ComposeTestRule, activity: MainActivity) :
             .config
             .getOrNull(SemanticsProperties.Text)?.firstOrNull()?.text ?: ""
     }
+
+    fun clickCreateAlbum() =
+        clickTextButton(context.getString(R.string.agregar_album))
 }

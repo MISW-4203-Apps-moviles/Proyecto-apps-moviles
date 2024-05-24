@@ -15,6 +15,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 
 @Composable
 fun VinylsDropDownMenu(
@@ -34,6 +36,7 @@ fun VinylsDropDownMenu(
             value = state.value,
             modifier = Modifier
                 .fillMaxWidth()
+                .semantics { contentDescription = label }
                 .menuAnchor(),
             onValueChange = {  },
             readOnly = true,

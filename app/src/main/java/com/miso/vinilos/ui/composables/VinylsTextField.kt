@@ -21,6 +21,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import com.miso.vinilos.R
 
 @Composable
@@ -62,6 +64,7 @@ fun VinylsTextField(
         enabled = enabled,
         supportingText = if (error == null || !(wasFocused || forceShowError)) null else error.let { { Text(it) } },
         modifier = modifier
+            .semantics { contentDescription = label }
             .fillMaxWidth()
             .onFocusChanged { focusState ->
                 if (!focusState.isFocused) {
@@ -83,6 +86,7 @@ fun VinylsTextField(
                 }
             },
         placeholder = { Text(placeholder) },
+        maxLines = if (singleLine) 1 else 2,
         colors = TextFieldDefaults.colors(
             unfocusedContainerColor = MaterialTheme.colorScheme.onSecondary,
             focusedContainerColor = MaterialTheme.colorScheme.onSecondary,
