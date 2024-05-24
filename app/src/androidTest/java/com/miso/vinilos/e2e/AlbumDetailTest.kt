@@ -71,4 +71,27 @@ class AlbumDetailTest {
            assertText(albumName)
         }
     }
+
+    @Test
+    fun album_detail_open_dialog() {
+
+        val itemClickedAlbumName: SemanticsNodeInteraction
+        val albumName: String
+        with(UserTypeSelectionPage(composeTestRule, composeTestRule.activity)) {
+            validateScreen()
+            clickPublicUserTypeButton()
+        }
+        with(AlbumListPage(composeTestRule, composeTestRule.activity)) {
+            validateListElement()
+            validateListItemElement()
+            albumName = getAlbumNameFromList(0)
+            clickListElement(0)
+        }
+        with(AlbumDetailPage(composeTestRule, composeTestRule.activity)) {
+            validateLoader()
+            validateScreen()
+            assertText(albumName)
+            clickAddCommentButton()
+        }
+    }
 }

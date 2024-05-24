@@ -1,8 +1,8 @@
 package com.miso.vinilos.ui.screens
 
-
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,9 +14,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -25,9 +30,15 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -51,6 +62,10 @@ fun AlbumDetailScreen(
     album: Album?,
     isLoading: Boolean,
     fetchAlbum: () -> Unit,
+    toggleCommentModal: () -> Unit,
+    onCommentAdded: (String) -> Unit,
+    isOpenDialog: Boolean = false,
+    comments: List<Comment>,
     innerPadding: PaddingValues = PaddingValues()
 ) {
     val loadingDescription = stringResource(R.string.cargando_album_descripcion)
@@ -72,6 +87,13 @@ fun AlbumDetailScreen(
         }
     }
 
+    if (isOpenDialog) {
+        CommentDialog(
+            onDialogDismiss = toggleCommentModal,
+            onCommentAdded = onCommentAdded
+        )
+    }
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -81,19 +103,110 @@ fun AlbumDetailScreen(
 
         album?.let {
             Column(
-                verticalArrangement = Arrangement.spacedBy(16.dp)
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                modifier = Modifier.padding(start = 8.dp, end = 8.dp, top = 8.dp)
             ) {
-
                 AlbumCard(
                     album = it,
                 )
 
                 CommentSection(
-                    onAddComment = {}
+                    onAddComment = toggleCommentModal,
+                    comments = comments
                 )
             }
         }
     }
+}
+
+@Composable
+fun CommentDialog(
+    onDialogDismiss: () -> Unit,
+    onCommentAdded: (String) -> Unit
+    ) {
+    var commentText by rememberSaveable { mutableStateOf("") }
+    var errorMessage by rememberSaveable { mutableStateOf("") }
+    var maxChar = 50;
+
+    AlertDialog(
+        onDismissRequest = { onDialogDismiss() },
+        title = { Text(text = "Agregar comentario", fontSize = MaterialTheme.typography.titleMedium.fontSize) },
+        text = {
+            Column {
+                TextField(
+                    value = commentText,
+                    onValueChange = {
+                        if (it.length <= maxChar) commentText = it
+                        errorMessage =
+                            if (it.length in 5..50) "" else "El comentario debe tener entre 5 y 50 caracteres"
+                    },
+                    singleLine = true,
+                    isError = errorMessage.isNotEmpty(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 20.dp),
+                    trailingIcon = {
+                        Icon(
+                            imageVector = Icons.Filled.Close,
+                            contentDescription = "Limpiar texto",
+                            tint = MaterialTheme.colorScheme.onSurface
+                        )
+                    },
+                    placeholder = {
+                        Text(
+                            text = "Digite el comentario",
+                            fontSize = MaterialTheme.typography.bodyMedium.fontSize
+                        )
+                    },
+                    label = { Text(text = "comentario") },
+                    colors = TextFieldDefaults.textFieldColors(
+                        unfocusedLabelColor = MaterialTheme.colorScheme.scrim,
+                        focusedLabelColor = MaterialTheme.colorScheme.scrim,
+                        errorLabelColor = MaterialTheme.colorScheme.error,
+                        errorContainerColor = MaterialTheme.colorScheme.inverseOnSurface,
+                        errorIndicatorColor = MaterialTheme.colorScheme.error,
+                        errorPlaceholderColor = MaterialTheme.colorScheme.error,
+                        // EL FONDO DEBE TENER UNA TONALIDAD TRANSPARENT PARA QUE SE PUEDA VER EL FONDO DE LA PANTALLA
+                        containerColor = MaterialTheme.colorScheme.inverseOnSurface
+                    )
+                )
+                if (errorMessage.isNotEmpty()) {
+                    Text(
+                        text = errorMessage,
+                        color = MaterialTheme.colorScheme.error,
+                        fontSize = MaterialTheme.typography.bodyMedium.fontSize,
+                        modifier = Modifier.padding(top = 4.dp)
+                    )
+                }
+            }
+        },
+        dismissButton = {
+            Button(onClick = onDialogDismiss,
+                colors = ButtonDefaults.buttonColors(
+                    contentColor = MaterialTheme.colorScheme.inverseOnSurface,
+                    containerColor = MaterialTheme.colorScheme.inverseSurface
+                )
+                ) {
+                Text("Cancelar")
+            }
+        },
+        confirmButton = {
+            Button(
+                colors = ButtonDefaults.buttonColors(
+                   contentColor = MaterialTheme.colorScheme.onSecondary,
+                    containerColor = MaterialTheme.colorScheme.onSecondaryContainer
+                ),
+                enabled = commentText.length in 5..50,
+                onClick = {
+                if (commentText.length in 5..50) {
+                    onCommentAdded(commentText)
+                }
+
+            }) {
+                Text("Agregar")
+            }
+        },
+    )
 }
 
 @Composable
@@ -109,6 +222,7 @@ fun AlbumCard(
 
     Card(
         border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
+        shape =  RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface,
             contentColor = contentColorFor(MaterialTheme.colorScheme.onSurface)
@@ -195,7 +309,10 @@ fun AlbumCard(
 }
 
 @Composable
-fun CommentItem() {
+fun CommentItem(
+    comment: String,
+    user: String
+) {
     Surface(
         modifier = Modifier
             .fillMaxWidth(),
@@ -210,15 +327,13 @@ fun CommentItem() {
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = "Usuario",
+                    text = user,
                     style = MaterialTheme.typography.titleMedium
                 )
             }
-
             Spacer(modifier = Modifier.height(8.dp))
-
             Text(
-                text = "Comentario",
+                text = comment,
                 style = MaterialTheme.typography.bodyMedium
             )
         }
@@ -229,22 +344,32 @@ fun CommentItem() {
 fun AddComment(
     onAddComment: () -> Unit
 ) {
-    ExtendedFloatingActionButton(
-        onClick = onAddComment,
-        icon = { Icon(Icons.Filled.Add, "Extended floating action button.") },
-        text = { Text(text = "Agregar comentario") },
-        containerColor = primaryDark,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(
-                bottom = 16.dp,
-            )
-    )
+    Row {
+        ExtendedFloatingActionButton(
+            onClick = onAddComment,
+            icon = { Icon(Icons.Filled.Add, "Extended floating action button.") },
+            text = { Text(text = stringResource(R.string.agregar_comentario)) },
+            containerColor = primaryDark,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(
+                    bottom = 16.dp,
+                    start = 8.dp,
+                    end = 8.dp
+                )
+                .border(
+                    shape = RoundedCornerShape(26.dp),
+                    border = BorderStroke(0.dp, MaterialTheme.colorScheme.primary),
+                )
+                .height(36.dp)
+        )
+    }
+
 }
 
 @Composable
 fun CommentSection(
-    comments: List<Comment> = emptyList(),
+    comments: List<Comment>,
     onAddComment: () -> Unit
 ) {
     Column {
@@ -253,12 +378,16 @@ fun CommentSection(
             style = MaterialTheme.typography.titleMedium,
             fontWeight = MaterialTheme.typography.titleMedium.fontWeight,
             color = MaterialTheme.colorScheme.onSurface,
+            modifier = Modifier.padding(bottom = 8.dp)
         )
     }
 
     Column {
-        repeat(2) {
-            CommentItem()
+        comments.forEach { comment ->
+            CommentItem(
+                comment = comment.description,
+                user = "Usuario"
+            )
             ListDivider()
         }
     }
@@ -286,7 +415,10 @@ fun CommentSectionPreview() {
 @Preview
 @Composable
 fun CommentItemPreview() {
-    CommentItem()
+    CommentItem(
+        comment = "This is a comment",
+        user = "User"
+    )
 }
 
 @Preview
@@ -323,6 +455,10 @@ fun AlbumDetailScreenPreview() {
             comments = emptyList()
         ),
         isLoading = false,
-        fetchAlbum = {}
+        fetchAlbum = {},
+        isOpenDialog = false,
+        toggleCommentModal = {},
+        onCommentAdded = {},
+        comments = emptyList()
     )
 }

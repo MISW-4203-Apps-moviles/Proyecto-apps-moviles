@@ -14,11 +14,16 @@ fun AlbumDetailScreenHandler(
 ) {
     val isLoading by viewModel.isLoading.observeAsState(false)
     val album by viewModel.album.observeAsState(null)
+    val isOpenDialog by viewModel.isOpenDialog.observeAsState(false)
 
     AlbumDetailScreen(
         innerPadding = innerPadding,
         isLoading = isLoading,
         album = album,
-        fetchAlbum = { viewModel.fetchAlbum(albumId.toInt()) }
+        isOpenDialog = isOpenDialog,
+        toggleCommentModal = { viewModel.toggleCommentModal() },
+        fetchAlbum = { viewModel.fetchAlbum(albumId.toInt()) },
+        comments = album?.comments.orEmpty(),
+        onCommentAdded = { comment -> viewModel.postComment(albumId.toInt(), comment) }
     )
 }
