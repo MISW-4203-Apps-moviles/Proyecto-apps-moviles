@@ -7,22 +7,20 @@ import com.miso.vinilos.MainActivity
 import com.miso.vinilos.R
 import org.junit.Assert
 
-class NavigationSelectionPage (composeRule: ComposeTestRule, activity: MainActivity) :
+class NavigationSelectionPage(composeRule: ComposeTestRule, activity: MainActivity) :
 
     PageObject(composeRule) {
 
-        val context: Context = activity.applicationContext
+    val context: Context = activity.applicationContext
 
-    fun assertCurrentRouteName(navController: NavController, expectedRouteName: String) {
-            Assert.assertEquals(expectedRouteName, navController.currentBackStackEntry?.destination?.route)
-        }
-        //Navegación y comprobación de la pantalla de listado de álbumes
-        fun clickAlbumes() =
-            clickTextButton(context.getString(R.string.nav_albumes_label))
-        //Navegaciòn pantalla de artistas
-        fun clickArtistas() =
-            clickTextButton(context.getString(R.string.nav_artistas_label))
+    //Navegación y comprobación de la pantalla de listado de álbumes
+    fun clickAlbumes() =
+        clickTextButton(context.getString(R.string.nav_albumes_label))
 
-        fun clickColeccionistas() =
-            clickTextButton(context.getString(R.string.nav_coleccionistas_label))
-    }
+    //Navegaciòn pantalla de artistas
+    fun clickArtistas() =
+        clickTextButton(context.getString(R.string.nav_artistas_label))
+
+    fun clickColeccionistas() =
+        clickTextButton(context.getString(R.string.nav_coleccionistas_label))
+}

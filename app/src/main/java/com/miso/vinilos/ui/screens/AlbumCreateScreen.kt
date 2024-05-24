@@ -37,10 +37,8 @@ import com.miso.vinilos.ui.composables.VynilsDatePicker
 import com.miso.vinilos.ui.theme.VinylsTheme
 import com.miso.vinilos.ui.theme.primaryDark
 import com.miso.vinilos.ui.theme.secondaryDark
+import com.miso.vinilos.utils.DateHelper
 import com.miso.vinilos.viewModels.AlbumCreateViewModel
-import java.text.SimpleDateFormat
-import java.util.Locale
-import java.util.TimeZone
 
 @Composable
 fun AlbumCreateScreen(
@@ -160,18 +158,11 @@ fun CreateAlbumForm(navController: NavController, viewModel: AlbumCreateViewMode
             ExtendedFloatingActionButton(
                 onClick = {
                     if (isFormValid) {
-                        val inputFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-                        val date = inputFormat.parse(albumReleaseDateState.value)
-
-                        val outputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
-                        outputFormat.timeZone = TimeZone.getTimeZone("GMT-5")
-                        val releaseDateOutput = date?.let { outputFormat.format(it) } + "-05:00"
-
                         viewModel.createAlbum(
                             Album(
                                 name = albumNameState.value,
                                 cover = albumCoverState.value,
-                                releaseDate = releaseDateOutput,
+                                releaseDate = DateHelper.formatDate(albumReleaseDateState.value),
                                 description = albumDescriptionState.value,
                                 recordLabel = selectedRecordLabelText.value,
                                 genre = selectedGenreText.value,
