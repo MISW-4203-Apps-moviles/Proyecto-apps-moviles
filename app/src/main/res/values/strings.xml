@@ -63,4 +63,5 @@
     <string name="desc_telefono_del_coleccionista">Telefono del coleccionista</string>
     <string name="lista_de_comentarios">Lista de comentarios</string>
     <string name="descripcion_del_comment">Descripcion del comment</string>
+    <string name="click_coleccionista">Click en el coleccionista</string>
 </resources>
