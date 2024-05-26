@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.miso.vinilos.models.Album
-import com.miso.vinilos.models.Collector
 import com.miso.vinilos.models.NewCollector
 import com.miso.vinilos.models.NewComment
 import com.miso.vinilos.repositories.AlbumRepository

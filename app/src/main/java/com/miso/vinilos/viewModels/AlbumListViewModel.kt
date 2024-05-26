@@ -26,15 +26,6 @@ class AlbumListViewModel : ViewModel() {
     private val _albums = MutableLiveData<List<Album>>()
     val albums: LiveData<List<Album>> = _albums
 
-    /**
-     * Call fetchAlbums() on init so we can display status immediately.
-     */
-    //init {
-    //    if (vinylUiState == VinylUiState.Loading) {
-    //        fetchAlbums()
-    //    }
-    //}
-
     fun fetchAlbums() {
         viewModelScope.launch {
             vinylUiState = VinylUiState.Loading

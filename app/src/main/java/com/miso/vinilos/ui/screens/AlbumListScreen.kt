@@ -33,6 +33,8 @@ import com.miso.vinilos.ui.composables.ListDivider
 import com.miso.vinilos.ui.theme.VinylsTheme
 import com.miso.vinilos.ui.theme.primaryDark
 
+const val COVER_URL = "https://placehold.co/400x400.png"
+const val RECORD_LABEL = "Harvest Records"
 
 @Composable
 fun AlbumListScreen(
@@ -135,7 +137,7 @@ fun AlbumItemPreview() {
                 comments = emptyList(),
                 performers = emptyList(),
                 genre = "Rock progresivo",
-                recordLabel = "Harvest Records"
+                recordLabel = RECORD_LABEL
             ),
             onNavigateToAlbumDetail = {}
         )
@@ -145,32 +147,34 @@ fun AlbumItemPreview() {
 @Preview(showBackground = true)
 @Composable
 fun AlbumListScreenPreview() {
+
     VinylsTheme (darkTheme = true) {
         AlbumListScreen(
             navigateToAlbumDetail = {},
             navigateToAlbumCreate = {},
-            albums = listOf(
+            albums =
+            listOf(
                 Album(
                     id = 1,
                     name = "The Dark Side of the Moon",
                     releaseDate = "1973",
-                    cover = "https://placehold.co/400x400.png",
+                    cover = COVER_URL,
                     description = "The Dark Side of the Moon es el octavo álbum de estudio de la banda británica de rock progresivo Pink Floyd, lanzado el 1 de marzo de 1973.",
                     comments = emptyList(),
                     performers = emptyList(),
                     genre = "Rock progresivo",
-                    recordLabel = "Harvest Records"
+                    recordLabel = RECORD_LABEL
                 ),
                 Album(
                     id = 2,
                     name = "The Wall",
                     releaseDate = "1979",
-                    cover = "https://placehold.co/400x400.png",
+                    cover = COVER_URL,
                     description = "The Wall es el undécimo álbum de estudio de la banda británica de rock Pink Floyd, lanzado el 30 de noviembre de 1979.",
                     comments = emptyList(),
                     performers = emptyList(),
                     genre = "Rock",
-                    recordLabel = "Harvest Records"
+                    recordLabel = RECORD_LABEL
                 ),
             ),
         )
