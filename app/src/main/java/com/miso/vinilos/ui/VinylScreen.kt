@@ -134,9 +134,6 @@ fun VinylApp(
     navController: NavHostController = rememberNavController()
 ) {
     val backStackEntry by navController.currentBackStackEntryAsState()
-    // Get the name of the current screen
-    //val currentScreen = backStackEntry?.destination?.route
-    //Log.d("DEBUG", "currentScreen: $currentScreen")
     Scaffold(
         topBar = {
             VinylAppBar(
@@ -168,7 +165,6 @@ fun BottomNavigationBar(
             NavigationBar {
                val currentDestination = navController.currentDestination
                 VinylTab.entries.forEach { tab ->
-                    //Log.d("DEBUG", "tab: ${tab.name}")
                     NavigationBarItem(
                         icon = {
                             Icon(
