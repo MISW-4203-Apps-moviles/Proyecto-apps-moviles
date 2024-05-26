@@ -152,6 +152,7 @@ fun AlbumListScreenPreview() {
         AlbumListScreen(
             navigateToAlbumDetail = {},
             navigateToAlbumCreate = {},
+
             albums =
             listOf(
                 Album(
