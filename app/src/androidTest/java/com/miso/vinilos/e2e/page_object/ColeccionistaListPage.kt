@@ -18,6 +18,9 @@ class ColeccionistaListPage (composeRule: ComposeTestRule, activity: MainActivit
 
     val context: Context = activity.applicationContext
 
+    fun validateLoader() {
+        waitForElement(hasContentDescription(context.getString(R.string.loading_data)))
+    }
     fun validateListElement() {
         waitForElement(hasContentDescription(context.getString(R.string.lista_coleccionistas_descripcion)))
     }
@@ -36,20 +39,28 @@ class ColeccionistaListPage (composeRule: ComposeTestRule, activity: MainActivit
     fun getListItemFromList(itemIndex: Int): SemanticsNodeInteraction {
         return getNodeItemFromList(
             itemIndex,
-            hasContentDescription(context.getString(R.string.lista_artistas_descripcion))
+            hasContentDescription(context.getString(R.string.lista_coleccionistas_descripcion))
         )
     }
-    fun getArtistaNameFromList(itemIndex:Int):String {
+   /* fun getColeccionistaNameFromList(itemIndex:Int):String {
         return getListItemFromList(itemIndex)
             .onChildren()
-            .filter(hasContentDescription(context.getString(R.string.album_artista_descripcion)))
+            .filter(hasContentDescription(context.getString(R.string.nombre_del_coleccionista)))
             .onFirst()
             .onChildren()
-            .filter(hasContentDescription(context.getString(R.string.performer_click)))
+            .filter(hasContentDescription(context.getString(R.string.click_coleccionista)))
             .onFirst()
             .fetchSemanticsNode()
             .config
             .getOrNull(SemanticsProperties.Text)?.firstOrNull()?.text ?: ""
+    }*/
+
+    fun getColeccionistaNameFromList(itemIndex:Int):String {
+        val nodes = composeRule.onAllNodes(hasContentDescription(context.getString(R.string.nombre_del_coleccionista)))
+        val node = nodes[0]
+
+        return node.fetchSemanticsNode().config[SemanticsProperties.Text][itemIndex].text
+
     }
 
 }

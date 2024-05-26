@@ -42,9 +42,8 @@ fun ColeccionistasListScreen(
         LazyColumn(
             modifier = Modifier
                 .semantics { contentDescription = listDescription }
-                .testTag("ItemCollectionList"),
         ) {
-            items(collections, key = { album -> album.id }) { collection ->
+            items(collections, key = { collection -> collection.id }) { collection ->
                 CollectionItem(
                     collection = collection,
                     onNavigateToCollectionDetail = navigateToCollectionDetail
@@ -61,16 +60,17 @@ fun CollectionItem(
 ) {
 
     val collectorNameDescription = stringResource(R.string.nombre_del_coleccionista)
+    val collectorContent = stringResource(R.string.click_coleccionista)
 
     ListDivider()
     ListItem(
         modifier = Modifier
-            .fillMaxWidth()
             .clickable { onNavigateToCollectionDetail(collection.id) }
             .semantics { contentDescription = collectorNameDescription },
         headlineContent = {
             Text(
-                text = collection.name
+                text = collection.name,
+                modifier = Modifier.semantics { contentDescription = collectorContent }
 
             )
         },
