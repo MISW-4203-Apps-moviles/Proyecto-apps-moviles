@@ -53,6 +53,8 @@ import com.miso.vinilos.ui.screens.ColeccionistasDetailScreenHandler
 import com.miso.vinilos.ui.screens.ColeccionistasListScreenHandler
 import com.miso.vinilos.ui.screens.UserTypeSelectionScreen
 import com.miso.vinilos.ui.theme.VinylsTheme
+import com.miso.vinilos.viewModels.AlbumCreateViewModel
+import com.miso.vinilos.viewModels.AlbumCreateViewModelFactory
 import com.miso.vinilos.viewModels.AlbumDetailViewModel
 import com.miso.vinilos.viewModels.AlbumDetailViewModelFactory
 import com.miso.vinilos.viewModels.AlbumListViewModel
@@ -132,9 +134,6 @@ fun VinylApp(
     navController: NavHostController = rememberNavController()
 ) {
     val backStackEntry by navController.currentBackStackEntryAsState()
-    // Get the name of the current screen
-    //val currentScreen = backStackEntry?.destination?.route
-    //Log.d("DEBUG", "currentScreen: $currentScreen")
     Scaffold(
         topBar = {
             VinylAppBar(
@@ -166,7 +165,6 @@ fun BottomNavigationBar(
             NavigationBar {
                val currentDestination = navController.currentDestination
                 VinylTab.entries.forEach { tab ->
-                    //Log.d("DEBUG", "tab: ${tab.name}")
                     NavigationBarItem(
                         icon = {
                             Icon(
@@ -275,7 +273,10 @@ fun Navigation(
             }
             composable(VinylScreen.AlbumCreate.name) {
 
+                val albumcreateViewModel: AlbumCreateViewModel =
+                    viewModel(factory = AlbumCreateViewModelFactory())
                 AlbumCreateScreenHandler(
+                    viewModel = albumcreateViewModel,
                     navController = navController,
                     innerPadding = innerPadding
                 )

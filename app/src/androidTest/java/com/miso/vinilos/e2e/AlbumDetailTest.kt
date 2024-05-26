@@ -73,7 +73,6 @@ class AlbumDetailTest {
     @Test
     fun album_detail_open_dialog() {
 
-        val itemClickedAlbumName: SemanticsNodeInteraction
         val albumName: String
         with(UserTypeSelectionPage(composeTestRule, composeTestRule.activity)) {
             validateScreen()
@@ -86,8 +85,8 @@ class AlbumDetailTest {
             clickListElement(0)
         }
         with(AlbumDetailPage(composeTestRule, composeTestRule.activity)) {
-            validateLoader()
             validateScreen()
+            clickAddCommentButton()
             assertText(albumName)
             clickAddCommentButton()
         }
