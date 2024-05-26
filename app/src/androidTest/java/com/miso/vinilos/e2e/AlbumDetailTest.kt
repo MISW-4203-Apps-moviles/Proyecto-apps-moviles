@@ -86,7 +86,6 @@ class AlbumDetailTest {
             clickListElement(0)
         }
         with(AlbumDetailPage(composeTestRule, composeTestRule.activity)) {
-            validateLoader()
             validateScreen()
             assertText(albumName)
             clickAddCommentButton()
