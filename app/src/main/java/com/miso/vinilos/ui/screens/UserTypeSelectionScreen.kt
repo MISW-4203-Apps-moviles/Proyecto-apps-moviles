@@ -82,10 +82,7 @@ fun UserTypeSelectionScreen(
     }
 }
 
-
 private fun navigateToAlbumTab(navController: NavHostController) {
-    //Log.d( "DEBUG", "navigateToAlbumTab")
-    //Log.d( "DEBUG", VinylTab.AlbumTab.name)
     navController.navigate(VinylTab.AlbumTab.name) {
         popUpTo(navController.graph.startDestinationId)
         launchSingleTop = true

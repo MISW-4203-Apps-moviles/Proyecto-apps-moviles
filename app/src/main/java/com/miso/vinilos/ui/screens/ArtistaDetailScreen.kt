@@ -179,7 +179,7 @@ fun AlbumArtistItem(album: Album,
     ListDivider()
     ListItem(
         modifier = Modifier
-            .clickable { onNavigateToAlbumDetail(album.id) },
+            .clickable { album.id?.let { onNavigateToAlbumDetail(it) } },
 
         headlineContent = {
             Text(

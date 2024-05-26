@@ -20,4 +20,12 @@ class AlbumDetailPage(composeRule: ComposeTestRule, activity: MainActivity):
         waitForElement(hasContentDescription(context.getString(R.string.album_disquera_descripcion)))
         waitForElement(hasContentDescription(context.getString(R.string.album_portada_descripcion)))
     }
+
+    fun clickAddCommentButton() {
+        clickTextButton(context.getString(R.string.agregar_comentario))
+        waitForElement(hasContentDescription(context.getString(R.string.agregar_comentario)))
+
+    }
+
+
 }
