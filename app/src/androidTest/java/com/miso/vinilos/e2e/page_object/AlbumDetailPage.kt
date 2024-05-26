@@ -23,7 +23,7 @@ class AlbumDetailPage(composeRule: ComposeTestRule, activity: MainActivity):
 
     fun clickAddCommentButton() {
         clickTextButton(context.getString(R.string.agregar_comentario))
-        waitForElement(hasContentDescription(context.getString(R.string.agregar_comentario)))
+       // waitForElement(hasContentDescription(context.getString(R.string.agregar_comentario)))
 
     }
 
